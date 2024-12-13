@@ -19,7 +19,10 @@ export default {
     				'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
     				border: 'hsl(var(--sidebar-border))',
     				ring: 'hsl(var(--sidebar-ring))'
-    			}
+    			},
+				defaultBlue: '#576086',
+				defaultOrange: '#f7b696',
+				defaultGray: '#fafaf8'
     		},
     		screens: {
     			sm: '380px',

@@ -2,6 +2,7 @@ import {BrowserRouter, Navigate, Route, Routes} from "react-router";
 import AuthPage from "@/pages/AuthPage.tsx";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import Dashboard from "@/pages/Dashboard.tsx";
+import SchoolDash from "@/components/school/SchoolDash.tsx";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -20,7 +21,7 @@ function App() {
                         <Route path="/auth" element={<AuthPage/>}/>
                         <Route path="/school" element={<Dashboard />}>
                             <Route path="" element={<Navigate to="dash"/> } />
-                            <Route path="dash" element={<p>dashboard</p>}/>
+                            <Route path="dash" element={<SchoolDash />}/>
                             <Route path="students" element={<p>students</p>} />
                             <Route path="fees" element={<p>fees</p>} />
                             <Route path="docs" element={<p>docs</p>} />

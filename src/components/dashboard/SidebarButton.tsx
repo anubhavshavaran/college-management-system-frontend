@@ -17,7 +17,7 @@ function SidebarButton({icon, path, title}: SidebarButtonProps) {
                         <p className="text-lg font-medium capitalize">{title}</p>
                     </div>
                     {isActive && (
-                        <div className="h-full w-1.5 rounded-l-md rounded-bl-md bg-[#576086]"/>
+                        <div className="h-full w-1.5 rounded-l-md rounded-bl-md bg-defaultBlue"/>
                     )}
                 </>
             )}
