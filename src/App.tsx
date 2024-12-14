@@ -3,6 +3,8 @@ import AuthPage from "@/pages/AuthPage.tsx";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import Dashboard from "@/pages/Dashboard.tsx";
 import SchoolDash from "@/components/school/SchoolDash.tsx";
+import Vouchers from "@/pages/Vouchers.tsx";
+import Organization from "@/constants/Organization.ts";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -25,7 +27,7 @@ function App() {
                             <Route path="students" element={<p>students</p>} />
                             <Route path="fees" element={<p>fees</p>} />
                             <Route path="docs" element={<p>docs</p>} />
-                            <Route path="vouchers" element={<p>vouchers</p>} />
+                            <Route path="vouchers" element={<Vouchers organization={Organization.SCHOOL} />} />
                         </Route>
                         <Route path="/college" element={<Dashboard />}>
                             <Route path="" element={<Navigate to="dash"/> } />
@@ -33,7 +35,7 @@ function App() {
                             <Route path="students" element={<p>students</p>} />
                             <Route path="fees" element={<p>fees</p>} />
                             <Route path="docs" element={<p>docs</p>} />
-                            <Route path="vouchers" element={<p>vouchers</p>} />
+                            <Route path="vouchers" element={<Vouchers organization={Organization.COLLEGE} />} />
                         </Route>
                     </Routes>
                 </BrowserRouter>
