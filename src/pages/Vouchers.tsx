@@ -46,7 +46,7 @@ function Vouchers({organization}: VoucherProps) {
     return (
         <div className="w-full p-4 flex flex-col gap-4">
             <Dialog open={isDialogOpen} onOpenChange={handleDialogClose}>
-                <VoucherDialog/>
+                <VoucherDialog organization={organization} />
             </Dialog>
             <Button
                 onClick={() => setIsDialogOpen(true)}

@@ -63,8 +63,7 @@ async function updateVoucherApi(id: string, voucher: Voucher, organization: Orga
         method: "PATCH",
         url: `/vouchers/${organization}/${id}`,
         data: {
-            ...voucher,
-            voucherId: 'rt764r5476'
+            ...voucher
         }
     });
 
