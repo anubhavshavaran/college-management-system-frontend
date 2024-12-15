@@ -21,7 +21,6 @@ function VoucherTable({headers, data, render}: TableProps) {
                     {headers.map((header, i) => (
                         <TableHead className="text-center" key={i}>{header}</TableHead>
                     ))}
-                    <TableHead></TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
