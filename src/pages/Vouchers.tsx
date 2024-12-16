@@ -1,4 +1,3 @@
-import Organization from "@/constants/Organization.ts";
 import {
     TableCell,
     TableRow,
@@ -14,14 +13,13 @@ import {useSearchParams} from "react-router";
 import {useState} from "react";
 import VoucherDialog from "@/components/vouchers/VoucherDialog.tsx";
 import {useDeleteVouchers, useVouchers} from "@/hooks/vouchers.ts";
-
-type VoucherProps = {
-    organization: Organization;
-}
+import {useOrganization} from "@/contexts/OrganizationContextProvider.tsx";
 
 const headers = ['Sr. no.', 'Voucher ID', 'Title', 'Date', 'Amount', 'Mode of Payment', 'Particulars'];
 
-function Vouchers({organization}: VoucherProps) {
+function Vouchers() {
+    const {organization} = useOrganization();
+    console.log(organization);
     const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
     const [searchParams, setSearchParams] = useSearchParams();
     const {vouchers, isVouchersLoading, error} = useVouchers(organization);
