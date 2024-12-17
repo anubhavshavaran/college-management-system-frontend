@@ -1,5 +1,6 @@
-import {createContext, ReactNode, useContext, useState} from "react";
+import {createContext, ReactNode, useContext} from "react";
 import User from "@/constants/User.ts";
+import useLocalStorage from "@/hooks/useLocalStorage.ts";
 
 type UserContextType = {
     user: User | null;
@@ -9,7 +10,7 @@ type UserContextType = {
 const UserContext = createContext<UserContextType | null>(null);
 
 function UserContextProvider({children}: { children: ReactNode }) {
-    const [user, setUser] = useState<User | null>(null);
+    const [user, setUser] = useLocalStorage<User | null>("user", null);
     const changeUser = (u: User) => setUser(u);
 
     return (
