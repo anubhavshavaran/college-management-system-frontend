@@ -18,20 +18,17 @@ import {
 import {Tabs, TabsList, TabsTrigger} from "@/components/ui/tabs.tsx";
 import {Controller, useForm} from "react-hook-form";
 import FormError from "@/components/ui/FormError.tsx";
-import {useMutation} from "@tanstack/react-query";
-import {loginUserApi} from "@/services/authApi.ts";
 import {useNavigate} from "react-router";
-
-type FormInput = {
-    role: string;
-    username: string;
-    password: string;
-    organization: string;
-}
+import useLogin from "@/hooks/auth/useLogin.ts";
+import User from "@/constants/User.ts";
+import {useUser} from "@/contexts/UserContextProvider.tsx";
+import {useEffect, useState} from "react";
 
 function AuthForm() {
+    const [isUserSet, setIsUserSet] = useState<boolean>(false);
+    const {changeUser} = useUser();
     const navigate = useNavigate();
-    const {control, getValues, handleSubmit, formState: {errors}} = useForm<FormInput>({
+    const {control, getValues, handleSubmit, formState: {errors}} = useForm<User>({
         defaultValues: {
             role: '',
             username: '',
@@ -39,20 +36,25 @@ function AuthForm() {
             organization: 'SCHOOL'
         }
     });
-    const {mutateAsync, isPending, error} = useMutation({
-        mutationKey: ['login'],
-        mutationFn: ({username, password, organization, role}: FormInput) => loginUserApi(username, password, organization, role),
-        onSuccess: onSuccess
-    });
-
-    function onSuccess() {
-        navigate("/school");
-    }
+    const {user, loginUser, isLoggingIn, error, isSuccess} = useLogin();
 
     function submit() {
         const data = getValues();
-        mutateAsync(data);
+        loginUser(data);
     }
+
+    useEffect(() => {
+        if (isSuccess && user) {
+            changeUser(user);
+            setIsUserSet(true);
+        }
+    }, [isSuccess, user, changeUser]);
+
+    useEffect(() => {
+        if (isUserSet) {
+            navigate(`/${getValues().organization.toLowerCase()}`);
+        }
+    }, [getValues, isUserSet, navigate]);
 
     return (
         <div className="w-full flex justify-center items-center">
@@ -68,17 +70,17 @@ function AuthForm() {
                             <Controller
                                 control={control}
                                 name='organization'
-                                render={({ field: {onChange, value}}) => (
+                                render={({field: {onChange, value}}) => (
                                     <Tabs defaultValue="SCHOOL" value={value} onValueChange={onChange}
                                           className="w-[400px]">
                                         <TabsList>
-                                            <TabsTrigger disabled={isPending} value="SCHOOL">School</TabsTrigger>
-                                            <TabsTrigger disabled={isPending} value="COLLEGE">College</TabsTrigger>
+                                            <TabsTrigger disabled={isLoggingIn} value="SCHOOL">School</TabsTrigger>
+                                            <TabsTrigger disabled={isLoggingIn} value="COLLEGE">College</TabsTrigger>
                                         </TabsList>
                                     </Tabs>
                                 )}
                             />
-                            <FormError message={errors.organization?.message} />
+                            <FormError message={errors.organization?.message}/>
                         </div>
                         <div className="w-full flex flex-col space-y-1.5">
                             <Label htmlFor="framework">Select Role</Label>
@@ -92,7 +94,7 @@ function AuthForm() {
                                     }
                                 }}
                                 render={({field: {onChange, value}}) => (
-                                    <Select disabled={isPending} value={value} onValueChange={onChange}>
+                                    <Select disabled={isLoggingIn} value={value} onValueChange={onChange}>
                                         <SelectTrigger id="framework">
                                             <SelectValue placeholder="Select Role"/>
                                         </SelectTrigger>
@@ -104,7 +106,7 @@ function AuthForm() {
                                     </Select>
                                 )}
                             />
-                            <FormError message={errors.role?.message} />
+                            <FormError message={errors.role?.message}/>
                         </div>
                         <div className="w-full flex flex-col space-y-1.5">
                             <Label>Username</Label>
@@ -118,10 +120,11 @@ function AuthForm() {
                                     }
                                 }}
                                 render={({field: {onChange, value}}) => (
-                                    <Input disabled={isPending} value={value} onChange={onChange} type="text" placeholder="johndoe"/>
+                                    <Input disabled={isLoggingIn} value={value} onChange={onChange} type="text"
+                                           placeholder="johndoe"/>
                                 )}
                             />
-                            <FormError message={errors.username?.message} />
+                            <FormError message={errors.username?.message}/>
                         </div>
                         <div className="w-full flex flex-col space-y-1.5">
                             <Label>Password</Label>
@@ -135,19 +138,20 @@ function AuthForm() {
                                     }
                                 }}
                                 render={({field: {onChange, value}}) => (
-                                    <Input disabled={isPending} value={value} onChange={onChange} type="password" placeholder="*****"/>
+                                    <Input disabled={isLoggingIn} value={value} onChange={onChange} type="password"
+                                           placeholder="*****"/>
                                 )}
                             />
-                            <FormError message={errors.password?.message} />
+                            <FormError message={errors.password?.message}/>
                         </div>
                     </div>
                 </CardContent>
 
                 <CardFooter className="flex flex-col justify-center space-y-1.5">
-                    <Button disabled={isPending} className="w-full" onClick={handleSubmit(submit)}>
-                        {isPending ? 'Loadiing...' : 'Log in'}
+                    <Button disabled={isLoggingIn} className="w-full" onClick={handleSubmit(submit)}>
+                        {isLoggingIn ? 'Loading...' : 'Log in'}
                     </Button>
-                    <FormError message={error?.message} />
+                    <FormError message={error?.message}/>
                 </CardFooter>
             </Card>
         </div>
