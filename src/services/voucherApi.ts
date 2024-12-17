@@ -55,7 +55,7 @@ async function deleteVoucherApi(id: string, organization: Organization) {
         throw new Error(data.message);
     }
 
-    return true;
+    return data;
 }
 
 async function updateVoucherApi(id: string, voucher: Voucher, organization: Organization) {
@@ -71,7 +71,7 @@ async function updateVoucherApi(id: string, voucher: Voucher, organization: Orga
         throw new Error(data.message);
     }
 
-    return true;
+    return data;
 }
 
 export {getAllVouchersApi, getVoucherApi, createVoucherApi, deleteVoucherApi, updateVoucherApi};

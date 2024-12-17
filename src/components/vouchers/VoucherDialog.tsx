@@ -18,10 +18,11 @@ import {useEffect} from "react";
 import {useCreateVoucher, useUpdateVoucher, useVoucher} from "@/hooks/vouchers.ts";
 
 type VoucherDialogProps = {
-    organization: Organization
+    organization: Organization;
+    onSave: () => void;
 }
 
-export function VoucherDialog({organization}: VoucherDialogProps) {
+export function VoucherDialog({organization, onSave}: VoucherDialogProps) {
     const [searchParams] = useSearchParams();
     const voucherId: string | null = searchParams.get("id");
     const isEditing: boolean = voucherId !== null;
@@ -48,11 +49,13 @@ export function VoucherDialog({organization}: VoucherDialogProps) {
     function create() {
         const data = getValues();
         createVoucher(data);
+        onSave();
     }
 
     function update() {
         const data = getValues();
         updateVoucher(data);
+        onSave();
     }
 
     return (

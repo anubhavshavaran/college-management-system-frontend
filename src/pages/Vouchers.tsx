@@ -10,16 +10,17 @@ import VoucherTable from "@/components/vouchers/VoucherTable.tsx";
 import {format} from "date-fns";
 import Searchbar from "@/components/ui/Searchbar.tsx";
 import {useSearchParams} from "react-router";
-import {useState} from "react";
+import React, {useState} from "react";
 import VoucherDialog from "@/components/vouchers/VoucherDialog.tsx";
 import {useDeleteVouchers, useVouchers} from "@/hooks/vouchers.ts";
 import {useOrganization} from "@/contexts/OrganizationContextProvider.tsx";
+import Filter from "@/components/common/Filter.tsx";
+import TablePagination from "@/components/common/TablePagination.tsx";
 
 const headers = ['Sr. no.', 'Voucher ID', 'Title', 'Date', 'Amount', 'Mode of Payment', 'Particulars'];
 
 function Vouchers() {
     const {organization} = useOrganization();
-    console.log(organization);
     const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
     const [searchParams, setSearchParams] = useSearchParams();
     const {vouchers, isVouchersLoading, error} = useVouchers(organization);
@@ -41,14 +42,19 @@ function Vouchers() {
         }
     }
 
+    function handleDelete(e: React.MouseEvent, id: string) {
+        e.stopPropagation();
+        deleteVoucher(id ?? '');
+    }
+
     return (
-        <div className="w-full p-4 flex flex-col gap-4">
+        <div className="w-full p-4 pt-20 flex flex-col gap-4">
             <Dialog open={isDialogOpen} onOpenChange={handleDialogClose}>
-                <VoucherDialog organization={organization} />
+                <VoucherDialog onSave={() => setIsDialogOpen(false)} organization={organization}/>
             </Dialog>
-            <Button
-                onClick={() => setIsDialogOpen(true)}
-                className="bg-defaultGray p-5 shadow-none border-[1.5px] border-gray-400 rounded-xl hover:bg-defaultGray w-fit">
+            <Button onClick={() => setIsDialogOpen(true)}
+                    className="bg-defaultGray p-5 shadow-none border-[1.5px] border-gray-400 rounded-xl hover:bg-defaultGray w-fit">
+                <img src="/icons/plus.png" width={18} alt="Add Vocuhers"/>
                 <p className="text-lg text-black font-normal ">Add Vouchers</p>
             </Button>
 
@@ -67,6 +73,7 @@ function Vouchers() {
                                 searchParams.delete("query");
                                 setSearchParams(searchParams);
                             }}>X</Button>
+                            <Filter/>
                         </div>
                         <VoucherTable
                             headers={headers}
@@ -81,10 +88,14 @@ function Vouchers() {
                                     <TableCell className="text-center">{voucher.amount}</TableCell>
                                     <TableCell className="text-center">{voucher.modeOfPayment}</TableCell>
                                     <TableCell className="text-center">{voucher.particulars}</TableCell>
-                                    <TableCell onClick={() => deleteVoucher(voucher._id ?? '')} className="z-10">D</TableCell>
+                                    <TableCell className="hover:bg-gray-200 rounded-lg flex justify-center"
+                                               onClick={(e) => handleDelete(e, voucher._id ?? '')}>
+                                        <img src="/icons/bin.png" width="20" alt="Delete Button"/>
+                                    </TableCell>
                                 </TableRow>
                             )}
                         />
+                        <TablePagination pages={50} />
                     </div>
                 )}
             </div>

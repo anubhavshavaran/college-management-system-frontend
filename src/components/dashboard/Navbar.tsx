@@ -11,7 +11,7 @@ import {useUser} from "@/contexts/UserContextProvider.tsx";
 function Navbar() {
     const {user} = useUser();
     return (
-        <div className="w-full border-b-2 border-gray-200 p-3 px-5 flex justify-between items-center">
+        <div className="w-full top-0 fixed bg-white z-10 border-b-2 border-gray-200 p-3 px-5 flex justify-between items-center">
             <div className="flex items-center justify-between gap-4">
                 <SidebarTrigger/>
                 <Breadcrumb>
