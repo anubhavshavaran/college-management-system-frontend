@@ -5,6 +5,7 @@ import Dashboard from "@/pages/Dashboard.tsx";
 import Vouchers from "@/pages/Vouchers.tsx";
 import {OrganizationContextProvider} from "@/contexts/OrganizationContextProvider.tsx";
 import {UserContextProvider} from "@/contexts/UserContextProvider.tsx";
+import Home from "@/pages/Home.tsx";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -25,7 +26,7 @@ function App() {
                                 <Route path="/auth" element={<AuthPage/>}/>
                                 <Route path="/school" element={<Dashboard/>}>
                                     <Route path="" element={<Navigate to="dash"/>}/>
-                                    <Route path="dash" element={<p>Dash</p>}/>
+                                    <Route path="dash" element={<Home/>}/>
                                     <Route path="students" element={<p>students</p>}/>
                                     <Route path="fees" element={<p>fees</p>}/>
                                     <Route path="docs" element={<p>docs</p>}/>
@@ -33,7 +34,7 @@ function App() {
                                 </Route>
                                 <Route path="/college" element={<Dashboard/>}>
                                     <Route path="" element={<Navigate to="dash"/>}/>
-                                    <Route index path="dash" element={<p>dashboard</p>}/>
+                                    <Route index path="dash" element={<Home/>}/>
                                     <Route path="students" element={<p>students</p>}/>
                                     <Route path="fees" element={<p>fees</p>}/>
                                     <Route path="docs" element={<p>docs</p>}/>

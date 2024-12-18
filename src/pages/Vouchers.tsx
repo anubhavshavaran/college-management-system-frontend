@@ -14,8 +14,8 @@ import React, {useState} from "react";
 import VoucherDialog from "@/components/vouchers/VoucherDialog.tsx";
 import {useDeleteVouchers, useVouchers} from "@/hooks/vouchers.ts";
 import {useOrganization} from "@/contexts/OrganizationContextProvider.tsx";
-import Filter from "@/components/common/Filter.tsx";
-import TablePagination from "@/components/common/TablePagination.tsx";
+import Filter from "@/components/ui/Filter.tsx";
+import TablePagination from "@/components/ui/TablePagination.tsx";
 
 const headers = ['Sr. no.', 'Voucher ID', 'Title', 'Date', 'Amount', 'Mode of Payment', 'Particulars'];
 

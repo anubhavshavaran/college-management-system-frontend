@@ -4,8 +4,11 @@ import {LuLayoutDashboard} from "react-icons/lu";
 import {PiStudentBold} from "react-icons/pi";
 import {IoReceiptOutline} from "react-icons/io5";
 import {GrDocumentText} from "react-icons/gr";
+import {useLocation} from "react-router";
 
 function DashSidebar() {
+    const location = useLocation();
+    const route = location.pathname.split("/").at(1);
     return (
         <Sidebar>
             <SidebarHeader className="w-full p-4 flex flex-row justify-start items-center">
@@ -14,15 +17,18 @@ function DashSidebar() {
                     alt="Logo"
                     className="w-12"
                 />
-                <p className="text-2xl font-semibold">APJ School</p>
+                <div className="flex flex-col items-center">
+                    <p className="text-sm font-normal">S.M.E SOCIETY's</p>
+                    <p className="text-sm font-bold uppercase">abdulkalam {route}</p>
+                </div>
             </SidebarHeader>
             <SidebarContent>
                 <SidebarGroup className="pr-0">
-                    <SidebarButton title="dashboard" path="dash" icon={<LuLayoutDashboard/>} />
-                    <SidebarButton title="students" path="students" icon={<PiStudentBold/>} />
-                    <SidebarButton title="fees" path="fees" icon={<IoReceiptOutline/>} />
-                    <SidebarButton title="student docs" path="docs" icon={<GrDocumentText />} />
-                    <SidebarButton title="vouchers" path="vouchers" icon={<GrDocumentText/>} />
+                    <SidebarButton title="dashboard" path="dash" icon={<LuLayoutDashboard/>}/>
+                    <SidebarButton title="students" path="students" icon={<PiStudentBold/>}/>
+                    <SidebarButton title="fees" path="fees" icon={<IoReceiptOutline/>}/>
+                    <SidebarButton title="student docs" path="docs" icon={<GrDocumentText/>}/>
+                    <SidebarButton title="vouchers" path="vouchers" icon={<GrDocumentText/>}/>
                 </SidebarGroup>
             </SidebarContent>
         </Sidebar>
