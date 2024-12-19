@@ -11,12 +11,7 @@ import {
     ChartContainer,
     ChartTooltip,
     ChartTooltipContent,
-} from "@/components/ui/chart.tsx"
-
-const chartData = [
-    { gender: "Male", count: 54.5, fill: "#F7B696" },
-    { gender: "Female", count: 45.5, fill: "#576086" },
-]
+} from "@/components/ui/chart.tsx";
 
 const chartConfig = {
     count: {
@@ -30,9 +25,19 @@ const chartConfig = {
         label: "Female",
         color: "hsl(var(--chart-female))",
     },
-} satisfies ChartConfig
+} satisfies ChartConfig;
 
-export function GenderChart() {
+type GenderChartProps = {
+    malePercentage: number;
+    femalePercentage: number;
+}
+
+export function GenderChart({malePercentage, femalePercentage}: GenderChartProps) {
+    const chartData = [
+        { gender: "Male", count: malePercentage, fill: "#F7B696" },
+        { gender: "Female", count: femalePercentage, fill: "#576086" },
+    ];
+
     return (
         <Card className="w-full flex flex-col border-none shadow-none rounded-2xl bg-defaultGray">
             <CardHeader className="items-center pb-0">
@@ -91,14 +96,14 @@ export function GenderChart() {
                         <img src="/icons/male.png" alt="male"/>
                         <p className="font-normal text-base capitalize">male</p>
                     </span>
-                    <p className="text-xl font-bold">54.5%</p>
+                    <p className="text-xl font-bold">{malePercentage}%</p>
                 </div>
                 <div className="flex-col gap-2">
                     <span className="flex gap-2">
                         <img src="/icons/female.png" alt="female"/>
                         <p className="font-normal text-base capitalize">female</p>
                     </span>
-                    <p className="text-xl font-bold">45.5%</p>
+                    <p className="text-xl font-bold">{femalePercentage}%</p>
                 </div>
             </CardFooter>
         </Card>

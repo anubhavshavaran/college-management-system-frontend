@@ -4,11 +4,10 @@ import {LuLayoutDashboard} from "react-icons/lu";
 import {PiStudentBold} from "react-icons/pi";
 import {IoReceiptOutline} from "react-icons/io5";
 import {GrDocumentText} from "react-icons/gr";
-import {useLocation} from "react-router";
+import {useOrganization} from "@/contexts/OrganizationContextProvider.tsx";
 
 function DashSidebar() {
-    const location = useLocation();
-    const route = location.pathname.split("/").at(1);
+    const {organization} = useOrganization();
     return (
         <Sidebar>
             <SidebarHeader className="w-full p-4 flex flex-row justify-start items-center">
@@ -19,7 +18,7 @@ function DashSidebar() {
                 />
                 <div className="flex flex-col items-center">
                     <p className="text-sm font-normal">S.M.E SOCIETY's</p>
-                    <p className="text-sm font-bold uppercase">abdulkalam {route}</p>
+                    <p className="text-sm font-bold uppercase">abdulkalam {organization}</p>
                 </div>
             </SidebarHeader>
             <SidebarContent>

@@ -3,7 +3,7 @@ import {
 } from "@/components/ui/sidebar.tsx";
 import {Outlet} from "react-router";
 import Navbar from "@/components/dashboard/Navbar.tsx";
-import DashSidebar from "@/components/home/DashSidebar.tsx";
+import DashSidebar from "@/components/dashboard/DashSidebar.tsx";
 
 function Dashboard() {
     return (

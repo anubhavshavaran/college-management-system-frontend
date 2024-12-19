@@ -7,8 +7,8 @@ type InfoCardPropsType = {
 
 function InfoCard({label, text}: InfoCardPropsType) {
     return (
-        <div className="sm:w-full md:w-[250px] p-6 rounded-2xl bg-defaultGray flex justify-between items-end">
-            <div className="flex flex-col gap-4">
+        <div className="sm:w-full md:w-[250px] p-6 rounded-3xl bg-defaultGray flex justify-between items-end">
+            <div className="flex flex-col gap-2">
                 <p className="text-xl font-light text-slate-600 capitalize">{label}</p>
                 <p className="font-bold text-defaultBlue text-2xl">{text}</p>
             </div>
