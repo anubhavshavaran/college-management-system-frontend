@@ -1,7 +1,7 @@
 import InfoCard from "@/components/ui/InfoCard.tsx";
 import FeesChart from "@/components/home/FeesChart.tsx";
 import GenderChart from "@/components/home/GenderChart.tsx";
-import useDashData from "@/hooks/dashboard.ts";
+import {useDashData} from "@/hooks/dashboard.ts";
 import Spinner from "@/components/ui/Spinner.tsx";
 import {formatCurrency} from "@/functions/formatCurrency.ts";
 

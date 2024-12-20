@@ -1,6 +1,6 @@
 import {useOrganization} from "@/contexts/OrganizationContextProvider.tsx";
 import {useQuery} from "@tanstack/react-query";
-import {getDashDataApi} from "@/services/dashboardApi.ts";
+import {getDashDataApi, getPaymentsStatsApi} from "@/services/dashboardApi.ts";
 
 function useDashData() {
     const {organization} = useOrganization();
@@ -17,4 +17,19 @@ function useDashData() {
     }
 }
 
-export default useDashData;
+function usePaymentsData(year: string | number) {
+    const {organization} = useOrganization();
+    const {data, isPending, error, isFetched} = useQuery({
+        queryKey: ['paymentsStats', year],
+        queryFn: () => getPaymentsStatsApi(organization, year)
+    });
+
+    return {
+        data: data?.data.payments,
+        isPending,
+        isFetched,
+        error
+    }
+}
+
+export {useDashData, usePaymentsData};
