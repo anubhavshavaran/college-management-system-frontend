@@ -7,7 +7,7 @@ async function getDashDataApi(organization: Organization) {
         url: `/dash/${organization}`,
     });
 
-    if (status.toString()[0] === '4') {
+    if (status.toString()[0] === '4' || status.toString()[0] === '5') {
         throw new Error(data.message);
     }
 

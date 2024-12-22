@@ -5,6 +5,7 @@ import {PiStudentBold} from "react-icons/pi";
 import {IoReceiptOutline} from "react-icons/io5";
 import {GrDocumentText} from "react-icons/gr";
 import {useOrganization} from "@/contexts/OrganizationContextProvider.tsx";
+import {FaUsers} from "react-icons/fa6";
 
 function DashSidebar() {
     const {organization} = useOrganization();
@@ -26,6 +27,7 @@ function DashSidebar() {
                     <SidebarButton title="dashboard" path="dash" icon={<LuLayoutDashboard/>}/>
                     <SidebarButton title="students" path="students" icon={<PiStudentBold/>}/>
                     <SidebarButton title="fees" path="fees" icon={<IoReceiptOutline/>}/>
+                    <SidebarButton title="users" path="users" icon={<FaUsers />}/>
                     <SidebarButton title="student docs" path="docs" icon={<GrDocumentText/>}/>
                     <SidebarButton title="vouchers" path="vouchers" icon={<GrDocumentText/>}/>
                 </SidebarGroup>

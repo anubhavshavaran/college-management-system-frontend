@@ -7,7 +7,6 @@ import {formatCurrency} from "@/functions/formatCurrency.ts";
 
 function Home() {
     const {data, isPending} = useDashData();
-    console.log(data);
 
     return (
         <div className="w-full p-6">

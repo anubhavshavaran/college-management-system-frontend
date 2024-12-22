@@ -7,6 +7,7 @@ import {OrganizationContextProvider} from "@/contexts/OrganizationContextProvide
 import {UserContextProvider} from "@/contexts/UserContextProvider.tsx";
 import Home from "@/pages/Home.tsx";
 import Students from "@/pages/Students.tsx";
+import Users from "@/pages/Users.tsx";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -30,6 +31,7 @@ function App() {
                                     <Route path="dash" element={<Home/>}/>
                                     <Route path="students" element={<Students />}/>
                                     <Route path="fees" element={<p>fees</p>}/>
+                                    <Route path="users" element={<Users />}/>
                                     <Route path="docs" element={<p>docs</p>}/>
                                     <Route path="vouchers" element={<Vouchers/>}/>
                                 </Route>
@@ -38,6 +40,7 @@ function App() {
                                     <Route index path="dash" element={<Home/>}/>
                                     <Route path="students" element={<Students />}/>
                                     <Route path="fees" element={<p>fees</p>}/>
+                                    <Route path="users" element={<Users />}/>
                                     <Route path="docs" element={<p>docs</p>}/>
                                     <Route path="vouchers" element={<Vouchers/>}/>
                                 </Route>
