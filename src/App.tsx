@@ -10,6 +10,7 @@ import Students from "@/pages/Students.tsx";
 import Users from "@/pages/Users.tsx";
 import Fees from "@/pages/Fees.tsx";
 import AddStudent from "@/pages/AddStudent.tsx";
+import Student from "@/pages/Student.tsx";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -32,6 +33,7 @@ function App() {
                                     <Route path="" element={<Navigate to="dash"/>}/>
                                     <Route path="dash" element={<Home/>}/>
                                     <Route path="students" element={<Students />}/>
+                                    <Route path="students/:studentId" element={<Student />}/>
                                     <Route path="addStudent" element={<AddStudent />}/>
                                     <Route path="fees" element={<Fees />}/>
                                     <Route path="users" element={<Users />}/>
@@ -42,6 +44,7 @@ function App() {
                                     <Route path="" element={<Navigate to="dash"/>}/>
                                     <Route index path="dash" element={<Home/>}/>
                                     <Route path="students" element={<Students />}/>
+                                    <Route path="students/:studentId" element={<Student />}/>
                                     <Route path="addStudent" element={<AddStudent />}/>
                                     <Route path="fees" element={<Fees />}/>
                                     <Route path="users" element={<Users />}/>

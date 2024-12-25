@@ -26,6 +26,7 @@ export default {
 				defaultLightBlue: '#dfeaf2',
 				defaultOrange: '#f7b696',
 				defaultGray: '#fafaf8',
+				defaultLightGray: '#f9f9f7',
     		},
     		screens: {
     			sm: '380px',

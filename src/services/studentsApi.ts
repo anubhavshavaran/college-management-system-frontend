@@ -47,4 +47,17 @@ async function createStudentApi(organization: Organization, student: Student) {
     return data;
 }
 
-export {getStudentApi, getStudentsApi, createStudentApi};
+async function deleteStudentApi(organization: Organization, id: string) {
+    const {data, status} = await axiosInstance.request({
+        method: 'DELETE',
+        url: `/students/${organization}/${id}`,
+    });
+
+    if (status.toString()[0] === '4') {
+        throw new Error(data.message);
+    }
+
+    return data;
+}
+
+export {getStudentApi, getStudentsApi, createStudentApi, deleteStudentApi};

@@ -1,4 +1,5 @@
 type Student = {
+    _id: string;
     name: string;
     organization: "SCHOOL" | "COLLEGE";
     rollNumber?: string;
