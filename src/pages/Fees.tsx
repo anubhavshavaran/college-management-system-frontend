@@ -1,11 +1,11 @@
-import SchoolCategories from "@/components/categories/SchoolCategories.tsx";
 import {useOrganization} from "@/contexts/OrganizationContextProvider.tsx";
-import Organization from "@/constants/Organization.ts";
-import CollegeCategories from "@/components/categories/CollegeCategories.tsx";
 import {useSearchParams} from "react-router";
+import Organization from "@/constants/Organization.ts";
+import SchoolCategories from "@/components/categories/SchoolCategories.tsx";
+import CollegeCategories from "@/components/categories/CollegeCategories.tsx";
 import StudentsData from "@/components/students/StudentsData.tsx";
 
-function Students() {
+function Fees() {
     const {organization} = useOrganization();
     const [searchParams] = useSearchParams();
     const isCategory = searchParams.get("cat");
@@ -24,4 +24,4 @@ function Students() {
     );
 }
 
-export default Students;
+export default Fees;

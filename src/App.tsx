@@ -8,6 +8,8 @@ import {UserContextProvider} from "@/contexts/UserContextProvider.tsx";
 import Home from "@/pages/Home.tsx";
 import Students from "@/pages/Students.tsx";
 import Users from "@/pages/Users.tsx";
+import Fees from "@/pages/Fees.tsx";
+import AddStudent from "@/pages/AddStudent.tsx";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -30,7 +32,8 @@ function App() {
                                     <Route path="" element={<Navigate to="dash"/>}/>
                                     <Route path="dash" element={<Home/>}/>
                                     <Route path="students" element={<Students />}/>
-                                    <Route path="fees" element={<p>fees</p>}/>
+                                    <Route path="addStudent" element={<AddStudent />}/>
+                                    <Route path="fees" element={<Fees />}/>
                                     <Route path="users" element={<Users />}/>
                                     <Route path="docs" element={<p>docs</p>}/>
                                     <Route path="vouchers" element={<Vouchers/>}/>
@@ -39,7 +42,8 @@ function App() {
                                     <Route path="" element={<Navigate to="dash"/>}/>
                                     <Route index path="dash" element={<Home/>}/>
                                     <Route path="students" element={<Students />}/>
-                                    <Route path="fees" element={<p>fees</p>}/>
+                                    <Route path="addStudent" element={<AddStudent />}/>
+                                    <Route path="fees" element={<Fees />}/>
                                     <Route path="users" element={<Users />}/>
                                     <Route path="docs" element={<p>docs</p>}/>
                                     <Route path="vouchers" element={<Vouchers/>}/>

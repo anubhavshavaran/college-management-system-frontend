@@ -23,8 +23,9 @@ export default {
     				ring: 'hsl(var(--sidebar-ring))'
     			},
 				defaultBlue: '#576086',
+				defaultLightBlue: '#dfeaf2',
 				defaultOrange: '#f7b696',
-				defaultGray: '#fafaf8'
+				defaultGray: '#fafaf8',
     		},
     		screens: {
     			sm: '380px',
