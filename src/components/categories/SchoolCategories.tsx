@@ -4,17 +4,22 @@ const schoolCategories = [
     {
         type: "class",
         header: "pre-primary",
-        categories: ['nursery', 'LKG', 'UKG']
+        categories: ['nursery', 'lkg', 'ukg']
     },
     {
         type: "class",
         header: "primary",
-        categories: ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th']
+        categories: ['1', '2', '3', '4', '5', '6', '7', '8']
     },
     {
         type: "class",
         header: "high",
-        categories: ['9th', '10th']
+        categories: ['9', '10']
+    },
+    {
+        type: "class",
+        header: "passed out batch",
+        categories: ['passed out']
     },
 ]
 

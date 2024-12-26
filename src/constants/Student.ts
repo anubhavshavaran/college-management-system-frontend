@@ -3,11 +3,11 @@ type Student = {
     name: string;
     organization: "SCHOOL" | "COLLEGE";
     rollNumber?: string;
-    class?: string; // Only for the school
-    section?: number; // Only for the school
-    course?: string; // Only for the college
-    semester?: number; // Only for the college (1-8, default 1)
-    expectedYearOfPassing?: string; // Only for the college
+    class?: string;
+    section?: number;
+    course?: string;
+    semester?: number;
+    expectedYearOfPassing?: string;
     mothersName?: string;
     fathersName?: string;
     phoneNumber?: string;
@@ -30,6 +30,9 @@ type Student = {
     categoryCertificateEnclosed?: "yes" | "no";
     parentsIncome?: string;
     incomeCertificateEnclosed?: "yes" | "no";
+    fixedFee?: number,
+    paidFee?: number,
+    previousFee?: number
 }
 
 export default Student;

@@ -2,12 +2,12 @@ import axiosInstance from "@/services/axiosInstance.ts";
 import Organization from "@/constants/Organization.ts";
 import Student from "@/constants/Student.ts";
 
-async function getStudentsApi(organization: Organization, ) {
+async function getStudentsApi(organization: Organization, query: {course?: string, class?: string}) {
     const {data, status} = await axiosInstance.request({
         method: 'GET',
         url: `/students/${organization}`,
         params: {
-
+            ...query
         }
     });
 
@@ -21,7 +21,7 @@ async function getStudentsApi(organization: Organization, ) {
 async function getStudentApi(organization: Organization, id: string) {
     const {data, status} = await axiosInstance.request({
         method: 'GET',
-        url: `/students/${organization}/${id}`,
+        url: `/students/${organization}/${id}`
     });
 
     if (status.toString()[0] === '4') {

@@ -11,10 +11,11 @@ import Student from "@/constants/Student.ts";
 import {createPaymentApi, deletePaymentApi, getPaymentsApi} from "@/services/paymentsApi.ts";
 import Payment from "@/constants/Payment.ts";
 
-function useStudents(organization: Organization) {
+function useStudents(organization: Organization, course: string) {
+    const query = organization === Organization.SCHOOL ? {class: course} : {course};
     const {data, isPending, error} = useQuery({
         queryKey: [organization, 'students'],
-        queryFn: () => getStudentsApi(organization)
+        queryFn: () => getStudentsApi(organization, query)
     });
 
     return {

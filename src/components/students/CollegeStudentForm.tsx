@@ -9,6 +9,7 @@ import FormError from "@/components/ui/FormError.tsx";
 import Spinner from "@/components/ui/Spinner.tsx";
 import {useParams} from "react-router";
 import {useEffect} from "react";
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select.tsx";
 
 function CollegeStudentForm() {
     const {organization} = useOrganization();
@@ -139,12 +140,16 @@ function CollegeStudentForm() {
                                 }}
                                 render={({field: {value, onChange}}) => (
                                     <>
-                                        <Input
-                                            placeholder="Male/Female"
-                                            value={value}
-                                            onChange={onChange}
-                                            className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
-                                        />
+                                        <Select value={value} onValueChange={onChange}>
+                                            <SelectTrigger
+                                                className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl">
+                                                <SelectValue placeholder="Gender"/>
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="male">Male</SelectItem>
+                                                <SelectItem value="female">Female</SelectItem>
+                                            </SelectContent>
+                                        </Select>
                                         <FormError message={errors?.gender?.message}/>
                                     </>
                                 )}
@@ -156,13 +161,22 @@ function CollegeStudentForm() {
                             <Controller
                                 control={control}
                                 name='course'
+                                rules={{
+                                    required: {
+                                        value: true,
+                                        message: 'Course is required'
+                                    }
+                                }}
                                 render={({field: {value, onChange}}) => (
-                                    <Input
-                                        placeholder="Course"
-                                        value={value}
-                                        onChange={onChange}
-                                        className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
-                                    />
+                                    <>
+                                        <Input
+                                            placeholder="Course"
+                                            value={value}
+                                            onChange={onChange}
+                                            className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
+                                        />
+                                        <FormError message={errors?.course?.message} />
+                                    </>
                                 )}
                             />
                         </StudentInfoInput>
@@ -172,13 +186,22 @@ function CollegeStudentForm() {
                             <Controller
                                 control={control}
                                 name='semester'
+                                rules={{
+                                    required: {
+                                        value: true,
+                                        message: 'Semester is required'
+                                    }
+                                }}
                                 render={({field: {value, onChange}}) => (
-                                    <Input
-                                        placeholder="Semester"
-                                        value={value}
-                                        onChange={onChange}
-                                        className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
-                                    />
+                                    <>
+                                        <Input
+                                            placeholder="Semester"
+                                            value={value}
+                                            onChange={onChange}
+                                            className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
+                                        />
+                                        <FormError message={errors?.semester?.message}/>
+                                    </>
                                 )}
                             />
                         </StudentInfoInput>
@@ -511,7 +534,31 @@ function CollegeStudentForm() {
                                 )}
                             />
                         </StudentInfoInput>
-
+                        <StudentInfoInput
+                            label="Fixed Fee"
+                        >
+                            <Controller
+                                control={control}
+                                name='fixedFee'
+                                rules={{
+                                    required: {
+                                        value: true,
+                                        message: 'Fixed Fee is required'
+                                    }
+                                }}
+                                render={({field: {value, onChange}}) => (
+                                    <>
+                                        <Input
+                                            placeholder="xxxx"
+                                            value={value}
+                                            onChange={onChange}
+                                            className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
+                                        />
+                                        <FormError message={errors?.fixedFee?.message}/>
+                                    </>
+                                )}
+                            />
+                        </StudentInfoInput>
                     </div>
                     <Button
                         onClick={isEditing ? handleSubmit(update) : handleSubmit(create)}

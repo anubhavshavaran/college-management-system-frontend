@@ -4,17 +4,17 @@ const collegeCategories = [
     {
         type: "course",
         header: "under graduate courses",
-        categories: ['BBA', 'BCA', 'BCom', 'BA', 'BSc']
+        categories: ['bba', 'bca', 'bcom', 'ba', 'bsc']
     },
     {
         type: "course",
         header: "post graduate courses",
-        categories: ['MSc']
+        categories: ['msc']
     },
     {
         type: "course",
         header: "passed out batches",
-        categories: ['BBA', 'BCA', 'BCom', 'BA', 'BSc', 'MSc']
+        categories: ['bba', 'bca', 'bcom', 'ba', 'bsc', 'msc']
     },
 ]
 

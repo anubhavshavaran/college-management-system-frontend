@@ -28,7 +28,7 @@ function DashSidebar() {
                     <SidebarButton title="students" path="students" icon={<PiStudentBold/>}/>
                     <SidebarButton title="fees" path="fees" icon={<IoReceiptOutline/>}/>
                     <SidebarButton title="users" path="users" icon={<FaUsers />}/>
-                    <SidebarButton title="student docs" path="docs" icon={<GrDocumentText/>}/>
+                    <SidebarButton title={`${organization} docs`} path="docs" icon={<GrDocumentText/>}/>
                     <SidebarButton title="vouchers" path="vouchers" icon={<GrDocumentText/>}/>
                 </SidebarGroup>
             </SidebarContent>

@@ -9,15 +9,26 @@ import Organization from "@/constants/Organization.ts";
 import {TableCell, TableRow} from "@/components/ui/table.tsx";
 import {format} from "date-fns";
 import CollegeStudentsTable from "@/components/students/CollegeStudentsTable.tsx";
+import formatOrdinal from "@/functions/formatOrdinal.ts";
 
 function StudentsData() {
     const navigate = useNavigate();
     const {organization} = useOrganization();
     const [searchParams] = useSearchParams();
+    const course = searchParams.get("cat") ?? '';
     const {deleteStudent} = useDeleteStudent(organization);
-    console.log(searchParams.get("cat"));
-    const {data, isPending} = useStudents(organization);
-    console.log(data);
+    const {data, isPending} = useStudents(organization, course);
+
+    let title: string;
+    if (organization === Organization.SCHOOL) {
+        if (course.length >= 3) {
+            title = course;
+        } else {
+            title = `${formatOrdinal(Number(course))} std`;
+        }
+    } else {
+        title = course;
+    }
 
     function navToAdd() {
         navigate(`/${organization}/addStudent`);
@@ -39,9 +50,9 @@ function StudentsData() {
             ) : (
                 <>
                     <div className="flex gap-4">
-                        <InfoCard label={"6th std students"} text={data.students.length}/>
-                        <InfoCard label={"6th std students"} text={data.stats.males}/>
-                        <InfoCard label={"6th std students"} text={data.stats.females}/>
+                        <InfoCard label={`${title} students`} text={data.students.length}/>
+                        <InfoCard label={`${title} male`} text={data.stats.males}/>
+                        <InfoCard label={`${title} females`} text={data.stats.females}/>
                     </div>
                     <Button
                         onClick={navToAdd}
@@ -60,9 +71,12 @@ function StudentsData() {
                                         <TableCell className="text-center">{student.admissionNumber}</TableCell>
                                         <TableCell className="text-center">{student.name}</TableCell>
                                         <TableCell className="text-center">{student.rollNumber}</TableCell>
-                                        <TableCell className="text-center">{student.gender?.toLocaleUpperCase()}</TableCell>
-                                        <TableCell className="text-center">{student.dateOfBirth ? format(new Date(student.dateOfBirth), 'dd-MM-yyyy') : 'NIL'}</TableCell>
-                                        <TableCell className="text-center">{student.dateOfAdmission ? format(new Date(student.dateOfAdmission), 'dd-MM-yyyy') : 'NIL'}</TableCell>
+                                        <TableCell
+                                            className="text-center">{student.gender?.toLocaleUpperCase()}</TableCell>
+                                        <TableCell
+                                            className="text-center">{student.dateOfBirth ? format(new Date(student.dateOfBirth), 'dd-MM-yyyy') : 'NIL'}</TableCell>
+                                        <TableCell
+                                            className="text-center">{student.dateOfAdmission ? format(new Date(student.dateOfAdmission), 'dd-MM-yyyy') : 'NIL'}</TableCell>
                                         <TableCell className="text-center">+91 {student.phoneNumber}</TableCell>
                                         <TableCell className="hover:bg-gray-200 rounded-lg flex justify-center"
                                                    onClick={(e) => handleDelete(e, student._id ?? '')}>
@@ -81,9 +95,12 @@ function StudentsData() {
                                         <TableCell className="text-center">{student.name}</TableCell>
                                         <TableCell className="text-center">{student.semester}</TableCell>
                                         <TableCell className="text-center">{student.rollNumber}</TableCell>
-                                        <TableCell className="text-center">{student.gender?.toLocaleUpperCase()}</TableCell>
-                                        <TableCell className="text-center">{student.dateOfBirth ? format(new Date(student.dateOfBirth), 'dd-MM-yyyy') : 'NIL'}</TableCell>
-                                        <TableCell className="text-center">{student.dateOfAdmission ? format(new Date(student.dateOfAdmission), 'dd-MM-yyyy') : 'NIL'}</TableCell>
+                                        <TableCell
+                                            className="text-center">{student.gender?.toLocaleUpperCase()}</TableCell>
+                                        <TableCell
+                                            className="text-center">{student.dateOfBirth ? format(new Date(student.dateOfBirth), 'dd-MM-yyyy') : 'NIL'}</TableCell>
+                                        <TableCell
+                                            className="text-center">{student.dateOfAdmission ? format(new Date(student.dateOfAdmission), 'dd-MM-yyyy') : 'NIL'}</TableCell>
                                         <TableCell className="text-center">+91 {student.phoneNumber}</TableCell>
                                         <TableCell className="hover:bg-gray-200 rounded-lg flex justify-center"
                                                    onClick={(e) => handleDelete(e, student._id ?? '')}>
