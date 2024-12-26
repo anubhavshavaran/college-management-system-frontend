@@ -60,4 +60,20 @@ async function deleteStudentApi(organization: Organization, id: string) {
     return data;
 }
 
-export {getStudentApi, getStudentsApi, createStudentApi, deleteStudentApi};
+async function updateStudentApi(organization: Organization, id: string, student: Student) {
+    const {data, status} = await axiosInstance.request({
+        method: 'PATCH',
+        url: `/students/${organization}/${id}`,
+        data: {
+            ...student
+        }
+    });
+
+    if (status.toString()[0] === '4') {
+        throw new Error(data.message);
+    }
+
+    return data;
+}
+
+export {getStudentApi, getStudentsApi, createStudentApi, deleteStudentApi, updateStudentApi};

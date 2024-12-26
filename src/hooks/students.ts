@@ -1,5 +1,11 @@
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
-import {createStudentApi, deleteStudentApi, getStudentsApi} from "@/services/studentsApi.ts";
+import {
+    createStudentApi,
+    deleteStudentApi,
+    getStudentApi,
+    getStudentsApi,
+    updateStudentApi
+} from "@/services/studentsApi.ts";
 import Organization from "@/constants/Organization.ts";
 import Student from "@/constants/Student.ts";
 
@@ -16,8 +22,19 @@ function useStudents(organization: Organization) {
     }
 }
 
-function useStudent() {
+function useStudent(organization: Organization, id: string, isEnable: boolean) {
+    const {data, isPending, error, isFetched} = useQuery({
+        queryKey: [organization, 'student', id],
+        queryFn: () => getStudentApi(organization, id),
+        enabled: isEnable,
+    });
 
+    return {
+        student: data?.data.doc,
+        isPending,
+        isFetched,
+        error
+    }
 }
 
 function useCreateStudent(organization: Organization) {
@@ -48,4 +65,23 @@ function useDeleteStudent(organization: Organization) {
     return {deleteStudent, isDeletingStudent};
 }
 
-export {useStudent, useStudents, useCreateStudent, useDeleteStudent};
+function useUpdateStudent(studentId: string, organization: Organization) {
+    const queryClient = useQueryClient();
+    const {mutate: updateStudent, isPending: isUpdatingStudent} = useMutation({
+        mutationFn: (student: Student) => updateStudentApi(organization, studentId, student),
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({
+                queryKey: [organization, 'students']
+            }, {
+                throwOnError: true
+            });
+        }
+    });
+
+    return {
+        updateStudent,
+        isUpdatingStudent,
+    }
+}
+
+export {useStudent, useStudents, useCreateStudent, useDeleteStudent, useUpdateStudent};

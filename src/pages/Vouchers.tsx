@@ -68,12 +68,12 @@ function Vouchers() {
                 {!isVouchersLoading && !error && (
                     <div className="w-full flex flex-col gap-4">
                         <div className="w-full flex justify-end gap-4 px-4">
-                            <Searchbar/>
-                            <Button onClick={() => {
-                                searchParams.delete("query");
-                                setSearchParams(searchParams);
-                            }}>X</Button>
-                            <Filter/>
+                            {/*<Searchbar/>*/}
+                            {/*<Button onClick={() => {*/}
+                            {/*    searchParams.delete("query");*/}
+                            {/*    setSearchParams(searchParams);*/}
+                            {/*}}>X</Button>*/}
+                            {/*<Filter/>*/}
                         </div>
                         <VoucherTable
                             headers={headers}
@@ -95,7 +95,7 @@ function Vouchers() {
                                 </TableRow>
                             )}
                         />
-                        <TablePagination pages={50} />
+                        {/*<TablePagination pages={50} />*/}
                     </div>
                 )}
             </div>

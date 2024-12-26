@@ -6,11 +6,14 @@ import {
     DialogClose
 } from "@/components/ui/dialog.tsx";
 import PayFeeDialog from "@/components/students/PayFeeDialog.tsx";
+import {useState} from "react";
 
 function FeeData() {
+    const [isPayDialogOpen, setIsPayDialogOpen] = useState<boolean>(false);
+
     return (
         <>
-            <Dialog open={true}>
+            <Dialog open={isPayDialogOpen} onOpenChange={() => setIsPayDialogOpen(false)}>
                 <DialogClose />
                 <PayFeeDialog />
             </Dialog>
@@ -22,6 +25,7 @@ function FeeData() {
                     <FeeInfoCard/>
                 </div>
                 <Button
+                    onClick={() => setIsPayDialogOpen(true)}
                     className="w-fit px-16 py-6 bg-defaultOrange text-black text-lg border-white border-[6px] rounded-2xl hover:bg-defaultOrange">
                     Pay
                 </Button>
