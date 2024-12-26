@@ -8,14 +8,11 @@ import {Dialog} from "@/components/ui/dialog.tsx";
 import Voucher from "@/constants/Voucher.ts";
 import VoucherTable from "@/components/vouchers/VoucherTable.tsx";
 import {format} from "date-fns";
-import Searchbar from "@/components/ui/Searchbar.tsx";
 import {useSearchParams} from "react-router";
 import React, {useState} from "react";
 import VoucherDialog from "@/components/vouchers/VoucherDialog.tsx";
 import {useDeleteVouchers, useVouchers} from "@/hooks/vouchers.ts";
 import {useOrganization} from "@/contexts/OrganizationContextProvider.tsx";
-import Filter from "@/components/ui/Filter.tsx";
-import TablePagination from "@/components/ui/TablePagination.tsx";
 
 const headers = ['Sr. no.', 'Voucher ID', 'Title', 'Date', 'Amount', 'Mode of Payment', 'Particulars'];
 

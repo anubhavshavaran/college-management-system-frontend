@@ -2,8 +2,28 @@ import {DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitl
 import {Label} from "@/components/ui/label.tsx";
 import {Input} from "@/components/ui/input.tsx";
 import {Button} from "@/components/ui/button.tsx";
+import {useCreateStudentPayment} from "@/hooks/students.ts";
+import {useParams} from "react-router";
+import {Controller, useForm} from "react-hook-form";
+import Payment from "@/constants/Payment.ts";
+import FormError from "@/components/ui/FormError.tsx";
+import Spinner from "@/components/ui/Spinner.tsx";
 
-function PayFeeDialog() {
+type PayFeeDialogProps = {
+    onSave: () => void;
+}
+
+function PayFeeDialog({onSave}: PayFeeDialogProps) {
+    const {studentId} = useParams();
+    const {createPayment, isCreatingPayment} = useCreateStudentPayment(studentId ?? '');
+    const {control, getValues, formState: {errors}, handleSubmit} = useForm<Payment>();
+
+    function create() {
+        const data = getValues();
+        createPayment(data);
+        onSave();
+    }
+
     return (
         <DialogContent>
             <DialogHeader>
@@ -17,35 +37,121 @@ function PayFeeDialog() {
                     <Label htmlFor="name" className="text-right">
                         Amount
                     </Label>
-                    <Input
-                        id="name"
-                        defaultValue="Pedro Duarte"
-                        className="col-span-3"
+                    <Controller
+                        control={control}
+                        name="amount"
+                        rules={{
+                            required: {
+                                value: true,
+                                message: 'Amount is required'
+                            },
+                            min: {
+                                value: 1,
+                                message: 'Amount connot be zero'
+                            }
+                        }}
+                        render={({field: {value, onChange}}) => (
+                            <>
+                                <Input
+                                    id="name"
+                                    className="col-span-3"
+                                    value={value}
+                                    onChange={onChange}
+                                    disabled={isCreatingPayment}
+                                />
+                                <FormError message={errors.amount?.message}/>
+                            </>
+                        )}
                     />
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
                     <Label htmlFor="username" className="text-right">
                         Mode of Payment
                     </Label>
-                    <Input
-                        id="username"
-                        defaultValue="@peduarte"
-                        className="col-span-3"
+                    <Controller
+                        control={control}
+                        name="mode"
+                        rules={{
+                            required: {
+                                value: true,
+                                message: 'Mode of Payment is required'
+                            }
+                        }}
+                        render={({field: {value, onChange}}) => (
+                            <>
+                                <Input
+                                    id="name"
+                                    className="col-span-3"
+                                    value={value}
+                                    onChange={onChange}
+                                    disabled={isCreatingPayment}
+                                />
+                                <FormError message={errors.mode?.message}/>
+                            </>
+                        )}
+                    />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="username" className="text-right">
+                        Paid On
+                    </Label>
+                    <Controller
+                        control={control}
+                        name="paidOn"
+                        rules={{
+                            required: {
+                                value: true,
+                                message: 'Payment Date is required'
+                            }
+                        }}
+                        render={({field: {value, onChange}}) => (
+                            <>
+                                <Input
+                                    id="name"
+                                    className="col-span-3"
+                                    value={value}
+                                    onChange={onChange}
+                                    disabled={isCreatingPayment}
+                                />
+                                <FormError message={errors.mode?.message}/>
+                            </>
+                        )}
                     />
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
                     <Label htmlFor="username" className="text-right">
                         Particulars
                     </Label>
-                    <Input
-                        id="username"
-                        defaultValue="@peduarte"
-                        className="col-span-3"
+                    <Controller
+                        control={control}
+                        name="particulars"
+                        render={({field: {value, onChange}}) => (
+                            <>
+                                <Input
+                                    id="name"
+                                    className="col-span-3"
+                                    value={value}
+                                    onChange={onChange}
+                                    disabled={isCreatingPayment}
+                                />
+                            </>
+                        )}
                     />
                 </div>
             </div>
             <DialogFooter className="w-full flex sm:justify-center">
-                <Button type="submit" className="bg-defaultOrange">Pay</Button>
+                <Button
+                    type="submit"
+                    className="bg-defaultOrange"
+                    onClick={handleSubmit(create)}
+                    disabled={isCreatingPayment}
+                >
+                    {isCreatingPayment ? (
+                        <Spinner/>
+                    ) : (
+                        'Pay'
+                    )}
+                </Button>
             </DialogFooter>
         </DialogContent>
     );

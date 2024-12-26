@@ -8,6 +8,8 @@ import {
 } from "@/services/studentsApi.ts";
 import Organization from "@/constants/Organization.ts";
 import Student from "@/constants/Student.ts";
+import {createPaymentApi, deletePaymentApi, getPaymentsApi} from "@/services/paymentsApi.ts";
+import Payment from "@/constants/Payment.ts";
 
 function useStudents(organization: Organization) {
     const {data, isPending, error} = useQuery({
@@ -24,7 +26,7 @@ function useStudents(organization: Organization) {
 
 function useStudent(organization: Organization, id: string, isEnable: boolean) {
     const {data, isPending, error, isFetched} = useQuery({
-        queryKey: [organization, 'student', id],
+        queryKey: ['student', id],
         queryFn: () => getStudentApi(organization, id),
         enabled: isEnable,
     });
@@ -84,4 +86,76 @@ function useUpdateStudent(studentId: string, organization: Organization) {
     }
 }
 
-export {useStudent, useStudents, useCreateStudent, useDeleteStudent, useUpdateStudent};
+function useStudentsPayments(id: string) {
+    const {data, isPending, error} = useQuery({
+        queryKey: ['payments', id],
+        queryFn: () => getPaymentsApi(id)
+    });
+
+    return {
+        payments: data?.data?.payments,
+        isPending,
+        error
+    }
+}
+
+function useCreateStudentPayment(id: string) {
+    const queryClient = useQueryClient();
+    const {mutate: createPayment, isPending: isCreatingPayment, error} = useMutation({
+        mutationFn: (payment: Payment) => createPaymentApi(id, payment),
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({
+                queryKey: ['payments', id]
+            }, {
+                throwOnError: true
+            });
+            await queryClient.invalidateQueries({
+                queryKey: ['student', id]
+            }, {
+                throwOnError: true
+            });
+        }
+    });
+
+    return {
+        createPayment,
+        isCreatingPayment,
+        error
+    }
+}
+
+function useDeleteStudentPayment(studentId: string) {
+    const queryClient = useQueryClient();
+    const {mutate: deletePayment, isPending: isDeletingPayment, error} = useMutation({
+        mutationFn: (id: string) => deletePaymentApi(id),
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({
+                queryKey: ['payments', studentId]
+            }, {
+                throwOnError: true
+            });
+            await queryClient.invalidateQueries({
+                queryKey: ['student', studentId]
+            }, {
+                throwOnError: true
+            });
+        }
+    });
+
+    return {
+        deletePayment,
+        isDeletingPayment,
+        error
+    }
+}
+
+export {
+    useStudent,
+    useStudents,
+    useCreateStudent,
+    useDeleteStudent,
+    useUpdateStudent,
+    useStudentsPayments,
+    useCreateStudentPayment,
+    useDeleteStudentPayment
+};
