@@ -157,8 +157,8 @@ export function UserDialog({organization, onSave}: UserDialogProps) {
                             <FormError message={errors.password?.message}/>
                         </div>
                     </div>
-                    <DialogFooter className="w-full flex-row justify-center">
-                        <Button onClick={isEditing ? handleSubmit(update) : handleSubmit(create)}>
+                    <DialogFooter className="w-full flex-row sm:justify-center">
+                        <Button onClick={isEditing ? handleSubmit(update) : handleSubmit(create)} className="bg-defaultOrange">
                             {isCreatingUser || isUpdatingUser ? (
                                 <Spinner/>
                             ) : (

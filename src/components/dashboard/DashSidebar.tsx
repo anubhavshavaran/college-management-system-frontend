@@ -7,10 +7,23 @@ import {useOrganization} from "@/contexts/OrganizationContextProvider.tsx";
 import {FaUsers} from "react-icons/fa6";
 import {useUser} from "@/contexts/UserContextProvider.tsx";
 import {LiaMoneyCheckAltSolid} from "react-icons/lia";
+import {RiLogoutBoxLine} from "react-icons/ri";
+import Organization from "@/constants/Organization.ts";
+import {useNavigate} from "react-router";
 
 function DashSidebar() {
     const {organization} = useOrganization();
+    const navigate = useNavigate();
     const {user} = useUser();
+
+    function switchOrganization() {
+        if (organization === Organization.SCHOOL) {
+            navigate("/college");
+        } else {
+            navigate("/school");
+        }
+    }
+
     return (
         <Sidebar>
             <SidebarHeader className="w-full p-4 flex flex-row justify-start items-center">
@@ -28,12 +41,27 @@ function DashSidebar() {
                 <SidebarGroup className="pr-0">
                     <SidebarButton title="dashboard" path="dash" icon={<LuLayoutDashboard/>}/>
                     <SidebarButton title="students" path="students" icon={<PiStudentBold/>}/>
-                    <SidebarButton title="fees" path="fees" icon={<LiaMoneyCheckAltSolid />}/>
+                    <SidebarButton title="fees" path="fees" icon={<LiaMoneyCheckAltSolid/>}/>
+
                     {user?.role === "CHAIRMAN" && (
                         <SidebarButton title="users" path="users" icon={<FaUsers/>}/>
                     )}
-                    <SidebarButton title={`${organization} docs`} path="docs" icon={<IoDocumentAttachOutline />}/>
-                    <SidebarButton title="vouchers" path="vouchers" icon={<IoReceiptOutline />}/>
+
+                    <SidebarButton title={`${organization} docs`} path="docs" icon={<IoDocumentAttachOutline/>}/>
+                    <SidebarButton title="vouchers" path="vouchers" icon={<IoReceiptOutline/>}/>
+
+                    {user?.role === "CHAIRMAN" && (
+                        <div
+                            onClick={() => switchOrganization()}
+                            className="bg-transparent flex justify-start items-center gap-3 p-2 pr-0 hover:bg-gray-200 rounded-lg">
+                            <RiLogoutBoxLine size={20} color="red"/>
+                            <p className="text-lg font-medium capitalize">
+                                go to
+                                {organization === Organization.SCHOOL ? ' college' : ' school'}
+                            </p>
+                        </div>
+                    )}
+
                 </SidebarGroup>
             </SidebarContent>
         </Sidebar>
