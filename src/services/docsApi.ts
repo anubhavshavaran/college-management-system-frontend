@@ -1,10 +1,10 @@
 import axiosInstance from "@/services/axiosInstance.ts";
-import Payment from "@/constants/Payment.ts";
+import Organization from "@/constants/Organization.ts";
 
-async function getPaymentsApi(id: string) {
+async function getDocsApi(organization: Organization) {
     const {data, status} = await axiosInstance.request({
         method: 'GET',
-        url: `/payments/${id}`,
+        url: `/docs/${organization}`,
     });
 
     if (status.toString()[0] === '4' || status.toString()[0] === '5') {
@@ -14,12 +14,13 @@ async function getPaymentsApi(id: string) {
     return data;
 }
 
-async function createPaymentApi(id: string, payment: Payment) {
+async function createDocsApi(organization: Organization, formData: FormData) {
     const {data, status} = await axiosInstance.request({
         method: 'POST',
-        url: `/payments/${id}`,
-        data: {
-            ...payment,
+        url: `/docs/${organization}`,
+        data: formData,
+        headers: {
+            'Content-Type': 'multipart/form-data'
         },
     });
 
@@ -30,10 +31,10 @@ async function createPaymentApi(id: string, payment: Payment) {
     return data;
 }
 
-async function deletePaymentApi(id: string) {
+async function deleteDocsApi(organization: Organization, id: string) {
     const {data, status} = await axiosInstance.request({
         method: 'DELETE',
-        url: `/payments/${id}`
+        url: `/docs/${organization}/${id}`
     });
 
     if (status.toString()[0] === '4' || status.toString()[0] === '5') {
@@ -43,4 +44,4 @@ async function deletePaymentApi(id: string) {
     return data;
 }
 
-export {getPaymentsApi, createPaymentApi, deletePaymentApi};
+export {createDocsApi, getDocsApi, deleteDocsApi}

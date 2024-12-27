@@ -11,6 +11,7 @@ import Users from "@/pages/Users.tsx";
 import Fees from "@/pages/Fees.tsx";
 import AddStudent from "@/pages/AddStudent.tsx";
 import Student from "@/pages/Student.tsx";
+import Documents from "@/pages/Documents.tsx";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -28,6 +29,7 @@ function App() {
                     <UserContextProvider>
                         <OrganizationContextProvider>
                             <Routes>
+                                <Route path="/" element={<Navigate to="/auth" />} />
                                 <Route path="/auth" element={<AuthPage/>}/>
                                 <Route path="/school" element={<Dashboard/>}>
                                     <Route path="" element={<Navigate to="dash"/>}/>
@@ -37,7 +39,7 @@ function App() {
                                     <Route path="addStudent" element={<AddStudent />}/>
                                     <Route path="fees" element={<Fees />}/>
                                     <Route path="users" element={<Users />}/>
-                                    <Route path="docs" element={<p>docs</p>}/>
+                                    <Route path="docs" element={<Documents />}/>
                                     <Route path="vouchers" element={<Vouchers/>}/>
                                 </Route>
                                 <Route path="/college" element={<Dashboard/>}>
@@ -48,7 +50,7 @@ function App() {
                                     <Route path="addStudent" element={<AddStudent />}/>
                                     <Route path="fees" element={<Fees />}/>
                                     <Route path="users" element={<Users />}/>
-                                    <Route path="docs" element={<p>docs</p>}/>
+                                    <Route path="docs" element={<Documents />}/>
                                     <Route path="vouchers" element={<Vouchers/>}/>
                                 </Route>
                             </Routes>
