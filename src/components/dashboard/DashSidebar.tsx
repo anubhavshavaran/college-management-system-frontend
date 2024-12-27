@@ -2,13 +2,15 @@ import {Sidebar, SidebarContent, SidebarGroup, SidebarHeader} from "@/components
 import SidebarButton from "@/components/dashboard/SidebarButton.tsx";
 import {LuLayoutDashboard} from "react-icons/lu";
 import {PiStudentBold} from "react-icons/pi";
-import {IoReceiptOutline} from "react-icons/io5";
-import {GrDocumentText} from "react-icons/gr";
+import {IoDocumentAttachOutline, IoReceiptOutline} from "react-icons/io5";
 import {useOrganization} from "@/contexts/OrganizationContextProvider.tsx";
 import {FaUsers} from "react-icons/fa6";
+import {useUser} from "@/contexts/UserContextProvider.tsx";
+import {LiaMoneyCheckAltSolid} from "react-icons/lia";
 
 function DashSidebar() {
     const {organization} = useOrganization();
+    const {user} = useUser();
     return (
         <Sidebar>
             <SidebarHeader className="w-full p-4 flex flex-row justify-start items-center">
@@ -26,10 +28,12 @@ function DashSidebar() {
                 <SidebarGroup className="pr-0">
                     <SidebarButton title="dashboard" path="dash" icon={<LuLayoutDashboard/>}/>
                     <SidebarButton title="students" path="students" icon={<PiStudentBold/>}/>
-                    <SidebarButton title="fees" path="fees" icon={<IoReceiptOutline/>}/>
-                    <SidebarButton title="users" path="users" icon={<FaUsers />}/>
-                    <SidebarButton title={`${organization} docs`} path="docs" icon={<GrDocumentText/>}/>
-                    <SidebarButton title="vouchers" path="vouchers" icon={<GrDocumentText/>}/>
+                    <SidebarButton title="fees" path="fees" icon={<LiaMoneyCheckAltSolid />}/>
+                    {user?.role === "CHAIRMAN" && (
+                        <SidebarButton title="users" path="users" icon={<FaUsers/>}/>
+                    )}
+                    <SidebarButton title={`${organization} docs`} path="docs" icon={<IoDocumentAttachOutline />}/>
+                    <SidebarButton title="vouchers" path="vouchers" icon={<IoReceiptOutline />}/>
                 </SidebarGroup>
             </SidebarContent>
         </Sidebar>

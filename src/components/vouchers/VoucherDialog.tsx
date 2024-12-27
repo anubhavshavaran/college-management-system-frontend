@@ -198,8 +198,11 @@ export function VoucherDialog({organization, onSave}: VoucherDialogProps) {
                             <FormError message={errors.particulars?.message}/>
                         </div>
                     </div>
-                    <DialogFooter className="w-full flex-row justify-center">
-                        <Button onClick={isEditing ? handleSubmit(update) : handleSubmit(create)}>
+                    <DialogFooter className="w-full flex sm:justify-center">
+                        <Button
+                            onClick={isEditing ? handleSubmit(update) : handleSubmit(create)}
+                            className="bg-defaultOrange"
+                        >
                             {isCreatingVoucher || isUpdatingVoucher ? (
                                 <Spinner/>
                             ) : (

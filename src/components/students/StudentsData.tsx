@@ -10,8 +10,10 @@ import {TableCell, TableRow} from "@/components/ui/table.tsx";
 import {format} from "date-fns";
 import CollegeStudentsTable from "@/components/students/CollegeStudentsTable.tsx";
 import formatOrdinal from "@/functions/formatOrdinal.ts";
+import {useUser} from "@/contexts/UserContextProvider.tsx";
 
 function StudentsData() {
+    const {user} = useUser();
     const navigate = useNavigate();
     const {organization} = useOrganization();
     const [searchParams] = useSearchParams();
@@ -54,12 +56,15 @@ function StudentsData() {
                         <InfoCard label={`${title} male`} text={data.stats.males}/>
                         <InfoCard label={`${title} females`} text={data.stats.females}/>
                     </div>
-                    <Button
-                        onClick={navToAdd}
-                        className="bg-defaultGray p-5 shadow-none border-[1.5px] border-gray-400 rounded-xl hover:bg-defaultGray w-fit">
-                        <img src="/icons/plus.png" width={18} alt="Add Student"/>
-                        <p className="text-lg text-black font-normal ">Add Student</p>
-                    </Button>
+
+                    {user?.role !== "ADMIN" && (
+                        <Button
+                            onClick={navToAdd}
+                            className="bg-defaultGray p-5 shadow-none border-[1.5px] border-gray-400 rounded-xl hover:bg-defaultGray w-fit">
+                            <img src="/icons/plus.png" width={18} alt="Add Student"/>
+                            <p className="text-lg text-black font-normal ">Add Student</p>
+                        </Button>
+                    )}
 
                     <div className="w-full bg-defaultGray py-2 rounded-2xl flex justify-center">
                         {organization === Organization.SCHOOL ? (
@@ -78,10 +83,14 @@ function StudentsData() {
                                         <TableCell
                                             className="text-center">{student.dateOfAdmission ? format(new Date(student.dateOfAdmission), 'dd-MM-yyyy') : 'NIL'}</TableCell>
                                         <TableCell className="text-center">+91 {student.phoneNumber}</TableCell>
-                                        <TableCell className="hover:bg-gray-200 rounded-lg flex justify-center"
-                                                   onClick={(e) => handleDelete(e, student._id ?? '')}>
-                                            <img src="/icons/bin.png" width="20" alt="Delete Button"/>
-                                        </TableCell>
+
+                                        {user?.role !== "ADMIN" && (
+                                            <TableCell className="hover:bg-gray-200 rounded-lg flex justify-center"
+                                                       onClick={(e) => handleDelete(e, student._id ?? '')}>
+                                                <img src="/icons/bin.png" width="20" alt="Delete Button"/>
+                                            </TableCell>
+                                        )}
+
                                     </TableRow>
                                 )}
                             />
@@ -102,10 +111,14 @@ function StudentsData() {
                                         <TableCell
                                             className="text-center">{student.dateOfAdmission ? format(new Date(student.dateOfAdmission), 'dd-MM-yyyy') : 'NIL'}</TableCell>
                                         <TableCell className="text-center">+91 {student.phoneNumber}</TableCell>
-                                        <TableCell className="hover:bg-gray-200 rounded-lg flex justify-center"
-                                                   onClick={(e) => handleDelete(e, student._id ?? '')}>
-                                            <img src="/icons/bin.png" width="20" alt="Delete Button"/>
-                                        </TableCell>
+
+                                        {user?.role !== "ADMIN" && (
+                                            <TableCell className="hover:bg-gray-200 rounded-lg flex justify-center"
+                                                       onClick={(e) => handleDelete(e, student._id ?? '')}>
+                                                <img src="/icons/bin.png" width="20" alt="Delete Button"/>
+                                            </TableCell>
+                                        )}
+
                                     </TableRow>
                                 )}
                             />

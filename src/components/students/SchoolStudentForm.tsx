@@ -10,9 +10,12 @@ import {useCreateStudent, useStudent, useUpdateStudent} from "@/hooks/students.t
 import {useParams} from "react-router";
 import {useEffect} from "react";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select.tsx";
+import {useUser} from "@/contexts/UserContextProvider.tsx";
 
 
 function SchoolStudentForm() {
+    const {user} = useUser();
+    const isDisabled = user?.role === "ADMIN";
     const {organization} = useOrganization();
     const {studentId} = useParams();
     const isEditing: boolean = studentId !== null && studentId !== undefined;
@@ -67,6 +70,7 @@ function SchoolStudentForm() {
                                             placeholder="John Doe"
                                             value={value}
                                             onChange={onChange}
+                                            disabled={isPending || isUpdatingStudent || isDisabled}
                                             className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
                                         />
                                         <FormError message={errors?.name?.message}/>
@@ -85,6 +89,7 @@ function SchoolStudentForm() {
                                         placeholder="Jane Doe"
                                         value={value}
                                         onChange={onChange}
+                                        disabled={isPending || isUpdatingStudent || isDisabled}
                                         className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
                                     />
                                 )}
@@ -101,6 +106,7 @@ function SchoolStudentForm() {
                                         placeholder="John Doe"
                                         value={value}
                                         onChange={onChange}
+                                        disabled={isPending || isUpdatingStudent || isDisabled}
                                         className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
                                     />
                                 )}
@@ -124,6 +130,7 @@ function SchoolStudentForm() {
                                             placeholder="xxxx"
                                             value={value}
                                             onChange={onChange}
+                                            disabled={isPending || isUpdatingStudent || isDisabled}
                                             className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
                                         />
                                         <FormError message={errors?.rollNumber?.message}/>
@@ -145,7 +152,7 @@ function SchoolStudentForm() {
                                 }}
                                 render={({field: {value, onChange}}) => (
                                     <>
-                                        <Select value={value} onValueChange={onChange}>
+                                        <Select value={value} onValueChange={onChange} disabled={isPending || isUpdatingStudent || isDisabled}>
                                             <SelectTrigger
                                                 className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl">
                                                 <SelectValue placeholder="Gender"/>
@@ -178,9 +185,10 @@ function SchoolStudentForm() {
                                             placeholder="Class"
                                             value={value}
                                             onChange={onChange}
+                                            disabled={isPending || isUpdatingStudent || isDisabled}
                                             className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
                                         />
-                                        <FormError message={errors?.class?.message} />
+                                        <FormError message={errors?.class?.message}/>
                                     </>
                                 )}
                             />
@@ -196,6 +204,7 @@ function SchoolStudentForm() {
                                         placeholder="John Doe"
                                         value={value}
                                         onChange={onChange}
+                                        disabled={isPending || isUpdatingStudent || isDisabled}
                                         className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
                                     />
                                 )}
@@ -212,6 +221,7 @@ function SchoolStudentForm() {
                                         placeholder="1970/01/01"
                                         value={value}
                                         onChange={onChange}
+                                        disabled={isPending || isUpdatingStudent || isDisabled}
                                         className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
                                     />
                                 )}
@@ -228,6 +238,7 @@ function SchoolStudentForm() {
                                         placeholder="9678 3456 2345 1231"
                                         value={value}
                                         onChange={onChange}
+                                        disabled={isPending || isUpdatingStudent || isDisabled}
                                         className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
                                     />
                                 )}
@@ -244,6 +255,7 @@ function SchoolStudentForm() {
                                         placeholder="John Doe"
                                         value={value}
                                         onChange={onChange}
+                                        disabled={isPending || isUpdatingStudent || isDisabled}
                                         className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
                                     />
                                 )}
@@ -260,6 +272,7 @@ function SchoolStudentForm() {
                                         placeholder="PA32828"
                                         value={value}
                                         onChange={onChange}
+                                        disabled={isPending || isUpdatingStudent || isDisabled}
                                         className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
                                     />
                                 )}
@@ -283,6 +296,7 @@ function SchoolStudentForm() {
                                             placeholder="ADM001"
                                             value={value}
                                             onChange={onChange}
+                                            disabled={isPending || isUpdatingStudent || isDisabled}
                                             className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
                                         />
                                         <FormError message={errors?.admissionNumber?.message}/>
@@ -301,6 +315,7 @@ function SchoolStudentForm() {
                                         placeholder="1970/01/01"
                                         value={value}
                                         onChange={onChange}
+                                        disabled={isPending || isUpdatingStudent || isDisabled}
                                         className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
                                     />
                                 )}
@@ -317,6 +332,7 @@ function SchoolStudentForm() {
                                         placeholder="2027"
                                         value={value}
                                         onChange={onChange}
+                                        disabled={isPending || isUpdatingStudent || isDisabled}
                                         className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
                                     />
                                 )}
@@ -333,6 +349,7 @@ function SchoolStudentForm() {
                                         placeholder="Mumbai"
                                         value={value}
                                         onChange={onChange}
+                                        disabled={isPending || isUpdatingStudent || isDisabled}
                                         className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
                                     />
                                 )}
@@ -349,6 +366,7 @@ function SchoolStudentForm() {
                                         placeholder="Mumbai"
                                         value={value}
                                         onChange={onChange}
+                                        disabled={isPending || isUpdatingStudent || isDisabled}
                                         className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
                                     />
                                 )}
@@ -365,6 +383,7 @@ function SchoolStudentForm() {
                                         placeholder="Mumbai"
                                         value={value}
                                         onChange={onChange}
+                                        disabled={isPending || isUpdatingStudent || isDisabled}
                                         className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
                                     />
                                 )}
@@ -381,6 +400,7 @@ function SchoolStudentForm() {
                                         placeholder="Maharashtra"
                                         value={value}
                                         onChange={onChange}
+                                        disabled={isPending || isUpdatingStudent || isDisabled}
                                         className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
                                     />
                                 )}
@@ -397,6 +417,7 @@ function SchoolStudentForm() {
                                         placeholder="400001"
                                         value={value}
                                         onChange={onChange}
+                                        disabled={isPending || isUpdatingStudent || isDisabled}
                                         className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
                                     />
                                 )}
@@ -413,6 +434,7 @@ function SchoolStudentForm() {
                                         placeholder="Religion"
                                         value={value}
                                         onChange={onChange}
+                                        disabled={isPending || isUpdatingStudent || isDisabled}
                                         className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
                                     />
                                 )}
@@ -429,6 +451,7 @@ function SchoolStudentForm() {
                                         placeholder="Caste"
                                         value={value}
                                         onChange={onChange}
+                                        disabled={isPending || isUpdatingStudent || isDisabled}
                                         className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
                                     />
                                 )}
@@ -445,6 +468,7 @@ function SchoolStudentForm() {
                                         placeholder="Sub Caste"
                                         value={value}
                                         onChange={onChange}
+                                        disabled={isPending || isUpdatingStudent || isDisabled}
                                         className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
                                     />
                                 )}
@@ -461,6 +485,7 @@ function SchoolStudentForm() {
                                         placeholder="General/OBC/SC/ST"
                                         value={value}
                                         onChange={onChange}
+                                        disabled={isPending || isUpdatingStudent || isDisabled}
                                         className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
                                     />
                                 )}
@@ -477,6 +502,7 @@ function SchoolStudentForm() {
                                         placeholder="Yes/No"
                                         value={value}
                                         onChange={onChange}
+                                        disabled={isPending || isUpdatingStudent || isDisabled}
                                         className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
                                     />
                                 )}
@@ -493,6 +519,7 @@ function SchoolStudentForm() {
                                         placeholder="xx,xx,xxx"
                                         value={value}
                                         onChange={onChange}
+                                        disabled={isPending || isUpdatingStudent || isDisabled}
                                         className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
                                     />
                                 )}
@@ -509,6 +536,7 @@ function SchoolStudentForm() {
                                         placeholder="Yes/No"
                                         value={value}
                                         onChange={onChange}
+                                        disabled={isPending || isUpdatingStudent || isDisabled}
                                         className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
                                     />
                                 )}
@@ -532,6 +560,7 @@ function SchoolStudentForm() {
                                             placeholder="xxxx"
                                             value={value}
                                             onChange={onChange}
+                                            disabled={isPending || isUpdatingStudent || isDisabled}
                                             className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
                                         />
                                         <FormError message={errors?.fixedFee?.message}/>
@@ -540,17 +569,20 @@ function SchoolStudentForm() {
                             />
                         </StudentInfoInput>
                     </div>
-                    <Button
-                        onClick={isEditing ? handleSubmit(update) : handleSubmit(create)}
-                        className="bg-defaultOrange"
-                        disabled={isPending || isUpdatingStudent}
-                    >
-                        {isPending || isUpdatingStudent ? (
-                            <Spinner/>
-                        ) : (
-                            <p>{isEditing ? 'Save Student' : 'Add Student'}</p>
-                        )}
-                    </Button>
+
+                    {user?.role !== "ADMIN" && (
+                        <Button
+                            onClick={isEditing ? handleSubmit(update) : handleSubmit(create)}
+                            className="bg-defaultOrange"
+                            disabled={isPending || isUpdatingStudent}
+                        >
+                            {isPending || isUpdatingStudent ? (
+                                <Spinner/>
+                            ) : (
+                                <p>{isEditing ? 'Save Student' : 'Add Student'}</p>
+                            )}
+                        </Button>
+                    )}
                 </>
             )}
         </div>

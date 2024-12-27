@@ -7,10 +7,12 @@ import {useDeleteDocs, useDocs} from "@/hooks/docs.ts";
 import Docs from "@/constants/Docs.ts";
 import Spinner from "@/components/ui/Spinner.tsx";
 import {format} from "date-fns";
+import {useUser} from "@/contexts/UserContextProvider.tsx";
 
 const headers = ['Sr. no.', 'Title', 'Uploaded Date'];
 
 function Documents() {
+    const {user} = useUser();
     const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
     const {docs, isPending} = useDocs();
     const {deleteDocs, isDeletingDocs} = useDeleteDocs();
@@ -30,11 +32,14 @@ function Documents() {
             <Dialog open={isDialogOpen} onOpenChange={() => setIsDialogOpen(false)}>
                 <DocsDialog onSave={() => setIsDialogOpen(false)}/>
             </Dialog>
-            <Button onClick={() => setIsDialogOpen(true)}
-                    className="bg-defaultGray p-5 shadow-none border-[1.5px] border-gray-400 rounded-xl hover:bg-defaultGray w-fit">
-                <img src="/icons/plus.png" width={18} alt="Add Vocuhers"/>
-                <p className="text-lg text-black font-normal ">Add Docs</p>
-            </Button>
+
+            {user?.role !== "ADMIN" && (
+                <Button onClick={() => setIsDialogOpen(true)}
+                        className="bg-defaultGray p-5 shadow-none border-[1.5px] border-gray-400 rounded-xl hover:bg-defaultGray w-fit">
+                    <img src="/icons/plus.png" width={18} alt="Add Vocuhers"/>
+                    <p className="text-lg text-black font-normal ">Add Docs</p>
+                </Button>
+            )}
             <div className="w-full bg-defaultGray py-2 rounded-2xl">
                 {isPending || isDeletingDocs ? (
                     <Spinner/>
@@ -66,10 +71,13 @@ function Documents() {
                                     >
                                         View
                                     </TableCell>
-                                    <TableCell className="hover:bg-gray-200 rounded-lg flex justify-center"
-                                               onClick={(e) => handleDelete(e, doc._id ?? '')}>
-                                        <img src="/icons/bin.png" width="20" alt="Delete Button"/>
-                                    </TableCell>
+
+                                    {user?.role !== "ADMIN" && (
+                                        <TableCell className="hover:bg-gray-200 rounded-lg flex justify-center"
+                                                   onClick={(e) => handleDelete(e, doc._id ?? '')}>
+                                            <img src="/icons/bin.png" width="20" alt="Delete Button"/>
+                                        </TableCell>
+                                    )}
                                 </TableRow>
                             ))}
 

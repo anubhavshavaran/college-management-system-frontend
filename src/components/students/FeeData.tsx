@@ -13,8 +13,10 @@ import {useParams} from "react-router";
 import Spinner from "@/components/ui/Spinner.tsx";
 import Payment from "@/constants/Payment.ts";
 import {format} from "date-fns";
+import {useUser} from "@/contexts/UserContextProvider.tsx";
 
 function FeeData() {
+    const {user} = useUser();
     const {organization} = useOrganization();
     const {studentId} = useParams();
     const [isPayDialogOpen, setIsPayDialogOpen] = useState<boolean>(false);
@@ -35,7 +37,7 @@ function FeeData() {
                 <>
                     <Dialog open={isPayDialogOpen} onOpenChange={() => setIsPayDialogOpen(false)}>
                         <DialogClose/>
-                        <PayFeeDialog onSave={() => setIsPayDialogOpen(false)} />
+                        <PayFeeDialog onSave={() => setIsPayDialogOpen(false)}/>
                     </Dialog>
                     <div className="w-full flex flex-col gap-4 items-center">
                         <div className="w-full flex sm:flex-col md:flex-row gap-6">
@@ -45,11 +47,15 @@ function FeeData() {
                                          value={String(Number(student.fixedFee) - Number(student.paidFee))}/>
                             <FeeInfoCard label="previous fees" value={student.previousFee}/>
                         </div>
-                        <Button
-                            onClick={() => setIsPayDialogOpen(true)}
-                            className="w-fit px-16 py-6 bg-defaultOrange text-black text-lg border-white border-[6px] rounded-2xl hover:bg-defaultOrange">
-                            Pay
-                        </Button>
+
+                        {user?.role !== "ADMIN" && (
+                            <Button
+                                onClick={() => setIsPayDialogOpen(true)}
+                                className="w-fit px-16 py-6 bg-defaultOrange text-black text-lg border-white border-[6px] rounded-2xl hover:bg-defaultOrange">
+                                Pay
+                            </Button>
+                        )}
+
                         <div className="w-full flex flex-col gap-6">
 
                         </div>
@@ -84,10 +90,14 @@ function FeeData() {
                                             <TableCell
                                                 className="text-center">{payment.particulars ?? 'NIL'}</TableCell>
                                             <TableCell className="text-center">View Receipt</TableCell>
-                                            <TableCell className="hover:bg-gray-200 rounded-lg flex justify-center"
-                                                       onClick={(e) => handleDelete(e, payment._id ?? '')}>
-                                                <img src="/icons/bin.png" width="20" alt="Delete Button"/>
-                                            </TableCell>
+
+                                            {user?.role !== "ADMIN" && (
+                                                <TableCell className="hover:bg-gray-200 rounded-lg flex justify-center"
+                                                           onClick={(e) => handleDelete(e, payment._id ?? '')}>
+                                                    <img src="/icons/bin.png" width="20" alt="Delete Button"/>
+                                                </TableCell>
+                                            )}
+
                                         </TableRow>
                                     ))}
                                 </TableBody>

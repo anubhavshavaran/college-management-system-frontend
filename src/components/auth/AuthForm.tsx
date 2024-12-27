@@ -60,7 +60,7 @@ function AuthForm() {
         <div className="w-full flex justify-center items-center">
             <Card className="sm:w-[80%] md:w-[50%] lg:w-[60%]">
                 <CardHeader>
-                    <p className="text-2xl font-bold">Welcome,</p>
+                    <p className="text-2xl font-bold text-defaultOrange">Welcome,</p>
                     <CardDescription>Log into your account</CardDescription>
                 </CardHeader>
 
@@ -148,7 +148,7 @@ function AuthForm() {
                 </CardContent>
 
                 <CardFooter className="flex flex-col justify-center space-y-1.5">
-                    <Button disabled={isLoggingIn} className="w-full" onClick={handleSubmit(submit)}>
+                    <Button disabled={isLoggingIn} className="w-full bg-defaultOrange" onClick={handleSubmit(submit)}>
                         {isLoggingIn ? 'Loading...' : 'Log in'}
                     </Button>
                     <FormError message={error?.message}/>

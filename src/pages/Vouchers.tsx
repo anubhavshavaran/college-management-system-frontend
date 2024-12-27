@@ -13,10 +13,12 @@ import React, {useState} from "react";
 import VoucherDialog from "@/components/vouchers/VoucherDialog.tsx";
 import {useDeleteVouchers, useVouchers} from "@/hooks/vouchers.ts";
 import {useOrganization} from "@/contexts/OrganizationContextProvider.tsx";
+import {useUser} from "@/contexts/UserContextProvider.tsx";
 
 const headers = ['Sr. no.', 'Voucher ID', 'Title', 'Date', 'Amount', 'Mode of Payment', 'Particulars'];
 
 function Vouchers() {
+    const {user} = useUser();
     const {organization} = useOrganization();
     const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
     const [searchParams, setSearchParams] = useSearchParams();
@@ -46,14 +48,19 @@ function Vouchers() {
 
     return (
         <div className="w-full p-4 pt-20 flex flex-col gap-4">
-            <Dialog open={isDialogOpen} onOpenChange={handleDialogClose}>
-                <VoucherDialog onSave={() => setIsDialogOpen(false)} organization={organization}/>
-            </Dialog>
-            <Button onClick={() => setIsDialogOpen(true)}
-                    className="bg-defaultGray p-5 shadow-none border-[1.5px] border-gray-400 rounded-xl hover:bg-defaultGray w-fit">
-                <img src="/icons/plus.png" width={18} alt="Add Vocuhers"/>
-                <p className="text-lg text-black font-normal ">Add Vouchers</p>
-            </Button>
+            {user?.role !== "ADMIN" && (
+                <>
+                    <Dialog open={isDialogOpen} onOpenChange={handleDialogClose}>
+                        <VoucherDialog onSave={() => setIsDialogOpen(false)} organization={organization}/>
+                    </Dialog>
+
+                    <Button onClick={() => setIsDialogOpen(true)}
+                            className="bg-defaultGray p-5 shadow-none border-[1.5px] border-gray-400 rounded-xl hover:bg-defaultGray w-fit">
+                        <img src="/icons/plus.png" width={18} alt="Add Vocuhers"/>
+                        <p className="text-lg text-black font-normal ">Add Vouchers</p>
+                    </Button>
+                </>
+            )}
 
             <div className="w-full bg-defaultGray py-2 rounded-2xl flex justify-center">
                 {isVouchersLoading && (
@@ -85,10 +92,13 @@ function Vouchers() {
                                     <TableCell className="text-center">{voucher.amount}</TableCell>
                                     <TableCell className="text-center">{voucher.modeOfPayment}</TableCell>
                                     <TableCell className="text-center">{voucher.particulars}</TableCell>
-                                    <TableCell className="hover:bg-gray-200 rounded-lg flex justify-center"
-                                               onClick={(e) => handleDelete(e, voucher._id ?? '')}>
-                                        <img src="/icons/bin.png" width="20" alt="Delete Button"/>
-                                    </TableCell>
+
+                                    {user?.role !== "ADMIN" && (
+                                        <TableCell className="hover:bg-gray-200 rounded-lg flex justify-center"
+                                                   onClick={(e) => handleDelete(e, voucher._id ?? '')}>
+                                            <img src="/icons/bin.png" width="20" alt="Delete Button"/>
+                                        </TableCell>
+                                    )}
                                 </TableRow>
                             )}
                         />
