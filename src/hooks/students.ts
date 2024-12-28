@@ -4,12 +4,14 @@ import {
     deleteStudentApi,
     getStudentApi,
     getStudentsApi,
-    updateStudentApi
+    updateStudentApi, updateStudentsFixedFeeApi
 } from "@/services/studentsApi.ts";
 import Organization from "@/constants/Organization.ts";
 import Student from "@/constants/Student.ts";
 import {createPaymentApi, deletePaymentApi, getPaymentsApi} from "@/services/paymentsApi.ts";
 import Payment from "@/constants/Payment.ts";
+import {useOrganization} from "@/contexts/OrganizationContextProvider.tsx";
+import {useSearchParams} from "react-router";
 
 function useStudents(organization: Organization, course: string) {
     const query = organization === Organization.SCHOOL ? {class: course} : {course};
@@ -150,6 +152,25 @@ function useDeleteStudentPayment(studentId: string) {
     }
 }
 
+function useUpdateStudentsFee() {
+    const {organization} = useOrganization();
+    const [searchParams] = useSearchParams();
+    const query = organization === Organization.SCHOOL ? {
+        class: searchParams.get("cat") ?? '',
+    } : {
+        course: searchParams.get("cat") ?? '',
+        year: searchParams.get("year") ?? '',
+    };
+    const {mutate: updateFees, isPending} = useMutation({
+        mutationFn: (fixedFee: number) => updateStudentsFixedFeeApi(organization, query, fixedFee)
+    });
+
+    return {
+        updateFees,
+        isPending,
+    }
+}
+
 export {
     useStudent,
     useStudents,
@@ -158,5 +179,6 @@ export {
     useUpdateStudent,
     useStudentsPayments,
     useCreateStudentPayment,
-    useDeleteStudentPayment
+    useDeleteStudentPayment,
+    useUpdateStudentsFee
 };

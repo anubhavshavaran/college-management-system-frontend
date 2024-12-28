@@ -1,7 +1,7 @@
 import {Button} from "@/components/ui/button.tsx";
 import InfoCard from "@/components/ui/InfoCard.tsx";
 import {useOrganization} from "@/contexts/OrganizationContextProvider.tsx";
-import {useNavigate, useSearchParams} from "react-router";
+import {useLocation, useNavigate, useSearchParams} from "react-router";
 import {useDeleteStudent, useStudents} from "@/hooks/students.ts";
 import Spinner from "@/components/ui/Spinner.tsx";
 import SchoolStudentsTable from "@/components/students/SchoolStudentsTable.tsx";
@@ -11,11 +11,14 @@ import {format} from "date-fns";
 import CollegeStudentsTable from "@/components/students/CollegeStudentsTable.tsx";
 import formatOrdinal from "@/functions/formatOrdinal.ts";
 import {useUser} from "@/contexts/UserContextProvider.tsx";
+import UpdateFixedFeeForm from "@/components/students/UpdateFixedFeeForm.tsx";
+import React from "react";
 
 function StudentsData() {
     const {user} = useUser();
     const navigate = useNavigate();
     const {organization} = useOrganization();
+    const location = useLocation();
     const [searchParams] = useSearchParams();
     const course = searchParams.get("cat") ?? '';
     const {deleteStudent} = useDeleteStudent(organization);
@@ -51,19 +54,23 @@ function StudentsData() {
                 <Spinner/>
             ) : (
                 <>
-                    <div className="flex gap-4">
+                    <div className="w-full flex sm:flex-col md:flex-row gap-4">
                         <InfoCard label={`${title} students`} text={data.students.length}/>
                         <InfoCard label={`${title} male`} text={data.stats.males}/>
                         <InfoCard label={`${title} females`} text={data.stats.females}/>
                     </div>
 
-                    {user?.role !== "ADMIN" && (
+                    {user?.role !== "ADMIN" && location.pathname.split("/")[2] === "students" && (
                         <Button
                             onClick={navToAdd}
                             className="bg-defaultGray p-5 shadow-none border-[1.5px] border-gray-400 rounded-xl hover:bg-defaultGray w-fit">
                             <img src="/icons/plus.png" width={18} alt="Add Student"/>
                             <p className="text-lg text-black font-normal ">Add Student</p>
                         </Button>
+                    )}
+
+                    {user?.role === "CHAIRMAN" && location.pathname.split("/")[2] === "fees" && (
+                        <UpdateFixedFeeForm />
                     )}
 
                     <div className="w-full bg-defaultGray py-2 rounded-2xl flex justify-center">
@@ -102,7 +109,7 @@ function StudentsData() {
                                         <TableCell className="text-center">{key + 1}</TableCell>
                                         <TableCell className="text-center">{student.admissionNumber}</TableCell>
                                         <TableCell className="text-center">{student.name}</TableCell>
-                                        <TableCell className="text-center">{student.semester}</TableCell>
+                                        <TableCell className="text-center">{student.year}</TableCell>
                                         <TableCell className="text-center">{student.rollNumber}</TableCell>
                                         <TableCell
                                             className="text-center">{student.gender?.toLocaleUpperCase()}</TableCell>

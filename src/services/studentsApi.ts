@@ -2,7 +2,13 @@ import axiosInstance from "@/services/axiosInstance.ts";
 import Organization from "@/constants/Organization.ts";
 import Student from "@/constants/Student.ts";
 
-async function getStudentsApi(organization: Organization, query: {course?: string, class?: string}) {
+type CourseQuery = {
+    course?: string;
+    year?: string;
+    class?: string
+}
+
+async function getStudentsApi(organization: Organization, query: CourseQuery) {
     const {data, status} = await axiosInstance.request({
         method: 'GET',
         url: `/students/${organization}`,
@@ -76,4 +82,23 @@ async function updateStudentApi(organization: Organization, id: string, student:
     return data;
 }
 
-export {getStudentApi, getStudentsApi, createStudentApi, deleteStudentApi, updateStudentApi};
+async function updateStudentsFixedFeeApi(organization: Organization, query: CourseQuery, fixedFee: number) {
+    const {data, status} = await axiosInstance.request({
+        method: 'PATCH',
+        url: `/fees/${organization}`,
+        params: {
+            ...query
+        },
+        data: {
+            fixedFee
+        }
+    });
+
+    if (status.toString()[0] === '4') {
+        throw new Error(data.message);
+    }
+
+    return data;
+}
+
+export {getStudentApi, getStudentsApi, createStudentApi, deleteStudentApi, updateStudentApi, updateStudentsFixedFeeApi};

@@ -23,6 +23,7 @@ function CategoryButton({label, text}: CategoryButtonProps) {
 
     function handleClick() {
         searchParams.set("cat", text);
+        if (organization === Organization.COLLEGE) searchParams.set("year", "1");
         setSearchParams(searchParams);
     }
 

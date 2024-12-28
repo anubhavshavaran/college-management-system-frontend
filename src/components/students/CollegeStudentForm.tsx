@@ -189,27 +189,27 @@ function CollegeStudentForm() {
                             />
                         </StudentInfoInput>
                         <StudentInfoInput
-                            label="Semester"
+                            label="Year"
                         >
                             <Controller
                                 control={control}
-                                name='semester'
+                                name='year'
                                 rules={{
                                     required: {
                                         value: true,
-                                        message: 'Semester is required'
+                                        message: 'Year is required'
                                     }
                                 }}
                                 render={({field: {value, onChange}}) => (
                                     <>
                                         <Input
-                                            placeholder="Semester"
+                                            placeholder="Year"
                                             value={value}
                                             onChange={onChange}
                                             disabled={isPending || isUpdatingStudent || isDisabled}
                                             className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
                                         />
-                                        <FormError message={errors?.semester?.message}/>
+                                        <FormError message={errors?.year?.message}/>
                                     </>
                                 )}
                             />

@@ -1,4 +1,3 @@
-import {useState} from "react"
 import { format } from "date-fns"
 import { Calendar as CalendarIcon } from "lucide-react"
 
@@ -10,9 +9,14 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover"
+import {Dispatch, SetStateAction} from "react";
 
-export function DatePicker() {
-    const [date, setDate] = useState<Date>()
+type DatePickerProps = {
+    date: Date | undefined,
+    setDate: Dispatch<SetStateAction<Date | undefined>>
+}
+
+export function DatePicker({date, setDate}: DatePickerProps) {
 
     return (
         <Popover>
@@ -32,7 +36,7 @@ export function DatePicker() {
                 <Calendar
                     mode="single"
                     selected={date}
-                    onSelect={setDate}
+                    onSelect={(date) => setDate(date)}
                     initialFocus
                 />
             </PopoverContent>

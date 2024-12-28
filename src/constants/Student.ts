@@ -6,7 +6,7 @@ type Student = {
     class?: string;
     section?: number;
     course?: string;
-    semester?: number;
+    year?: number;
     expectedYearOfPassing?: string;
     mothersName?: string;
     fathersName?: string;
