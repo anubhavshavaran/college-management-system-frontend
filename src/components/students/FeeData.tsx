@@ -14,6 +14,8 @@ import Spinner from "@/components/ui/Spinner.tsx";
 import Payment from "@/constants/Payment.ts";
 import {format} from "date-fns";
 import {useUser} from "@/contexts/UserContextProvider.tsx";
+import PaymentReceipt from "@/components/receipts/PaymentReceipt.tsx";
+import Receipt from "@/components/receipts/Receipt.tsx";
 
 function FeeData() {
     const {user} = useUser();
@@ -24,6 +26,8 @@ function FeeData() {
     const {payments, isPending: isPaymentsLoading} = useStudentsPayments(studentId ?? '');
     const {deletePayment} = useDeleteStudentPayment(studentId ?? '');
 
+    const [showReceipt, setShowReceipt] = useState<boolean>(false);
+
     function handleDelete(e: React.MouseEvent, id: string) {
         e.stopPropagation();
         deletePayment(id ?? '');
@@ -31,6 +35,14 @@ function FeeData() {
 
     return (
         <>
+            {showReceipt && (
+                <PaymentReceipt onClose={() => setShowReceipt(false)}>
+                    <div className="w-full flex sm:flex-col md:flex-row justify-center gap-4">
+                        <Receipt title={`"${organization} copy"`}/>
+                        <Receipt title="&quot;student copy&quot;"/>
+                    </div>
+                </PaymentReceipt>
+            )}
             {isPending || isPaymentsLoading ? (
                 <Spinner/>
             ) : (
@@ -89,7 +101,15 @@ function FeeData() {
                                             <TableCell className="text-center">{payment.mode}</TableCell>
                                             <TableCell
                                                 className="text-center">{payment.particulars ?? 'NIL'}</TableCell>
-                                            <TableCell className="text-center">View Receipt</TableCell>
+                                            <TableCell
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    setShowReceipt(true)
+                                                }}
+                                                className="text-center"
+                                            >
+                                                View Receipt
+                                            </TableCell>
 
                                             {user?.role !== "ADMIN" && (
                                                 <TableCell className="hover:bg-gray-200 rounded-lg flex justify-center"

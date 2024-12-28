@@ -14,12 +14,15 @@ import VoucherDialog from "@/components/vouchers/VoucherDialog.tsx";
 import {useDeleteVouchers, useVouchers} from "@/hooks/vouchers.ts";
 import {useOrganization} from "@/contexts/OrganizationContextProvider.tsx";
 import {useUser} from "@/contexts/UserContextProvider.tsx";
+import PaymentReceipt from "@/components/receipts/PaymentReceipt.tsx";
+import VoucherReceipt from "@/components/receipts/VoucherReceipt.tsx";
 
 const headers = ['Sr. no.', 'Voucher ID', 'Title', 'Date', 'Amount', 'Mode of Payment', 'Particulars'];
 
 function Vouchers() {
     const {user} = useUser();
     const {organization} = useOrganization();
+    const [showReceipt, setShowReceipt] = useState<boolean>(false);
     const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
     const [searchParams, setSearchParams] = useSearchParams();
     const {vouchers, isVouchersLoading, error} = useVouchers(organization);
@@ -48,6 +51,13 @@ function Vouchers() {
 
     return (
         <div className="w-full p-4 pt-20 flex flex-col gap-4">
+
+            {showReceipt && (
+                <PaymentReceipt onClose={() => setShowReceipt(false)}>
+                    <VoucherReceipt/>
+                </PaymentReceipt>
+            )}
+
             {user?.role !== "ADMIN" && (
                 <>
                     <Dialog open={isDialogOpen} onOpenChange={handleDialogClose}>
@@ -92,6 +102,16 @@ function Vouchers() {
                                     <TableCell className="text-center">{voucher.amount}</TableCell>
                                     <TableCell className="text-center">{voucher.modeOfPayment}</TableCell>
                                     <TableCell className="text-center">{voucher.particulars}</TableCell>
+
+                                    <TableCell
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setShowReceipt(true)
+                                        }}
+                                        className="text-center"
+                                    >
+                                        View Receipt
+                                    </TableCell>
 
                                     {user?.role !== "ADMIN" && (
                                         <TableCell className="hover:bg-gray-200 rounded-lg flex justify-center"
