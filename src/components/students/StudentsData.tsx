@@ -12,7 +12,8 @@ import CollegeStudentsTable from "@/components/students/CollegeStudentsTable.tsx
 import formatOrdinal from "@/functions/formatOrdinal.ts";
 import {useUser} from "@/contexts/UserContextProvider.tsx";
 import UpdateFixedFeeForm from "@/components/students/UpdateFixedFeeForm.tsx";
-import React from "react";
+import React, {useState} from "react";
+import Searchbar from "@/components/ui/Searchbar.tsx";
 import YearSelect from "@/components/students/YearSelect.tsx";
 
 function StudentsData() {
@@ -20,11 +21,14 @@ function StudentsData() {
     const navigate = useNavigate();
     const {organization} = useOrganization();
     const location = useLocation();
-    const [searchParams] = useSearchParams();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchValue, setSearchValue] = useState<string>('');
     const course = searchParams.get("cat") ?? '';
     const year = searchParams.get("year") ?? '';
+    const query = searchParams.get("query");
     const {deleteStudent} = useDeleteStudent(organization);
     const {data, isPending} = useStudents(organization, course, year);
+    const {data: searchedData, isPending: isSearching} = useStudents(organization, course, year, query ?? '');
 
     let title: string;
     if (organization === Organization.SCHOOL) {
@@ -52,7 +56,7 @@ function StudentsData() {
 
     return (
         <div className="w-full flex flex-col gap-4">
-            {isPending ? (
+            {isPending || isSearching ? (
                 <Spinner/>
             ) : (
                 <>
@@ -76,9 +80,25 @@ function StudentsData() {
                     )}
 
                     <div className="w-full bg-defaultGray py-2 rounded-2xl flex flex-col justify-center items-end">
+                        <div className="flex justify-center items-center gap-2">
+                            <Searchbar value={searchValue} onChange={e => setSearchValue(e)}/>
+                            <Button
+                                className="bg-defaultOrange hover:bg-defaultOrange"
+                                onClick={() => {
+                                    searchParams.delete("query");
+                                    setSearchParams(searchParams);
+                                    setSearchValue('');
+                                }}
+                            >
+                                Clear
+                            </Button>
+                            {organization === Organization.COLLEGE && searchParams.get("year") !== "passedOut" && (
+                                <YearSelect/>
+                            )}
+                        </div>
                         {organization === Organization.SCHOOL ? (
                             <SchoolStudentsTable
-                                data={data.students}
+                                data={query !== null ? searchedData.students : data.students}
                                 render={(student, key) => (
                                     <TableRow key={key} onClick={() => navToStudent(student._id ?? '')}>
                                         <TableCell className="text-center">{key + 1}</TableCell>
@@ -105,11 +125,8 @@ function StudentsData() {
                             />
                         ) : (
                             <>
-                                {searchParams.get("year") !== "passedOut" && (
-                                    <YearSelect/>
-                                )}
                                 <CollegeStudentsTable
-                                    data={data.students}
+                                    data={query !== null ? searchedData.students : data.students}
                                     render={(student, key) => (
                                         <TableRow key={key} onClick={() => navToStudent(student._id ?? '')}>
                                             <TableCell className="text-center">{key + 1}</TableCell>

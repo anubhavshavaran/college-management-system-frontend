@@ -13,10 +13,10 @@ import Payment from "@/constants/Payment.ts";
 import {useOrganization} from "@/contexts/OrganizationContextProvider.tsx";
 import {useSearchParams} from "react-router";
 
-function useStudents(organization: Organization, course: string, year?: string) {
-    const query = organization === Organization.SCHOOL ? {class: course} : {course, year};
+function useStudents(organization: Organization, course: string, year?: string, name?: string) {
+    const query = organization === Organization.SCHOOL ? {class: course, name} : {course, year, name};
     const {data, isPending, error} = useQuery({
-        queryKey: organization === Organization.SCHOOL ? [organization, 'students'] : [organization, 'students', course, year],
+        queryKey: organization === Organization.SCHOOL ? [organization, 'students', name] : [organization, 'students', course, year, name],
         queryFn: () => getStudentsApi(organization, query)
     });
 

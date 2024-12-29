@@ -1,13 +1,18 @@
 import {useSearchParams} from "react-router";
 import {useEffect, useRef, KeyboardEvent} from "react";
 
-function Searchbar() {
+type SearchbarProps = {
+    value: string;
+    onChange: (value: string) => void;
+}
+
+function Searchbar({value, onChange}: SearchbarProps) {
     const [searchParams, setSearchParams] = useSearchParams();
     const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
-        function handleEvent(e: KeyboardEvent) {
-            if (e.key === "/") {
+        function handleEvent(this: Window, ev: KeyboardEvent){
+            if (ev.key === "/") {
                 inputRef.current?.focus();
             }
         }
@@ -20,8 +25,9 @@ function Searchbar() {
     }, []);
 
     function search(e: KeyboardEvent) {
-        if (e.key === "Enter") {
-            setSearchParams({query: e.target.value});
+        if (e.key === "Enter" && e.target.value !== '') {
+            searchParams.set("query", e.target.value);
+            setSearchParams(searchParams);
         }
     }
 
@@ -33,6 +39,8 @@ function Searchbar() {
                 placeholder="Search"
                 ref={inputRef}
                 onKeyUp={search}
+                value={value}
+                onChange={e => onChange(e.target.value)}
             />
         </div>
     );
