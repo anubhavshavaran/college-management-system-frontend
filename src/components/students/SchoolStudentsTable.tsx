@@ -7,7 +7,7 @@ type TableProps = {
     render: (data: Student, key: number) => ReactElement;
 }
 
-const headers = ['Sr. no.', 'Admission Number', 'Name', 'Roll no.', 'Gender', 'Date of Birth', 'Date of Admission', 'Phone number'];
+const headers = ['Sr. no.', 'SATS Number', 'Name', 'Roll no.', 'Gender', 'Date of Birth', 'Date of Admission', 'Phone number'];
 
 function SchoolStudentsTable({data, render}: TableProps) {
     return (

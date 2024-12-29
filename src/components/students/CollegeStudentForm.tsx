@@ -109,32 +109,6 @@ function CollegeStudentForm() {
                             />
                         </StudentInfoInput>
                         <StudentInfoInput
-                            label="Roll Number"
-                        >
-                            <Controller
-                                control={control}
-                                name='rollNumber'
-                                rules={{
-                                    required: {
-                                        value: true,
-                                        message: 'Roll number is required'
-                                    }
-                                }}
-                                render={({field: {value, onChange}}) => (
-                                    <>
-                                        <Input
-                                            placeholder="xxxx"
-                                            value={value}
-                                            onChange={onChange}
-                                            disabled={isPending || isUpdatingStudent || isDisabled}
-                                            className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
-                                        />
-                                        <FormError message={errors?.rollNumber?.message}/>
-                                    </>
-                                )}
-                            />
-                        </StudentInfoInput>
-                        <StudentInfoInput
                             label="Gender"
                         >
                             <Controller
@@ -322,15 +296,15 @@ function CollegeStudentForm() {
                             />
                         </StudentInfoInput>
                         <StudentInfoInput
-                            label="Admission Number"
+                            label="Registration Number"
                         >
                             <Controller
                                 control={control}
-                                name='admissionNumber'
+                                name='registrationNumber'
                                 rules={{
                                     required: {
                                         value: true,
-                                        message: 'Admission number is required'
+                                        message: 'Registration number is required'
                                     }
                                 }}
                                 render={({field: {value, onChange}}) => (
@@ -342,7 +316,7 @@ function CollegeStudentForm() {
                                             disabled={isPending || isUpdatingStudent || isDisabled}
                                             className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
                                         />
-                                        <FormError message={errors?.admissionNumber?.message}/>
+                                        <FormError message={errors?.registrationNumber?.message}/>
                                     </>
                                 )}
                             />

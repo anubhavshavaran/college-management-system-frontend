@@ -81,14 +81,6 @@ function Vouchers() {
                 )}
                 {!isVouchersLoading && !error && (
                     <div className="w-full flex flex-col gap-4">
-                        <div className="w-full flex justify-end gap-4 px-4">
-                            {/*<Searchbar/>*/}
-                            {/*<Button onClick={() => {*/}
-                            {/*    searchParams.delete("query");*/}
-                            {/*    setSearchParams(searchParams);*/}
-                            {/*}}>X</Button>*/}
-                            {/*<Filter/>*/}
-                        </div>
                         <VoucherTable
                             headers={headers}
                             data={vouchers ?? []}
@@ -113,7 +105,7 @@ function Vouchers() {
                                         View Receipt
                                     </TableCell>
 
-                                    {user?.role !== "ADMIN" && (
+                                    {user?.role === "CHAIRMAN" && (
                                         <TableCell className="hover:bg-gray-200 rounded-lg flex justify-center"
                                                    onClick={(e) => handleDelete(e, voucher._id ?? '')}>
                                             <img src="/icons/bin.png" width="20" alt="Delete Button"/>
@@ -122,7 +114,6 @@ function Vouchers() {
                                 </TableRow>
                             )}
                         />
-                        {/*<TablePagination pages={50} />*/}
                     </div>
                 )}
             </div>

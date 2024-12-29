@@ -274,15 +274,15 @@ function SchoolStudentForm() {
                             />
                         </StudentInfoInput>
                         <StudentInfoInput
-                            label="Admission Number"
+                            label="SATS Number"
                         >
                             <Controller
                                 control={control}
-                                name='admissionNumber'
+                                name='satsNumber'
                                 rules={{
                                     required: {
                                         value: true,
-                                        message: 'Admission number is required'
+                                        message: 'SATS number is required'
                                     }
                                 }}
                                 render={({field: {value, onChange}}) => (
@@ -294,7 +294,7 @@ function SchoolStudentForm() {
                                             disabled={isPending || isUpdatingStudent || isDisabled}
                                             className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
                                         />
-                                        <FormError message={errors?.admissionNumber?.message}/>
+                                        <FormError message={errors?.satsNumber?.message}/>
                                     </>
                                 )}
                             />

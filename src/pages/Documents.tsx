@@ -72,7 +72,7 @@ function Documents() {
                                         View
                                     </TableCell>
 
-                                    {user?.role !== "ADMIN" && (
+                                    {user?.role === "CHAIRMAN" && (
                                         <TableCell className="hover:bg-gray-200 rounded-lg flex justify-center"
                                                    onClick={(e) => handleDelete(e, doc._id ?? '')}>
                                             <img src="/icons/bin.png" width="20" alt="Delete Button"/>

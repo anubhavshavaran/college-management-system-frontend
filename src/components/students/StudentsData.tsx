@@ -102,7 +102,7 @@ function StudentsData() {
                                 render={(student, key) => (
                                     <TableRow key={key} onClick={() => navToStudent(student._id ?? '')}>
                                         <TableCell className="text-center">{key + 1}</TableCell>
-                                        <TableCell className="text-center">{student.admissionNumber}</TableCell>
+                                        <TableCell className="text-center">{student.satsNumber}</TableCell>
                                         <TableCell className="text-center">{student.name}</TableCell>
                                         <TableCell className="text-center">{student.rollNumber}</TableCell>
                                         <TableCell
@@ -113,7 +113,7 @@ function StudentsData() {
                                             className="text-center">{student.dateOfAdmission ? format(new Date(student.dateOfAdmission), 'dd-MM-yyyy') : 'NIL'}</TableCell>
                                         <TableCell className="text-center">+91 {student.phoneNumber}</TableCell>
 
-                                        {user?.role !== "ADMIN" && (
+                                        {user?.role === "CHAIRMAN" && (
                                             <TableCell className="hover:bg-gray-200 rounded-lg flex justify-center"
                                                        onClick={(e) => handleDelete(e, student._id ?? '')}>
                                                 <img src="/icons/bin.png" width="20" alt="Delete Button"/>
@@ -130,7 +130,7 @@ function StudentsData() {
                                     render={(student, key) => (
                                         <TableRow key={key} onClick={() => navToStudent(student._id ?? '')}>
                                             <TableCell className="text-center">{key + 1}</TableCell>
-                                            <TableCell className="text-center">{student.admissionNumber}</TableCell>
+                                            <TableCell className="text-center">{student.registrationNumber}</TableCell>
                                             <TableCell className="text-center">{student.name}</TableCell>
                                             <TableCell className="text-center">{student.year}</TableCell>
                                             <TableCell className="text-center">{student.rollNumber}</TableCell>
@@ -142,7 +142,7 @@ function StudentsData() {
                                                 className="text-center">{student.dateOfAdmission ? format(new Date(student.dateOfAdmission), 'dd-MM-yyyy') : 'NIL'}</TableCell>
                                             <TableCell className="text-center">+91 {student.phoneNumber}</TableCell>
 
-                                            {user?.role !== "ADMIN" && (
+                                            {user?.role === "CHAIRMAN" && (
                                                 <TableCell className="hover:bg-gray-200 rounded-lg flex justify-center"
                                                            onClick={(e) => handleDelete(e, student._id ?? '')}>
                                                     <img src="/icons/bin.png" width="20" alt="Delete Button"/>

@@ -2,6 +2,8 @@ type Student = {
     _id?: string;
     name?: string;
     organization?: "SCHOOL" | "COLLEGE";
+    satsNumber?: string,
+    registrationNumber?: string,
     rollNumber?: string;
     class?: string;
     section?: number;
@@ -16,7 +18,6 @@ type Student = {
     adhaarNumber?: string;
     voterNumber?: string;
     passportNumber?: string;
-    admissionNumber?: string;
     dateOfAdmission?: Date;
     gender?: "male" | "female";
     presentAddress?: string;
