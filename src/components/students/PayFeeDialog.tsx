@@ -8,6 +8,7 @@ import {Controller, useForm} from "react-hook-form";
 import Payment from "@/constants/Payment.ts";
 import FormError from "@/components/ui/FormError.tsx";
 import Spinner from "@/components/ui/Spinner.tsx";
+import DatePicker from "@/components/ui/date-picker.tsx";
 
 type PayFeeDialogProps = {
     onSave: () => void;
@@ -106,13 +107,7 @@ function PayFeeDialog({onSave}: PayFeeDialogProps) {
                         }}
                         render={({field: {value, onChange}}) => (
                             <>
-                                <Input
-                                    id="name"
-                                    className="col-span-3"
-                                    value={value}
-                                    onChange={onChange}
-                                    disabled={isCreatingPayment}
-                                />
+                                <DatePicker date={value} setDate={onChange} className="col-span-3" />
                                 <FormError message={errors.mode?.message}/>
                             </>
                         )}

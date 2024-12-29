@@ -12,12 +12,12 @@ type Student = {
     mothersName?: string;
     fathersName?: string;
     phoneNumber?: string;
-    dateOfBirth?: string;
+    dateOfBirth?: Date;
     adhaarNumber?: string;
     voterNumber?: string;
     passportNumber?: string;
     admissionNumber?: string;
-    dateOfAdmission?: string;
+    dateOfAdmission?: Date;
     gender?: "male" | "female";
     presentAddress?: string;
     permanentAddress?: string;

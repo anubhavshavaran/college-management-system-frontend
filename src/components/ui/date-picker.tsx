@@ -12,27 +12,28 @@ import {
 import {Dispatch, SetStateAction} from "react";
 
 type DatePickerProps = {
-    date: Date | undefined,
-    setDate: Dispatch<SetStateAction<Date | undefined>>
+    date: Date | undefined;
+    setDate: Dispatch<SetStateAction<Date | undefined>>;
+    className?: string;
 }
 
-export function DatePicker({date, setDate}: DatePickerProps) {
-
+export function DatePicker({date, setDate, className}: DatePickerProps) {
     return (
-        <Popover>
+        <Popover modal={false}>
             <PopoverTrigger asChild>
                 <Button
                     variant={"outline"}
                     className={cn(
-                        "w-[280px] justify-start text-left font-normal",
-                        !date && "text-muted-foreground"
+                        "justify-start text-left font-normal",
+                        !date && "text-muted-foreground",
+                        className
                     )}
                 >
                     <CalendarIcon className="mr-2 h-4 w-4" />
                     {date ? format(date, "PPP") : <span>Pick a date</span>}
                 </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-auto p-0">
+            <PopoverContent className="w-auto p-0 z-[1050] ">
                 <Calendar
                     mode="single"
                     selected={date}

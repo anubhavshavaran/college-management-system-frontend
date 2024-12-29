@@ -11,6 +11,7 @@ import {useParams} from "react-router";
 import {useEffect} from "react";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select.tsx";
 import {useUser} from "@/contexts/UserContextProvider.tsx";
+import DatePicker from "@/components/ui/date-picker.tsx";
 
 
 function SchoolStudentForm() {
@@ -217,13 +218,7 @@ function SchoolStudentForm() {
                                 control={control}
                                 name='dateOfBirth'
                                 render={({field: {value, onChange}}) => (
-                                    <Input
-                                        placeholder="1970/01/01"
-                                        value={value}
-                                        onChange={onChange}
-                                        disabled={isPending || isUpdatingStudent || isDisabled}
-                                        className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
-                                    />
+                                    <DatePicker date={value} setDate={onChange} />
                                 )}
                             />
                         </StudentInfoInput>
@@ -311,13 +306,7 @@ function SchoolStudentForm() {
                                 control={control}
                                 name='dateOfAdmission'
                                 render={({field: {value, onChange}}) => (
-                                    <Input
-                                        placeholder="1970/01/01"
-                                        value={value}
-                                        onChange={onChange}
-                                        disabled={isPending || isUpdatingStudent || isDisabled}
-                                        className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
-                                    />
+                                    <DatePicker date={value} setDate={onChange} />
                                 )}
                             />
                         </StudentInfoInput>

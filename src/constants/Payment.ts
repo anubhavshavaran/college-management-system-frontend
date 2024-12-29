@@ -3,7 +3,7 @@ type Payment = {
     studentId?: string;
     transactionId: string;
     amount: string;
-    paidOn: string;
+    paidOn: Date;
     mode: string;
     particulars: string;
 }

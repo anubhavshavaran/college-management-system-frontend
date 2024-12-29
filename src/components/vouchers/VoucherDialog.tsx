@@ -16,6 +16,7 @@ import Organization from "@/constants/Organization.ts";
 import {useSearchParams} from "react-router";
 import {useEffect} from "react";
 import {useCreateVoucher, useUpdateVoucher, useVoucher} from "@/hooks/vouchers.ts";
+import DatePicker from "@/components/ui/date-picker.tsx";
 
 type VoucherDialogProps = {
     organization: Organization;
@@ -29,7 +30,6 @@ export function VoucherDialog({organization, onSave}: VoucherDialogProps) {
     const {control, formState: {errors}, handleSubmit, getValues, reset} = useForm<Voucher>({
         defaultValues: {
             title: "",
-            date: "",
             amount: 0,
             modeOfPayment: "",
             particulars: "",
@@ -111,12 +111,7 @@ export function VoucherDialog({organization, onSave}: VoucherDialogProps) {
                                     }
                                 }}
                                 render={({field: {value, onChange}}) => (
-                                    <Input
-                                        id="date"
-                                        className="col-span-3"
-                                        value={value}
-                                        onChange={onChange}
-                                    />
+                                    <DatePicker date={value} setDate={onChange} className="col-span-3" />
                                 )}
                             />
                             <FormError message={errors.date?.message}/>

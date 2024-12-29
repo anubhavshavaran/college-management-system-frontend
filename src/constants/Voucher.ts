@@ -1,7 +1,7 @@
 type Voucher = {
     _id?: string;
     title: string;
-    date: string;
+    date: Date;
     amount: number;
     modeOfPayment: string;
     particulars: string;
