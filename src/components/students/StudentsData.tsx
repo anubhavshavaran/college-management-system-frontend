@@ -57,7 +57,7 @@ function StudentsData() {
             ) : (
                 <>
                     <div className="w-full flex sm:flex-col md:flex-row gap-4">
-                        <InfoCard label={`${title} students`} text={data.students.length}/>
+                        <InfoCard label={`${title} students`} text={data.students.length ?? "0"}/>
                         <InfoCard label={`${title} male`} text={data.stats.males}/>
                         <InfoCard label={`${title} females`} text={data.stats.females}/>
                     </div>
@@ -105,7 +105,9 @@ function StudentsData() {
                             />
                         ) : (
                             <>
-                                <YearSelect />
+                                {searchParams.get("year") !== "passedOut" && (
+                                    <YearSelect/>
+                                )}
                                 <CollegeStudentsTable
                                     data={data.students}
                                     render={(student, key) => (

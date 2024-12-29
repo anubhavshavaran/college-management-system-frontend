@@ -14,7 +14,7 @@ function CategorySection({header, type, category}: CategorySectionProps) {
             </div>
             <div className="flex sm:flex-col md:flex-row flex-wrap gap-y-4 gap-x-8">
                 {category.map((c, i) => (
-                    <CategoryButton label={`select ${type}`} text={c} key={i} />
+                    <CategoryButton label={`select ${type}`} text={c} key={i} collegePassedOut={header === "passed out batches"} />
                 ))}
             </div>
         </div>

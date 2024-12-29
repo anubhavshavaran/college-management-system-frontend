@@ -189,6 +189,33 @@ function CollegeStudentForm() {
                             />
                         </StudentInfoInput>
                         <StudentInfoInput
+                            label="Duration (years)"
+                        >
+                            <Controller
+                                control={control}
+                                name='durationInYear'
+                                rules={{
+                                    required: {
+                                        value: true,
+                                        message: 'Duration of the course is required'
+                                    }
+                                }}
+                                render={({field: {value, onChange}}) => (
+                                    <>
+                                        <Input
+                                            placeholder="1,2,3,4"
+                                            type="number"
+                                            value={value}
+                                            onChange={onChange}
+                                            disabled={isPending || isUpdatingStudent || isDisabled}
+                                            className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
+                                        />
+                                        <FormError message={errors?.durationInYear?.message}/>
+                                    </>
+                                )}
+                            />
+                        </StudentInfoInput>
+                        <StudentInfoInput
                             label="Year"
                         >
                             <Controller

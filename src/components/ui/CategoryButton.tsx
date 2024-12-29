@@ -7,9 +7,10 @@ import Organization from "@/constants/Organization.ts";
 type CategoryButtonProps = {
     label: string;
     text: string;
+    collegePassedOut?: boolean;
 }
 
-function CategoryButton({label, text}: CategoryButtonProps) {
+function CategoryButton({label, text, collegePassedOut}: CategoryButtonProps) {
     const {organization} = useOrganization();
     const [isMouseOver, setIsMouseOver] = useState<boolean>(false);
     const [searchParams, setSearchParams] = useSearchParams();
@@ -22,8 +23,13 @@ function CategoryButton({label, text}: CategoryButtonProps) {
     }
 
     function handleClick() {
+        text = text === "passed out" ? "passedOut" : text;
         searchParams.set("cat", text);
-        if (organization === Organization.COLLEGE) searchParams.set("year", "1");
+        if (organization === Organization.COLLEGE && collegePassedOut) {
+            searchParams.set("year", "passedOut");
+        } else if (organization === Organization.COLLEGE) {
+            searchParams.set("year", "1");
+        }
         setSearchParams(searchParams);
     }
 
