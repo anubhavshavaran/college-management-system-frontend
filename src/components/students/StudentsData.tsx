@@ -13,6 +13,7 @@ import formatOrdinal from "@/functions/formatOrdinal.ts";
 import {useUser} from "@/contexts/UserContextProvider.tsx";
 import UpdateFixedFeeForm from "@/components/students/UpdateFixedFeeForm.tsx";
 import React from "react";
+import YearSelect from "@/components/students/YearSelect.tsx";
 
 function StudentsData() {
     const {user} = useUser();
@@ -21,8 +22,9 @@ function StudentsData() {
     const location = useLocation();
     const [searchParams] = useSearchParams();
     const course = searchParams.get("cat") ?? '';
+    const year = searchParams.get("year") ?? '';
     const {deleteStudent} = useDeleteStudent(organization);
-    const {data, isPending} = useStudents(organization, course);
+    const {data, isPending} = useStudents(organization, course, year);
 
     let title: string;
     if (organization === Organization.SCHOOL) {
@@ -70,15 +72,15 @@ function StudentsData() {
                     )}
 
                     {user?.role === "CHAIRMAN" && location.pathname.split("/")[2] === "fees" && (
-                        <UpdateFixedFeeForm />
+                        <UpdateFixedFeeForm/>
                     )}
 
-                    <div className="w-full bg-defaultGray py-2 rounded-2xl flex justify-center">
+                    <div className="w-full bg-defaultGray py-2 rounded-2xl flex flex-col justify-center items-end">
                         {organization === Organization.SCHOOL ? (
                             <SchoolStudentsTable
                                 data={data.students}
                                 render={(student, key) => (
-                                    <TableRow key={key} onClick={() => navToStudent(student._id)}>
+                                    <TableRow key={key} onClick={() => navToStudent(student._id ?? '')}>
                                         <TableCell className="text-center">{key + 1}</TableCell>
                                         <TableCell className="text-center">{student.admissionNumber}</TableCell>
                                         <TableCell className="text-center">{student.name}</TableCell>
@@ -102,33 +104,36 @@ function StudentsData() {
                                 )}
                             />
                         ) : (
-                            <CollegeStudentsTable
-                                data={data.students}
-                                render={(student, key) => (
-                                    <TableRow key={key} onClick={() => navToStudent(student._id)}>
-                                        <TableCell className="text-center">{key + 1}</TableCell>
-                                        <TableCell className="text-center">{student.admissionNumber}</TableCell>
-                                        <TableCell className="text-center">{student.name}</TableCell>
-                                        <TableCell className="text-center">{student.year}</TableCell>
-                                        <TableCell className="text-center">{student.rollNumber}</TableCell>
-                                        <TableCell
-                                            className="text-center">{student.gender?.toLocaleUpperCase()}</TableCell>
-                                        <TableCell
-                                            className="text-center">{student.dateOfBirth ? format(new Date(student.dateOfBirth), 'dd-MM-yyyy') : 'NIL'}</TableCell>
-                                        <TableCell
-                                            className="text-center">{student.dateOfAdmission ? format(new Date(student.dateOfAdmission), 'dd-MM-yyyy') : 'NIL'}</TableCell>
-                                        <TableCell className="text-center">+91 {student.phoneNumber}</TableCell>
+                            <>
+                                <YearSelect />
+                                <CollegeStudentsTable
+                                    data={data.students}
+                                    render={(student, key) => (
+                                        <TableRow key={key} onClick={() => navToStudent(student._id ?? '')}>
+                                            <TableCell className="text-center">{key + 1}</TableCell>
+                                            <TableCell className="text-center">{student.admissionNumber}</TableCell>
+                                            <TableCell className="text-center">{student.name}</TableCell>
+                                            <TableCell className="text-center">{student.year}</TableCell>
+                                            <TableCell className="text-center">{student.rollNumber}</TableCell>
+                                            <TableCell
+                                                className="text-center">{student.gender?.toLocaleUpperCase()}</TableCell>
+                                            <TableCell
+                                                className="text-center">{student.dateOfBirth ? format(new Date(student.dateOfBirth), 'dd-MM-yyyy') : 'NIL'}</TableCell>
+                                            <TableCell
+                                                className="text-center">{student.dateOfAdmission ? format(new Date(student.dateOfAdmission), 'dd-MM-yyyy') : 'NIL'}</TableCell>
+                                            <TableCell className="text-center">+91 {student.phoneNumber}</TableCell>
 
-                                        {user?.role !== "ADMIN" && (
-                                            <TableCell className="hover:bg-gray-200 rounded-lg flex justify-center"
-                                                       onClick={(e) => handleDelete(e, student._id ?? '')}>
-                                                <img src="/icons/bin.png" width="20" alt="Delete Button"/>
-                                            </TableCell>
-                                        )}
+                                            {user?.role !== "ADMIN" && (
+                                                <TableCell className="hover:bg-gray-200 rounded-lg flex justify-center"
+                                                           onClick={(e) => handleDelete(e, student._id ?? '')}>
+                                                    <img src="/icons/bin.png" width="20" alt="Delete Button"/>
+                                                </TableCell>
+                                            )}
 
-                                    </TableRow>
-                                )}
-                            />
+                                        </TableRow>
+                                    )}
+                                />
+                            </>
                         )}
                     </div>
                 </>

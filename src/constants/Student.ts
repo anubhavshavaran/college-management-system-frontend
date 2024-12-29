@@ -1,7 +1,7 @@
 type Student = {
-    _id: string;
-    name: string;
-    organization: "SCHOOL" | "COLLEGE";
+    _id?: string;
+    name?: string;
+    organization?: "SCHOOL" | "COLLEGE";
     rollNumber?: string;
     class?: string;
     section?: number;

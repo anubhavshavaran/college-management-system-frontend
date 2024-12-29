@@ -16,6 +16,7 @@ import {format} from "date-fns";
 import {useUser} from "@/contexts/UserContextProvider.tsx";
 import PaymentReceipt from "@/components/receipts/PaymentReceipt.tsx";
 import Receipt from "@/components/receipts/Receipt.tsx";
+import UpdateStudentFeeForm from "@/components/students/UpdateStudentFeeForm.tsx";
 
 function FeeData() {
     const {user} = useUser();
@@ -59,6 +60,10 @@ function FeeData() {
                                          value={String(Number(student.fixedFee) - Number(student.paidFee))}/>
                             <FeeInfoCard label="previous fees" value={student.previousFee}/>
                         </div>
+
+                        {user?.role !== "ADMIN" && (
+                            <UpdateStudentFeeForm />
+                        )}
 
                         {user?.role !== "ADMIN" && (
                             <Button
