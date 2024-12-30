@@ -7,7 +7,7 @@ function AddStudent() {
     const {organization} = useOrganization();
 
     return (
-        <div className="w-full p-4 pt-20">
+        <div className="w-full p-4">
             <div className="w-full p-6 rounded-xl bg-defaultGray">
                 {organization === Organization.SCHOOL ? (
                     <SchoolStudentForm/>

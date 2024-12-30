@@ -50,7 +50,7 @@ function Vouchers() {
     }
 
     return (
-        <div className="w-full p-4 pt-20 flex flex-col gap-4">
+        <div className="w-full p-4 flex flex-col gap-4">
 
             {showReceipt && (
                 <PaymentReceipt onClose={() => setShowReceipt(false)}>

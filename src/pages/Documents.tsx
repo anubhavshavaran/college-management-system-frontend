@@ -28,7 +28,7 @@ function Documents() {
     }
 
     return (
-        <div className="w-full p-6 pt-20 flex flex-col gap-4">
+        <div className="w-full p-6 flex flex-col gap-4">
             <Dialog open={isDialogOpen} onOpenChange={() => setIsDialogOpen(false)}>
                 <DocsDialog onSave={() => setIsDialogOpen(false)}/>
             </Dialog>

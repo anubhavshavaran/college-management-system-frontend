@@ -42,7 +42,7 @@ function Users() {
     }
 
     return (
-        <div className="w-full p-4 pt-20 flex flex-col gap-4">
+        <div className="w-full p-4 flex flex-col gap-4">
             <div className="flex gap-4 sm:flex-col md:flex-row">
                 <InfoCard label="users" text={data?.users.length} />
                 {data?.stats.map((stat: {count: string, role: string}, key: number) => (

@@ -34,7 +34,6 @@ function Searchbar({value, onChange}: SearchbarProps) {
     return (
         <div className="p-1 px-3 rounded-md bg-white flex justify-start items-center gap-2 border-[1.5px] border-gray-400">
             <input
-                type="search"
                 className="outline-none"
                 placeholder="Search"
                 ref={inputRef}

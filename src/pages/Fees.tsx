@@ -11,7 +11,7 @@ function Fees() {
     const isCategory = searchParams.get("cat");
 
     return (
-        <div className="w-full p-4 pt-20 flex flex-col gap-4">
+        <div className="w-full p-4 flex flex-col gap-4">
             {!isCategory && (organization === Organization.SCHOOL ? (
                 <SchoolCategories/>
             ) : (

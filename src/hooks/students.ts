@@ -3,7 +3,7 @@ import {
     createStudentApi,
     deleteStudentApi,
     getStudentApi,
-    getStudentsApi,
+    getStudentsApi, searchStudentsApi,
     updateStudentApi, updateStudentsFixedFeeApi
 } from "@/services/studentsApi.ts";
 import Organization from "@/constants/Organization.ts";
@@ -176,6 +176,20 @@ function useUpdateStudentsFee() {
     }
 }
 
+function useSearchStudents(organization: Organization, enabled: boolean, query?: string) {
+    const {data, isPending: isSearching, isFetched} = useQuery({
+        queryKey: ['search', query],
+        queryFn: () => searchStudentsApi(organization, query ?? ''),
+        enabled
+    });
+
+    return {
+        results: data?.data?.students,
+        isSearching,
+        isFetched
+    }
+}
+
 export {
     useStudent,
     useStudents,
@@ -185,5 +199,6 @@ export {
     useStudentsPayments,
     useCreateStudentPayment,
     useDeleteStudentPayment,
-    useUpdateStudentsFee
+    useUpdateStudentsFee,
+    useSearchStudents
 };

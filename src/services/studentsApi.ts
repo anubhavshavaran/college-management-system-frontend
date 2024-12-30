@@ -101,4 +101,17 @@ async function updateStudentsFixedFeeApi(organization: Organization, query: Cour
     return data;
 }
 
-export {getStudentApi, getStudentsApi, createStudentApi, deleteStudentApi, updateStudentApi, updateStudentsFixedFeeApi};
+async function searchStudentsApi(organization: Organization, query: string) {
+    const {data, status} = await axiosInstance.request({
+        method: 'GET',
+        url: `/students/${organization}/search/${query}`
+    });
+
+    if (status.toString()[0] === '4') {
+        throw new Error(data.message);
+    }
+
+    return data;
+}
+
+export {getStudentApi, getStudentsApi, createStudentApi, deleteStudentApi, updateStudentApi, updateStudentsFixedFeeApi, searchStudentsApi};
