@@ -1,5 +1,5 @@
 import {useSearchParams} from "react-router";
-import {useEffect, useRef, KeyboardEvent} from "react";
+import {useRef} from "react";
 
 type SearchbarProps = {
     value: string;
@@ -10,23 +10,9 @@ function Searchbar({value, onChange}: SearchbarProps) {
     const [searchParams, setSearchParams] = useSearchParams();
     const inputRef = useRef<HTMLInputElement>(null);
 
-    useEffect(() => {
-        function handleEvent(this: Window, ev: KeyboardEvent){
-            if (ev.key === "/") {
-                inputRef.current?.focus();
-            }
-        }
-
-        window.addEventListener("keydown", handleEvent);
-
-        return () => {
-            window.removeEventListener("keydown", handleEvent);
-        }
-    }, []);
-
-    function search(e: KeyboardEvent) {
-        if (e.key === "Enter" && e.target.value !== '') {
-            searchParams.set("query", e.target.value);
+    function search(e: React.KeyboardEvent<HTMLInputElement>) {
+        if (e.key === "Enter" && e.currentTarget.value !== '') {
+            searchParams.set("query", e.currentTarget.value);
             setSearchParams(searchParams);
         }
     }
