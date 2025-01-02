@@ -119,7 +119,7 @@ export function UserDialog({organization, onSave}: UserDialogProps) {
                                             <SelectValue placeholder="Role"/>
                                         </SelectTrigger>
                                         <SelectContent>
-                                            <SelectItem value="CHAIRMAN">CHAIRMAN</SelectItem>
+                                            <SelectItem value="UNIVERSAL">CHAIRMAN</SelectItem>
                                             <SelectItem value="ACCOUNTANT">ACCOUNTANT</SelectItem>
                                             <SelectItem value="ADMIN">ADMIN</SelectItem>
                                         </SelectContent>
