@@ -25,9 +25,11 @@ function PaymentReceipt({children}: PaymentReceiptProps) {
                 onClick={handleClose}
                 className="bg-transparent hover:bg-transparent w-fit self-end "
             >
-                <IoCloseSharp color="black" />
+                <IoCloseSharp color="black"/>
             </Button>
-            {children}
+            <div className="print-section w-full flex justify-center items-center">
+                {children}
+            </div>
             <Button
                 onClick={handlePrint}
                 className="bg-defaultOrange hover:bg-defaultOrange w-fit mt-4"

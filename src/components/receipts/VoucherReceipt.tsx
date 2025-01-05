@@ -12,7 +12,7 @@ function VoucherReceipt() {
     const {voucher, isVoucherLoading} = useVoucher(voucherId, Boolean(voucherId), organization);
 
     return (
-        <div className="print-section w-[400px] h-min border-2 border-slate-700 rounded-lg p-4">
+        <div className="w-[400px] h-min border-2 border-slate-700 rounded-lg p-4">
             {isVoucherLoading ? (
                 <Spinner/>
             ) : (

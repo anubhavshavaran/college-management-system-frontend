@@ -9,7 +9,7 @@ import PayFeeDialog from "@/components/students/PayFeeDialog.tsx";
 import React, {useState} from "react";
 import {useDeleteStudentPayment, useStudent, useStudentsPayments} from "@/hooks/students.ts";
 import {useOrganization} from "@/contexts/OrganizationContextProvider.tsx";
-import {useParams} from "react-router";
+import {useParams, useSearchParams} from "react-router";
 import Spinner from "@/components/ui/Spinner.tsx";
 import Payment from "@/constants/Payment.ts";
 import {format} from "date-fns";
@@ -26,8 +26,10 @@ function FeeData() {
     const {student, isPending} = useStudent(organization, studentId ?? '', true);
     const {payments, isPending: isPaymentsLoading} = useStudentsPayments(studentId ?? '');
     const {deletePayment} = useDeleteStudentPayment(studentId ?? '');
+    const [searchParams, setSearchParams] = useSearchParams();
+    const receiptId = searchParams.get("receiptId");
 
-    const [showReceipt, setShowReceipt] = useState<boolean>(false);
+    // const [showReceipt, setShowReceipt] = useState<boolean>(false);
 
     function handleDelete(e: React.MouseEvent, id: string) {
         e.stopPropagation();
@@ -36,8 +38,8 @@ function FeeData() {
 
     return (
         <>
-            {showReceipt && (
-                <PaymentReceipt onClose={() => setShowReceipt(false)}>
+            {receiptId && (
+                <PaymentReceipt>
                     <div className="w-full flex sm:flex-col md:flex-row justify-center gap-4">
                         <Receipt title={`"${organization} copy"`}/>
                         <Receipt title="&quot;student copy&quot;"/>
@@ -109,7 +111,8 @@ function FeeData() {
                                             <TableCell
                                                 onClick={(e) => {
                                                     e.stopPropagation();
-                                                    setShowReceipt(true)
+                                                    searchParams.set("receiptId", payment._id ?? '');
+                                                    setSearchParams(searchParams);
                                                 }}
                                                 className="text-center"
                                             >

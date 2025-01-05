@@ -8,7 +8,7 @@ import {
 } from "@/services/studentsApi.ts";
 import Organization from "@/constants/Organization.ts";
 import Student from "@/constants/Student.ts";
-import {createPaymentApi, deletePaymentApi, getPaymentsApi} from "@/services/paymentsApi.ts";
+import {createPaymentApi, deletePaymentApi, getPaymentApi, getPaymentsApi} from "@/services/paymentsApi.ts";
 import Payment from "@/constants/Payment.ts";
 import {useOrganization} from "@/contexts/OrganizationContextProvider.tsx";
 import {useSearchParams} from "react-router";
@@ -107,6 +107,19 @@ function useStudentsPayments(id: string) {
     }
 }
 
+function useStudentPayment(id: string) {
+    const {data, isPending, error} = useQuery({
+        queryKey: ['paymentReceipt', id],
+        queryFn: () => getPaymentApi(id)
+    });
+
+    return {
+        payment: data?.data?.payment,
+        isPending,
+        error
+    }
+}
+
 function useCreateStudentPayment(id: string) {
     const queryClient = useQueryClient();
     const {mutate: createPayment, isPending: isCreatingPayment, error} = useMutation({
@@ -200,5 +213,6 @@ export {
     useCreateStudentPayment,
     useDeleteStudentPayment,
     useUpdateStudentsFee,
-    useSearchStudents
+    useSearchStudents,
+    useStudentPayment
 };
