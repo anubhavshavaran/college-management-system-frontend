@@ -10,6 +10,7 @@ import Docs from "@/constants/Docs.ts";
 import {createDocsApi} from "@/services/docsApi.ts";
 import {useOrganization} from "@/contexts/OrganizationContextProvider.tsx";
 import {useState} from "react";
+import {toast} from "react-hot-toast";
 
 type DocsDialogProps = {
     onSave: () => void;
@@ -23,6 +24,8 @@ function DocsDialog({onSave}: DocsDialogProps) {
     const {mutate, isPending} = useMutation({
         mutationFn: (docs: FormData) => createDocsApi(organization, docs),
         onSuccess: async () => {
+            toast.success("Document uploaded successfully.");
+
             await queryClient.invalidateQueries({
                 queryKey: [organization, 'docs']
             }, {

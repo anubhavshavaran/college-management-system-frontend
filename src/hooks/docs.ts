@@ -1,6 +1,7 @@
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {useOrganization} from "@/contexts/OrganizationContextProvider.tsx";
 import {deleteDocsApi, getDocsApi} from "@/services/docsApi.ts";
+import {toast} from "react-hot-toast";
 
 function useDocs() {
     const {organization} = useOrganization();
@@ -22,6 +23,8 @@ function useDeleteDocs() {
     const {mutate: deleteDocs, isPending: isDeletingDocs} = useMutation({
         mutationFn: (id: string) => deleteDocsApi(organization, id),
         onSuccess: async () => {
+            toast.success("Document deleted successfully.");
+
             await queryClient.invalidateQueries({
                 queryKey: [organization, 'docs']
             }, {

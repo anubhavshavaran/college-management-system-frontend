@@ -2,6 +2,7 @@ import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import Organization from "@/constants/Organization.ts";
 import {createUserApi, deleteUserApi, getUserApi, getUsersApi, updateUserApi} from "@/services/usersApi.ts";
 import User from "@/constants/User.ts";
+import {toast} from "react-hot-toast";
 
 function useUsers(organization: Organization) {
     const {data, isPending, error} = useQuery({
@@ -21,6 +22,8 @@ function useDeleteUser(organization: Organization) {
     const {mutate: deleteUser, isPending: isDeletingUser} = useMutation({
         mutationFn: (id: string) => deleteUserApi(id, organization),
         onSuccess: async () => {
+            toast.success("User deleted successfully.");
+
             await queryClient.invalidateQueries({
                 queryKey: ['users', organization]
             }, {
@@ -51,6 +54,8 @@ function useCreateUser(organization: Organization) {
     const {mutate: createUser, isPending: isCreatingUser} = useMutation({
         mutationFn: (user: User) => createUserApi(user, organization),
         onSuccess: async () => {
+            toast.success("User created successfully.");
+
             await queryClient.invalidateQueries({
                 queryKey: ['users', organization]
             }, {
@@ -70,6 +75,8 @@ function useUpdateUser(userId: string, organization: Organization) {
     const {mutate: updateUser, isPending: isUpdatingUser} = useMutation({
         mutationFn: (user: User) => updateUserApi(userId, user, organization),
         onSuccess: async () => {
+            toast.success("User updated successfully.");
+
             await queryClient.invalidateQueries({
                 queryKey: ['users', organization]
             }, {
