@@ -24,3 +24,17 @@
     --sidebar-ring: 217.2 91.2% 59.8%
   }
 }
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .print-section, .print-section * {
+    visibility: visible;
+  }
+  .print-section {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}

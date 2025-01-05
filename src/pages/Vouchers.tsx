@@ -22,9 +22,9 @@ const headers = ['Sr. no.', 'Voucher ID', 'Title', 'Date', 'Amount', 'Mode of Pa
 function Vouchers() {
     const {user} = useUser();
     const {organization} = useOrganization();
-    const [showReceipt, setShowReceipt] = useState<boolean>(false);
     const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
     const [searchParams, setSearchParams] = useSearchParams();
+    const receiptId = searchParams.get("receiptId");
     const {vouchers, isVouchersLoading, error} = useVouchers(organization);
     const {deleteVoucher} = useDeleteVouchers(organization);
 
@@ -52,8 +52,8 @@ function Vouchers() {
     return (
         <div className="w-full p-4 flex flex-col gap-4">
 
-            {showReceipt && (
-                <PaymentReceipt onClose={() => setShowReceipt(false)}>
+            {receiptId && (
+                <PaymentReceipt>
                     <VoucherReceipt/>
                 </PaymentReceipt>
             )}
@@ -98,7 +98,8 @@ function Vouchers() {
                                     <TableCell
                                         onClick={(e) => {
                                             e.stopPropagation();
-                                            setShowReceipt(true)
+                                            searchParams.set("receiptId", voucher._id ?? '');
+                                            setSearchParams(searchParams);
                                         }}
                                         className="text-center"
                                     >
