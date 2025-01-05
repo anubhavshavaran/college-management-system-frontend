@@ -8,6 +8,7 @@ import {
 } from "@/services/voucherApi.ts";
 import Organization from "@/constants/Organization.ts";
 import Voucher from "@/constants/Voucher.ts";
+import {toast} from "react-hot-toast";
 
 function useVouchers(organization: Organization) {
     const {data, isPending: isVouchersLoading, error, isFetched, refetch} = useQuery({
@@ -29,6 +30,8 @@ function useDeleteVouchers(organization: Organization) {
     const {mutate: deleteVoucher, isPending: isDeletingVoucher} = useMutation({
         mutationFn: (id: string) => deleteVoucherApi(id, organization),
         onSuccess: async () => {
+            toast.success("Voucher deleted successfully.");
+
             await queryClient.invalidateQueries({
                 queryKey: [organization, 'vouchers']
             }, {
@@ -59,6 +62,8 @@ function useCreateVoucher(organization: Organization) {
     const {mutate: createVoucher, isPending: isCreatingVoucher} = useMutation({
         mutationFn: (voucher: Voucher) => createVoucherApi(voucher, organization),
         onSuccess: async () => {
+            toast.success("Voucher created successfully.");
+
             await queryClient.invalidateQueries({
                 queryKey: [organization, 'vouchers']
             }, {
@@ -78,6 +83,8 @@ function useUpdateVoucher(voucherId: string, organization: Organization) {
     const {mutate: updateVoucher, isPending: isUpdatingVoucher} = useMutation({
         mutationFn: (voucher: Voucher) => updateVoucherApi(voucherId, voucher, organization),
         onSuccess: async () => {
+            toast.success("Voucher updated successfully.");
+
             await queryClient.invalidateQueries({
                 queryKey: [organization, 'vouchers']
             }, {

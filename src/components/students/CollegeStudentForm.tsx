@@ -122,7 +122,8 @@ function CollegeStudentForm() {
                                 }}
                                 render={({field: {value, onChange}}) => (
                                     <>
-                                        <Select value={value} onValueChange={onChange} disabled={isPending || isUpdatingStudent || isDisabled}>
+                                        <Select value={value} onValueChange={onChange}
+                                                disabled={isPending || isUpdatingStudent || isDisabled}>
                                             <SelectTrigger
                                                 className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl">
                                                 <SelectValue placeholder="Gender"/>
@@ -154,7 +155,10 @@ function CollegeStudentForm() {
                                         <Input
                                             placeholder="Course"
                                             value={value}
-                                            onChange={onChange}
+                                            onChange={(e) => {
+                                                const formattedValue = e.target.value.toLowerCase();
+                                                onChange(formattedValue);
+                                            }}
                                             disabled={isPending || isUpdatingStudent || isDisabled}
                                             className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
                                         />
@@ -178,7 +182,7 @@ function CollegeStudentForm() {
                                 render={({field: {value, onChange}}) => (
                                     <>
                                         <Input
-                                            placeholder="1,2,3,4"
+                                            placeholder="Duration in years"
                                             type="number"
                                             value={value}
                                             onChange={onChange}
@@ -191,7 +195,7 @@ function CollegeStudentForm() {
                             />
                         </StudentInfoInput>
                         <StudentInfoInput
-                            label="Year"
+                            label="Year (e.g. 1, 2, 3, 4)"
                         >
                             <Controller
                                 control={control}
@@ -205,7 +209,7 @@ function CollegeStudentForm() {
                                 render={({field: {value, onChange}}) => (
                                     <>
                                         <Input
-                                            placeholder="Year"
+                                            placeholder="(e.g. 1, 2, 3, 4)"
                                             value={value}
                                             onChange={onChange}
                                             disabled={isPending || isUpdatingStudent || isDisabled}
@@ -240,7 +244,7 @@ function CollegeStudentForm() {
                                 control={control}
                                 name='dateOfBirth'
                                 render={({field: {value, onChange}}) => (
-                                    <DatePicker date={value} setDate={onChange} />
+                                    <DatePicker date={value} setDate={onChange}/>
                                 )}
                             />
                         </StudentInfoInput>
@@ -328,7 +332,7 @@ function CollegeStudentForm() {
                                 control={control}
                                 name='dateOfAdmission'
                                 render={({field: {value, onChange}}) => (
-                                    <DatePicker date={value} setDate={onChange} />
+                                    <DatePicker date={value} setDate={onChange}/>
                                 )}
                             />
                         </StudentInfoInput>
@@ -338,14 +342,23 @@ function CollegeStudentForm() {
                             <Controller
                                 control={control}
                                 name='expectedYearOfPassing'
+                                rules={{
+                                    required: {
+                                        value: true,
+                                        message: "Expected date of passing is required"
+                                    }
+                                }}
                                 render={({field: {value, onChange}}) => (
-                                    <Input
-                                        placeholder="2027"
-                                        value={value}
-                                        onChange={onChange}
-                                        disabled={isPending || isUpdatingStudent || isDisabled}
-                                        className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
-                                    />
+                                    <>
+                                        <Input
+                                            placeholder="2027"
+                                            value={value}
+                                            onChange={onChange}
+                                            disabled={isPending || isUpdatingStudent || isDisabled}
+                                            className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
+                                        />
+                                        <FormError message={errors?.expectedYearOfPassing?.message} />
+                                    </>
                                 )}
                             />
                         </StudentInfoInput>

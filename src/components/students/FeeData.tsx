@@ -29,8 +29,6 @@ function FeeData() {
     const [searchParams, setSearchParams] = useSearchParams();
     const receiptId = searchParams.get("receiptId");
 
-    // const [showReceipt, setShowReceipt] = useState<boolean>(false);
-
     function handleDelete(e: React.MouseEvent, id: string) {
         e.stopPropagation();
         deletePayment(id ?? '');

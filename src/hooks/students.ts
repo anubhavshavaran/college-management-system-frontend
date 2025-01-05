@@ -12,6 +12,7 @@ import {createPaymentApi, deletePaymentApi, getPaymentApi, getPaymentsApi} from 
 import Payment from "@/constants/Payment.ts";
 import {useOrganization} from "@/contexts/OrganizationContextProvider.tsx";
 import {useSearchParams} from "react-router";
+import {toast} from "react-hot-toast";
 
 function useStudents(organization: Organization, course: string, year?: string, name?: string) {
     const query = organization === Organization.SCHOOL ? {class: course, name} : {course, year, name};
@@ -44,7 +45,10 @@ function useStudent(organization: Organization, id: string, isEnable: boolean) {
 
 function useCreateStudent(organization: Organization) {
     const {mutate: createStudent, isPending, error} = useMutation({
-        mutationFn: (student: Student) => createStudentApi(organization, student)
+        mutationFn: (student: Student) => createStudentApi(organization, student),
+        onSuccess: () => {
+            toast.success("Student created successfully.");
+        }
     });
 
     return {
@@ -59,6 +63,8 @@ function useDeleteStudent(organization: Organization) {
     const {mutate: deleteStudent, isPending: isDeletingStudent} = useMutation({
         mutationFn: (id: string) => deleteStudentApi(organization, id),
         onSuccess: async () => {
+            toast.success("Student deleted successfully.");
+
             await queryClient.invalidateQueries({
                 queryKey: [organization, 'students']
             }, {
@@ -75,6 +81,8 @@ function useUpdateStudent(studentId: string, organization: Organization) {
     const {mutate: updateStudent, isPending: isUpdatingStudent} = useMutation({
         mutationFn: (student: Student) => updateStudentApi(organization, studentId, student),
         onSuccess: async () => {
+            toast.success("Student updated successfully.");
+
             await queryClient.invalidateQueries({
                 queryKey: [organization, 'students']
             }, {
@@ -121,10 +129,15 @@ function useStudentPayment(id: string) {
 }
 
 function useCreateStudentPayment(id: string) {
+    const [searchParams, setSearchParams] = useSearchParams();
     const queryClient = useQueryClient();
     const {mutate: createPayment, isPending: isCreatingPayment, error} = useMutation({
         mutationFn: (payment: Payment) => createPaymentApi(id, payment),
-        onSuccess: async () => {
+        onSuccess: async (data) => {
+            searchParams.set("receiptId", data?.data?.payment._id);
+            setSearchParams(searchParams);
+            toast.success("Payment done successfully.");
+
             await queryClient.invalidateQueries({
                 queryKey: ['payments', id]
             }, {
@@ -150,6 +163,8 @@ function useDeleteStudentPayment(studentId: string) {
     const {mutate: deletePayment, isPending: isDeletingPayment, error} = useMutation({
         mutationFn: (id: string) => deletePaymentApi(id),
         onSuccess: async () => {
+            toast.success("Payment deleted successfully.");
+
             await queryClient.invalidateQueries({
                 queryKey: ['payments', studentId]
             }, {
@@ -180,7 +195,10 @@ function useUpdateStudentsFee() {
         year: searchParams.get("year") ?? '',
     };
     const {mutate: updateFees, isPending} = useMutation({
-        mutationFn: (fixedFee: number) => updateStudentsFixedFeeApi(organization, query, fixedFee)
+        mutationFn: (fixedFee: number) => updateStudentsFixedFeeApi(organization, query, fixedFee),
+        onSuccess: () => {
+            toast.success("Payment updated successfully.");
+        }
     });
 
     return {

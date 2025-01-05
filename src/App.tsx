@@ -12,6 +12,7 @@ import Fees from "@/pages/Fees.tsx";
 import AddStudent from "@/pages/AddStudent.tsx";
 import Student from "@/pages/Student.tsx";
 import Documents from "@/pages/Documents.tsx";
+import {Toaster} from "react-hot-toast";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -58,6 +59,9 @@ function App() {
                     </UserContextProvider>
                 </BrowserRouter>
             </QueryClientProvider>
+            <Toaster
+                position='bottom-center'
+            />
         </>
     )
 }

@@ -3,12 +3,15 @@ import {useStudentPayment} from "@/hooks/students.ts";
 import Spinner from "@/components/ui/Spinner.tsx";
 import {formatDate} from "date-fns";
 import formatNumberToWord from "@/functions/formatNumberToWord.ts";
+import {useOrganization} from "@/contexts/OrganizationContextProvider.tsx";
+import Organization from "@/constants/Organization.ts";
 
 type ReceiptProps = {
     title: string
 }
 
 function Receipt({title}: ReceiptProps) {
+    const {organization} = useOrganization();
     const [searchParams] = useSearchParams();
     const paymentId = searchParams.get("receiptId") ?? '';
     const {payment, isPending} = useStudentPayment(paymentId);
@@ -38,9 +41,20 @@ function Receipt({title}: ReceiptProps) {
                     </div>
                     <div className="flex flex-col justify-center items-start gap-1 mt-4">
                         <p className="">Name of the student: {payment.studentId.name}</p>
-                        <p className="">Class: {payment.studentId.class}</p>
-                        <p className="">Reg no.: {payment.studentId.satsNumber}</p>
-                        <p className="">Mode of Payment: {payment.mode}</p>
+                        {organization === Organization.SCHOOL ? (
+                            <>
+                                <p className="">Class: {payment.studentId.class}</p>
+                                <p className="">SATS Number.: {payment.studentId.satsNumber}</p>
+                                <p className="">Mode of Payment: {payment.mode}</p>
+                            </>
+                        ) : (
+                            <>
+                                <p className="">Course: {payment.studentId.course}</p>
+                                <p className="">Year: {payment.studentId.year}</p>
+                                <p className="">Reg no.: {payment.studentId.registrationNumber}</p>
+                                <p className="">Mode of Payment: {payment.mode}</p>
+                            </>
+                        )}
                     </div>
                     <table className="w-full mt-4">
                         <tbody>
@@ -65,7 +79,8 @@ function Receipt({title}: ReceiptProps) {
                 </>
             )}
         </div>
-    );
+    )
+        ;
 }
 
 export default Receipt;
