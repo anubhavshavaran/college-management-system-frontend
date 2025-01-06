@@ -20,7 +20,7 @@ function PaymentReceipt({children}: PaymentReceiptProps) {
     }
 
     return (
-        <div className="w-full h-screen overflow-scroll absolute z-20 bg-white top-0 left-0 flex flex-col items-center">
+        <div className="w-full h-screen overflow-scroll fixed z-20 bg-white top-0 left-0 flex flex-col items-center">
             <Button
                 onClick={handleClose}
                 className="bg-transparent hover:bg-transparent w-fit self-end "

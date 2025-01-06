@@ -27,6 +27,7 @@ function Receipt({title}: ReceiptProps) {
                         <p>Date: {formatDate(payment.paidOn, "dd-MM-yyyy")}</p>
                     </div>
                     <div className="flex flex-col gap-4 justify-center items-center">
+                        <p className="w-full text-start capitalize">Receipt no. {payment.transactionId}</p>
                         <img
                             src="/Logo.png"
                             width="40"

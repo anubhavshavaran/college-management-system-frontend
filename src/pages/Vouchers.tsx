@@ -17,7 +17,7 @@ import {useUser} from "@/contexts/UserContextProvider.tsx";
 import PaymentReceipt from "@/components/receipts/PaymentReceipt.tsx";
 import VoucherReceipt from "@/components/receipts/VoucherReceipt.tsx";
 
-const headers = ['Sr. no.', 'Voucher ID', 'Title', 'Date', 'Amount', 'Mode of Payment', 'Particulars'];
+const headers = ['Sr. no.', 'Voucher Number', 'Title', 'Date', 'Amount', 'Mode of Payment', 'Particulars'];
 
 function Vouchers() {
     const {user} = useUser();
@@ -87,7 +87,7 @@ function Vouchers() {
                             render={(voucher: Voucher, key: number) => (
                                 <TableRow key={key} onClick={() => setId(voucher._id ?? '')}>
                                     <TableCell className="text-center">{key + 1}</TableCell>
-                                    <TableCell className="text-center">{voucher._id}</TableCell>
+                                    <TableCell className="text-center">Voucher No. {voucher.voucherNumber}</TableCell>
                                     <TableCell className="text-center">{voucher.title}</TableCell>
                                     <TableCell
                                         className="text-center">{format(new Date(voucher.date), 'dd-MM-yyyy')}</TableCell>

@@ -18,6 +18,7 @@ function VoucherReceipt() {
             ) : (
                 <>
                     <div className="flex flex-col gap-4 justify-center items-center">
+                        <p className="w-full text-start capitalize">Voucher no. {voucher.voucherNumber}</p>
                         <img
                             src="/Logo.png"
                             width="40"

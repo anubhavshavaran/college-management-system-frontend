@@ -18,6 +18,16 @@ import PaymentReceipt from "@/components/receipts/PaymentReceipt.tsx";
 import Receipt from "@/components/receipts/Receipt.tsx";
 import UpdateStudentFeeForm from "@/components/students/UpdateStudentFeeForm.tsx";
 
+const headers = [
+    'Sr. No.',
+    'Receipt Number',
+    'Date',
+    'Amount',
+    'Mode of Payment',
+    'Particulars',
+    'Receipt'
+];
+
 function FeeData() {
     const {user} = useUser();
     const {organization} = useOrganization();
@@ -62,7 +72,7 @@ function FeeData() {
                         </div>
 
                         {user?.role !== "ADMIN" && (
-                            <UpdateStudentFeeForm />
+                            <UpdateStudentFeeForm/>
                         )}
 
                         {user?.role !== "ADMIN" && (
@@ -86,20 +96,16 @@ function FeeData() {
                                 )}
                                 <TableHeader>
                                     <TableRow>
-                                        <TableCell className="text-center">Sr. No.</TableCell>
-                                        <TableCell className="text-center">Transaction ID</TableCell>
-                                        <TableCell className="text-center">Date</TableCell>
-                                        <TableCell className="text-center">Amount</TableCell>
-                                        <TableCell className="text-center">Mode of Payment</TableCell>
-                                        <TableCell className="text-center">Particulars</TableCell>
-                                        <TableCell className="text-center">Receipt</TableCell>
+                                        {headers.map((header) => (
+                                            <TableCell className="text-center">{header}</TableCell>
+                                        ))}
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
                                     {payments.map((payment: Payment, key: number) => (
                                         <TableRow key={key}>
                                             <TableCell className="text-center">{key + 1}</TableCell>
-                                            <TableCell className="text-center">{payment.transactionId}</TableCell>
+                                            <TableCell className="text-center">Receipt No.: {payment.transactionId}</TableCell>
                                             <TableCell
                                                 className="text-center">{format(new Date(payment.paidOn), 'dd-MM-yyyy')}</TableCell>
                                             <TableCell className="text-center">{payment.amount}</TableCell>
