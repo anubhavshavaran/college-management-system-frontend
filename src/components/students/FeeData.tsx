@@ -48,7 +48,7 @@ function FeeData() {
         <>
             {receiptId && (
                 <PaymentReceipt>
-                    <div className="w-full flex sm:flex-col md:flex-row justify-center gap-4">
+                    <div className="w-full flex sm:flex-col md:flex-row justify-center gap-24">
                         <Receipt title={`"${organization} copy"`}/>
                         <Receipt title="&quot;student copy&quot;"/>
                     </div>
@@ -105,13 +105,23 @@ function FeeData() {
                                     {payments.map((payment: Payment, key: number) => (
                                         <TableRow key={key}>
                                             <TableCell className="text-center">{key + 1}</TableCell>
-                                            <TableCell className="text-center">Receipt No.: {payment.transactionId}</TableCell>
+                                            <TableCell className="text-center">Receipt
+                                                No.: {payment.transactionId}</TableCell>
                                             <TableCell
                                                 className="text-center">{format(new Date(payment.paidOn), 'dd-MM-yyyy')}</TableCell>
                                             <TableCell className="text-center">{payment.amount}</TableCell>
                                             <TableCell className="text-center">{payment.mode}</TableCell>
                                             <TableCell
-                                                className="text-center">{payment.particulars ?? 'NIL'}</TableCell>
+                                                className="text-center"
+                                            >
+                                                {
+                                                    payment.particulars ? (
+                                                        payment.particulars.length > 10 ?
+                                                            `${payment.particulars.substring(0, 11)}...`
+                                                            : payment.particulars
+                                                    ) : 'NIL'
+                                                }
+                                            </TableCell>
                                             <TableCell
                                                 onClick={(e) => {
                                                     e.stopPropagation();

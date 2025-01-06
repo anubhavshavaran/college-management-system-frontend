@@ -93,7 +93,18 @@ function Vouchers() {
                                         className="text-center">{format(new Date(voucher.date), 'dd-MM-yyyy')}</TableCell>
                                     <TableCell className="text-center">{voucher.amount}</TableCell>
                                     <TableCell className="text-center">{voucher.modeOfPayment}</TableCell>
-                                    <TableCell className="text-center">{voucher.particulars}</TableCell>
+
+                                    <TableCell
+                                        className="text-center"
+                                    >
+                                        {
+                                            voucher.particulars ? (
+                                                voucher.particulars.length > 10 ?
+                                                    `${voucher.particulars.substring(0, 11)}...`
+                                                    : voucher.particulars
+                                            ) : 'NIL'
+                                        }
+                                    </TableCell>
 
                                     <TableCell
                                         onClick={(e) => {

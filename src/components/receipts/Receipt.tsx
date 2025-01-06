@@ -57,23 +57,27 @@ function Receipt({title}: ReceiptProps) {
                             </>
                         )}
                     </div>
-                    <table className="w-full mt-4">
-                        <tbody>
-                        <tr>
-                            <td className="text-center border-black border-2">Particulars</td>
-                            <td className="text-center border-black border-2">Amount</td>
-                        </tr>
-                        <tr>
-                            <td className="border-2 p-[8px] border-black text-center">{payment.particulars}</td>
-                            <td className="border-2 p-[8px] border-black text-center">{payment.amount}</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <div className="mt-2 w-full flex flex-wrap justify-between">
-                        <p className="">Rs: {payment.amount}</p>
-                        <p className="capitalize">Rupees in Words: {formatNumberToWord(payment.amount)} only</p>
+                    <div className="w-full flex flex-col mt-4">
+                        <div className="w-full flex">
+                            <p className="w-[300px] text-center border-black border-2 border-b-0">Particulars</p>
+                            <p className="w-[65px] text-center border-black border-2 border-b-0 border-l-0">Amount</p>
+                        </div>
+                        <div className="w-full flex">
+                            <p className="w-[300px] p-1 text-center border-black border-2 whitespace-normal break-words">{payment.particulars}</p>
+                            <p className="w-[65px] p-1 text-center border-black border-2 border-l-0">120</p>
+                        </div>
                     </div>
-                    <div className="w-full flex justify-between py-12">
+                    <div className="mt-4 w-full flex flex-wrap justify-between">
+                        <div className="flex gap-1">
+                        <p className="">Rs:</p>
+                            <p className="border-b-[1.5px] border-b-black">{payment.amount}</p>
+                        </div>
+                        <div className="flex gap-1">
+                            <p className="">Rupees in Words:</p>
+                            <p className="border-b-[1.5px] border-b-black capitalize">{formatNumberToWord(payment.amount)} only</p>
+                        </div>
+                    </div>
+                    <div className="w-full flex justify-between pt-6 pb-4">
                         <p>Accountant sign:_________</p>
                         <p>Remitter sign:__________</p>
                     </div>

@@ -68,7 +68,6 @@ function SchoolStudentForm() {
                                 render={({field: {value, onChange}}) => (
                                     <>
                                         <Input
-                                            placeholder="John Doe"
                                             value={value}
                                             onChange={onChange}
                                             disabled={isPending || isUpdatingStudent || isDisabled}
@@ -87,7 +86,6 @@ function SchoolStudentForm() {
                                 name='mothersName'
                                 render={({field: {value, onChange}}) => (
                                     <Input
-                                        placeholder="Jane Doe"
                                         value={value}
                                         onChange={onChange}
                                         disabled={isPending || isUpdatingStudent || isDisabled}
@@ -104,7 +102,6 @@ function SchoolStudentForm() {
                                 name='fathersName'
                                 render={({field: {value, onChange}}) => (
                                     <Input
-                                        placeholder="John Doe"
                                         value={value}
                                         onChange={onChange}
                                         disabled={isPending || isUpdatingStudent || isDisabled}
@@ -128,8 +125,8 @@ function SchoolStudentForm() {
                                 render={({field: {value, onChange}}) => (
                                     <>
                                         <Input
-                                            placeholder="xxxx"
                                             value={value}
+                                            type="number"
                                             onChange={onChange}
                                             disabled={isPending || isUpdatingStudent || isDisabled}
                                             className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
@@ -183,7 +180,6 @@ function SchoolStudentForm() {
                                 render={({field: {value, onChange}}) => (
                                     <>
                                         <Input
-                                            placeholder="Class"
                                             value={value}
                                             onChange={onChange}
                                             disabled={isPending || isUpdatingStudent || isDisabled}
@@ -202,8 +198,8 @@ function SchoolStudentForm() {
                                 name='phoneNumber'
                                 render={({field: {value, onChange}}) => (
                                     <Input
-                                        placeholder="John Doe"
                                         value={value}
+                                        type="tel"
                                         onChange={onChange}
                                         disabled={isPending || isUpdatingStudent || isDisabled}
                                         className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
@@ -230,7 +226,6 @@ function SchoolStudentForm() {
                                 name='adhaarNumber'
                                 render={({field: {value, onChange}}) => (
                                     <Input
-                                        placeholder="9678 3456 2345 1231"
                                         value={value}
                                         onChange={onChange}
                                         disabled={isPending || isUpdatingStudent || isDisabled}
@@ -247,7 +242,6 @@ function SchoolStudentForm() {
                                 name='voterNumber'
                                 render={({field: {value, onChange}}) => (
                                     <Input
-                                        placeholder="John Doe"
                                         value={value}
                                         onChange={onChange}
                                         disabled={isPending || isUpdatingStudent || isDisabled}
@@ -264,7 +258,6 @@ function SchoolStudentForm() {
                                 name='passportNumber'
                                 render={({field: {value, onChange}}) => (
                                     <Input
-                                        placeholder="PA32828"
                                         value={value}
                                         onChange={onChange}
                                         disabled={isPending || isUpdatingStudent || isDisabled}
@@ -288,7 +281,6 @@ function SchoolStudentForm() {
                                 render={({field: {value, onChange}}) => (
                                     <>
                                         <Input
-                                            placeholder="ADM001"
                                             value={value}
                                             onChange={onChange}
                                             disabled={isPending || isUpdatingStudent || isDisabled}
@@ -318,7 +310,6 @@ function SchoolStudentForm() {
                                 name='expectedYearOfPassing'
                                 render={({field: {value, onChange}}) => (
                                     <Input
-                                        placeholder="2027"
                                         value={value}
                                         onChange={onChange}
                                         disabled={isPending || isUpdatingStudent || isDisabled}
@@ -335,7 +326,6 @@ function SchoolStudentForm() {
                                 name='presentAddress'
                                 render={({field: {value, onChange}}) => (
                                     <Input
-                                        placeholder="Mumbai"
                                         value={value}
                                         onChange={onChange}
                                         disabled={isPending || isUpdatingStudent || isDisabled}
@@ -352,7 +342,6 @@ function SchoolStudentForm() {
                                 name='permanentAddress'
                                 render={({field: {value, onChange}}) => (
                                     <Input
-                                        placeholder="Mumbai"
                                         value={value}
                                         onChange={onChange}
                                         disabled={isPending || isUpdatingStudent || isDisabled}
@@ -369,7 +358,6 @@ function SchoolStudentForm() {
                                 name='city'
                                 render={({field: {value, onChange}}) => (
                                     <Input
-                                        placeholder="Mumbai"
                                         value={value}
                                         onChange={onChange}
                                         disabled={isPending || isUpdatingStudent || isDisabled}
@@ -386,7 +374,6 @@ function SchoolStudentForm() {
                                 name='state'
                                 render={({field: {value, onChange}}) => (
                                     <Input
-                                        placeholder="Maharashtra"
                                         value={value}
                                         onChange={onChange}
                                         disabled={isPending || isUpdatingStudent || isDisabled}
@@ -403,7 +390,6 @@ function SchoolStudentForm() {
                                 name='pinCode'
                                 render={({field: {value, onChange}}) => (
                                     <Input
-                                        placeholder="400001"
                                         value={value}
                                         onChange={onChange}
                                         disabled={isPending || isUpdatingStudent || isDisabled}
@@ -420,7 +406,6 @@ function SchoolStudentForm() {
                                 name='religion'
                                 render={({field: {value, onChange}}) => (
                                     <Input
-                                        placeholder="Religion"
                                         value={value}
                                         onChange={onChange}
                                         disabled={isPending || isUpdatingStudent || isDisabled}
@@ -437,7 +422,6 @@ function SchoolStudentForm() {
                                 name='caste'
                                 render={({field: {value, onChange}}) => (
                                     <Input
-                                        placeholder="Caste"
                                         value={value}
                                         onChange={onChange}
                                         disabled={isPending || isUpdatingStudent || isDisabled}
@@ -454,7 +438,6 @@ function SchoolStudentForm() {
                                 name='subCaste'
                                 render={({field: {value, onChange}}) => (
                                     <Input
-                                        placeholder="Sub Caste"
                                         value={value}
                                         onChange={onChange}
                                         disabled={isPending || isUpdatingStudent || isDisabled}
@@ -471,7 +454,6 @@ function SchoolStudentForm() {
                                 name='category'
                                 render={({field: {value, onChange}}) => (
                                     <Input
-                                        placeholder="General/OBC/SC/ST"
                                         value={value}
                                         onChange={onChange}
                                         disabled={isPending || isUpdatingStudent || isDisabled}
@@ -487,13 +469,17 @@ function SchoolStudentForm() {
                                 control={control}
                                 name='categoryCertificateEnclosed'
                                 render={({field: {value, onChange}}) => (
-                                    <Input
-                                        placeholder="Yes/No"
-                                        value={value}
-                                        onChange={onChange}
-                                        disabled={isPending || isUpdatingStudent || isDisabled}
-                                        className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
-                                    />
+                                    <Select value={value} onValueChange={onChange}
+                                            disabled={isPending || isUpdatingStudent || isDisabled}>
+                                        <SelectTrigger
+                                            className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl">
+                                            <SelectValue placeholder="Yes/No"/>
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem value="yes">Yes</SelectItem>
+                                            <SelectItem value="no">No</SelectItem>
+                                        </SelectContent>
+                                    </Select>
                                 )}
                             />
                         </StudentInfoInput>
@@ -505,8 +491,8 @@ function SchoolStudentForm() {
                                 name='parentsIncome'
                                 render={({field: {value, onChange}}) => (
                                     <Input
-                                        placeholder="xx,xx,xxx"
                                         value={value}
+                                        type="number"
                                         onChange={onChange}
                                         disabled={isPending || isUpdatingStudent || isDisabled}
                                         className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
@@ -521,13 +507,17 @@ function SchoolStudentForm() {
                                 control={control}
                                 name='incomeCertificateEnclosed'
                                 render={({field: {value, onChange}}) => (
-                                    <Input
-                                        placeholder="Yes/No"
-                                        value={value}
-                                        onChange={onChange}
-                                        disabled={isPending || isUpdatingStudent || isDisabled}
-                                        className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
-                                    />
+                                    <Select value={value} onValueChange={onChange}
+                                            disabled={isPending || isUpdatingStudent || isDisabled}>
+                                        <SelectTrigger
+                                            className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl">
+                                            <SelectValue placeholder="Yes/No"/>
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem value="yes">Yes</SelectItem>
+                                            <SelectItem value="no">No</SelectItem>
+                                        </SelectContent>
+                                    </Select>
                                 )}
                             />
                         </StudentInfoInput>
@@ -546,8 +536,8 @@ function SchoolStudentForm() {
                                 render={({field: {value, onChange}}) => (
                                     <>
                                         <Input
-                                            placeholder="xxxx"
                                             value={value}
+                                            type="number"
                                             onChange={onChange}
                                             disabled={isPending || isUpdatingStudent || isDisabled}
                                             className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"

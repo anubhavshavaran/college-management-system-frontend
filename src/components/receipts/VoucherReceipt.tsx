@@ -36,23 +36,24 @@ function VoucherReceipt() {
                         <p className="">Paid to: {voucher.title}</p>
                         <p className="">Mode of Payment: {voucher.modeOfPayment}</p>
                     </div>
-                    <table className="w-full mt-4">
-                        <tbody>
-                        <tr>
-                            <td className="text-center border-black border-2">Particulars</td>
-                        </tr>
-                        <tr>
-                            <td className="border-2 p-[8px] border-black text-center">{voucher.particulars}</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <div className="mt-2 w-full flex flex-wrap justify-between">
-                        <p className="">Rs: {voucher.amount}</p>
-                        <p className="capitalize">Rupees in Words: {formatNumberToWord(voucher.amount)} only</p>
+                    <div className="w-full flex flex-col mt-4">
+                        <p className="w-full p-1 text-center border-black border-2 border-b-0">Particulars</p>
+                        <p className="w-full p-1 text-center border-black border-2 whitespace-normal break-words">{voucher.particulars}</p>
                     </div>
-                    <div className="w-full flex justify-between py-12">
-                        <p>Approved by:_________</p>
-                        <p>Received by:__________</p>
+
+                    <div className="mt-4 w-full flex flex-wrap justify-between">
+                        <div className="flex gap-1">
+                            <p className="">Rs:</p>
+                            <p className="border-b-[1.5px] border-b-black">{voucher.amount}</p>
+                        </div>
+                        <div className="flex gap-1">
+                            <p className="">Rupees in Words:</p>
+                            <p className="border-b-[1.5px] border-b-black capitalize">{formatNumberToWord(voucher.amount)} only</p>
+                        </div>
+                    </div>
+                    <div className="w-full flex justify-between pt-6 pb-4">
+                        <p>Accountant sign:_________</p>
+                        <p>Remitter sign:__________</p>
                     </div>
                 </>
             )}

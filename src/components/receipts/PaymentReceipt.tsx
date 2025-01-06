@@ -27,7 +27,7 @@ function PaymentReceipt({children}: PaymentReceiptProps) {
             >
                 <IoCloseSharp color="black"/>
             </Button>
-            <div className="print-section w-full flex justify-center items-center">
+            <div className="print-section w-full flex justify-around items-center">
                 {children}
             </div>
             <Button
