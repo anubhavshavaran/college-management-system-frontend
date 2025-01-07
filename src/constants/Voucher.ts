@@ -6,6 +6,7 @@ type Voucher = {
     amount: number;
     modeOfPayment: string;
     particulars: string;
+    organization: string
 }
 
 export default Voucher;

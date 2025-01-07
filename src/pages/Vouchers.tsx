@@ -16,6 +16,7 @@ import {useOrganization} from "@/contexts/OrganizationContextProvider.tsx";
 import {useUser} from "@/contexts/UserContextProvider.tsx";
 import PaymentReceipt from "@/components/receipts/PaymentReceipt.tsx";
 import VoucherReceipt from "@/components/receipts/VoucherReceipt.tsx";
+import Papa from "papaparse";
 
 const headers = ['Sr. no.', 'Voucher Number', 'Title', 'Date', 'Amount', 'Mode of Payment', 'Particulars'];
 
@@ -26,6 +27,7 @@ function Vouchers() {
     const [searchParams, setSearchParams] = useSearchParams();
     const receiptId = searchParams.get("receiptId");
     const {vouchers, isVouchersLoading, error} = useVouchers(organization);
+    console.log(vouchers);
     const {deleteVoucher} = useDeleteVouchers(organization);
 
     function setId(id: string) {
@@ -49,6 +51,29 @@ function Vouchers() {
         deleteVoucher(id ?? '');
     }
 
+    const handleExport = () => {
+        const csvData = vouchers.map((voucher: Voucher, key: number) => ({
+            Sr_No: key,
+            Voucher_Number: `Voucher no. ${voucher.voucherNumber}`,
+            Title: voucher.title,
+            Date: new Date(voucher.date).toLocaleDateString(),
+            Amount: voucher.amount,
+            Payment_Mode: voucher.modeOfPayment,
+            Particulars: voucher.particulars
+        }));
+
+        const csv = Papa.unparse(csvData);
+
+        const blob = new Blob([csv], {type: "text/csv;charset=utf-8;"});
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "vouchers.csv");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
     return (
         <div className="w-full p-4 flex flex-col gap-4">
 
@@ -64,11 +89,18 @@ function Vouchers() {
                         <VoucherDialog onSave={() => setIsDialogOpen(false)} organization={organization}/>
                     </Dialog>
 
-                    <Button onClick={() => setIsDialogOpen(true)}
+                    <div className="flex gap-3">
+                        <Button onClick={() => setIsDialogOpen(true)}
+                                className="bg-defaultGray p-5 shadow-none border-[1.5px] border-gray-400 rounded-xl hover:bg-defaultGray w-fit">
+                            <img src="/icons/plus.png" width={18} alt="Add Vocuhers"/>
+                            <p className="text-lg text-black font-normal ">Add Vouchers</p>
+                        </Button>
+                        <Button
+                            onClick={handleExport}
                             className="bg-defaultGray p-5 shadow-none border-[1.5px] border-gray-400 rounded-xl hover:bg-defaultGray w-fit">
-                        <img src="/icons/plus.png" width={18} alt="Add Vocuhers"/>
-                        <p className="text-lg text-black font-normal ">Add Vouchers</p>
-                    </Button>
+                            <p className="text-lg text-black font-normal ">Export</p>
+                        </Button>
+                    </div>
                 </>
             )}
 
