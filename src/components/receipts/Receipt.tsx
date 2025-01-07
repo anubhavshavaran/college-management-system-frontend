@@ -64,7 +64,7 @@ function Receipt({title}: ReceiptProps) {
                         </div>
                         <div className="w-full flex">
                             <p className="w-[300px] p-1 text-center border-black border-2 whitespace-normal break-words">{payment.particulars}</p>
-                            <p className="w-[65px] p-1 text-center border-black border-2 border-l-0">120</p>
+                            <p className="w-[65px] p-1 text-center border-black border-2 border-l-0">{payment.amount}</p>
                         </div>
                     </div>
                     <div className="mt-4 w-full flex flex-wrap justify-between">
