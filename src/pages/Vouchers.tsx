@@ -18,7 +18,7 @@ import PaymentReceipt from "@/components/receipts/PaymentReceipt.tsx";
 import VoucherReceipt from "@/components/receipts/VoucherReceipt.tsx";
 import Papa from "papaparse";
 
-const headers = ['Sr. no.', 'Voucher Number', 'Title', 'Date', 'Amount', 'Mode of Payment', 'Particulars'];
+const headers = ['Sr. no.', 'Voucher Number', 'Paid to', 'Date', 'Amount', 'Mode of Payment', 'Particulars'];
 
 function Vouchers() {
     const {user} = useUser();
