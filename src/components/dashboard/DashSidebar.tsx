@@ -16,7 +16,7 @@ import {IoMdArrowBack} from "react-icons/io";
 function DashSidebar() {
     const {organization} = useOrganization();
     const navigate = useNavigate();
-    const {user} = useUser();
+    const {user, changeUser} = useUser();
 
     function switchOrganization() {
         if (organization === Organization.SCHOOL) {
@@ -74,6 +74,15 @@ function DashSidebar() {
                     <IoMdArrowBack size={16} />
                     <p className="font-semibold">
                         Back
+                    </p>
+                </Button>
+                <Button
+                    onClick={() => changeUser(null)}
+                    className="bg-transparent flex justify-start items-center p-2 pr-0 hover:bg-gray-200 rounded-lg text-slate-500 shadow-none"
+                >
+                    <RiLogoutBoxLine size={16} color="red" />
+                    <p className="font-semibold">
+                        Log out
                     </p>
                 </Button>
             </SidebarFooter>

@@ -4,14 +4,14 @@ import useLocalStorage from "@/hooks/useLocalStorage.ts";
 
 type UserContextType = {
     user: User | null;
-    changeUser: (user: User) => void;
+    changeUser: (user: User | null) => void;
 }
 
 const UserContext = createContext<UserContextType | null>(null);
 
 function UserContextProvider({children}: { children: ReactNode }) {
     const [user, setUser] = useLocalStorage<User | null>("user", null);
-    const changeUser = (u: User) => setUser(u);
+    const changeUser = (u: User | null) => setUser(u);
 
     return (
         <UserContext.Provider value={{user, changeUser}}>
