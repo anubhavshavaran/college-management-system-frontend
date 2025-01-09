@@ -1,4 +1,4 @@
-import {Sidebar, SidebarContent, SidebarGroup, SidebarHeader} from "@/components/ui/sidebar.tsx";
+import {Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarHeader} from "@/components/ui/sidebar.tsx";
 import SidebarButton from "@/components/dashboard/SidebarButton.tsx";
 import {LuLayoutDashboard} from "react-icons/lu";
 import {PiStudentBold} from "react-icons/pi";
@@ -10,6 +10,8 @@ import {LiaMoneyCheckAltSolid} from "react-icons/lia";
 import {RiLogoutBoxLine} from "react-icons/ri";
 import Organization from "@/constants/Organization.ts";
 import {useNavigate} from "react-router";
+import {Button} from "@/components/ui/button.tsx";
+import {IoMdArrowBack} from "react-icons/io";
 
 function DashSidebar() {
     const {organization} = useOrganization();
@@ -64,6 +66,17 @@ function DashSidebar() {
 
                 </SidebarGroup>
             </SidebarContent>
+            <SidebarFooter>
+                <Button
+                    onClick={() => navigate(-1)}
+                    className="bg-transparent flex justify-start items-center p-2 pr-0 hover:bg-gray-200 rounded-lg text-slate-500 shadow-none"
+                >
+                    <IoMdArrowBack size={16} />
+                    <p className="font-semibold">
+                        Back
+                    </p>
+                </Button>
+            </SidebarFooter>
         </Sidebar>
     );
 }
