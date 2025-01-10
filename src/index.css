@@ -36,5 +36,7 @@
     position: absolute;
     top: 0;
     left: 0;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
   }
 }
