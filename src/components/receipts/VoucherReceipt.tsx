@@ -29,7 +29,7 @@ function VoucherReceipt() {
                             <p className="font-semibold">Abdulkalam College</p>
                             <p>Vivekanand Nagar, Gadag-Betageri-582 103</p>
                         </div>
-                        <p className="text-white px-2 py-1 bg-[#757575] rounded-lg capitalize">debit voucher</p>
+                        <p className="text-white px-2 py-1 bg-black rounded-lg capitalize">debit voucher</p>
                     </div>
                     <div className="flex flex-col justify-center items-start gap-1 mt-4 p-4">
                         <p className="">Date: {formatDate(voucher.date, "dd-MM-yyyy")}</p>
