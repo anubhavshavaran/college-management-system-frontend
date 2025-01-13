@@ -71,7 +71,7 @@ function FeeData() {
                             <FeeInfoCard label="previous fees" value={student.previousFee}/>
                         </div>
 
-                        {user?.role !== "ADMIN" && (
+                        {user?.role === "CHAIRMAN" && (
                             <UpdateStudentFeeForm/>
                         )}
 
