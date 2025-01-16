@@ -37,7 +37,7 @@ function VoucherReceipt() {
                         <p className="">Mode of Payment: {voucher.modeOfPayment}</p>
                     </div>
                     <div className="w-full flex flex-col mt-4">
-                        <p className="w-full p-1 text-center font-semibold">Particulars</p>
+                        <p className="w-full p-1 text-center font-semibold border-t-black border-t-2">Particulars</p>
                         <p className="w-full p-1 text-center border-y-black border-y-2 whitespace-normal break-words">{voucher.particulars}</p>
                     </div>
 

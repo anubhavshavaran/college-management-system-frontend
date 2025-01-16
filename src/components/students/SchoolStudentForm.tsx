@@ -53,7 +53,7 @@ function SchoolStudentForm() {
                 <>
                     <div className="w-full grid grid-cols-2 gap-x-6 gap-y-4">
                         <StudentInfoInput
-                            label="Student name"
+                            label="Student name *"
                         >
                             <Controller
                                 control={control}
@@ -111,7 +111,7 @@ function SchoolStudentForm() {
                             />
                         </StudentInfoInput>
                         <StudentInfoInput
-                            label="Roll Number"
+                            label="Roll Number *"
                         >
                             <Controller
                                 control={control}
@@ -137,7 +137,7 @@ function SchoolStudentForm() {
                             />
                         </StudentInfoInput>
                         <StudentInfoInput
-                            label="Gender"
+                            label="Gender *"
                         >
                             <Controller
                                 control={control}
@@ -166,7 +166,7 @@ function SchoolStudentForm() {
                             />
                         </StudentInfoInput>
                         <StudentInfoInput
-                            label="Class"
+                            label="Class *"
                         >
                             <Controller
                                 control={control}
@@ -267,7 +267,7 @@ function SchoolStudentForm() {
                             />
                         </StudentInfoInput>
                         <StudentInfoInput
-                            label="SATS Number"
+                            label="SATS Number *"
                         >
                             <Controller
                                 control={control}
@@ -522,7 +522,7 @@ function SchoolStudentForm() {
                             />
                         </StudentInfoInput>
                         <StudentInfoInput
-                            label="Fixed Fee"
+                            label="Fixed Fee *"
                         >
                             <Controller
                                 control={control}

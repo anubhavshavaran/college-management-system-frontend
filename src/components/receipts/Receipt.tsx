@@ -61,8 +61,8 @@ function Receipt({title}: ReceiptProps) {
                     </div>
                     <div className="w-full flex flex-col mt-4">
                         <div className="w-full flex">
-                            <p className="w-[7.5cm] text-center border-r-black border-r-2">Particulars</p>
-                            <p className="w-[2.5cm] text-center ">Amount</p>
+                            <p className="w-[7.5cm] text-center border-r-black border-r-2 border-t-black border-t-2">Particulars</p>
+                            <p className="w-[2.5cm] text-center border-t-black border-t-2">Amount</p>
                         </div>
                         <div className="w-full flex">
                             <p className="w-[7.5cm] p-[2px] text-center border-black border-2 border-b-0 border-l-0 whitespace-normal break-words">{payment.particulars}</p>

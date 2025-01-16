@@ -48,7 +48,7 @@ function CollegeStudentForm() {
                 <>
                     <div className="w-full grid grid-cols-2 gap-x-6 gap-y-4">
                         <StudentInfoInput
-                            label="Student name"
+                            label="Student name *"
                         >
                             <Controller
                                 control={control}
@@ -106,7 +106,7 @@ function CollegeStudentForm() {
                             />
                         </StudentInfoInput>
                         <StudentInfoInput
-                            label="Gender"
+                            label="Gender *"
                         >
                             <Controller
                                 control={control}
@@ -136,7 +136,7 @@ function CollegeStudentForm() {
                             />
                         </StudentInfoInput>
                         <StudentInfoInput
-                            label="Course"
+                            label="Course *"
                         >
                             <Controller
                                 control={control}
@@ -164,7 +164,7 @@ function CollegeStudentForm() {
                             />
                         </StudentInfoInput>
                         <StudentInfoInput
-                            label="Duration (years)"
+                            label="Duration (years) *"
                         >
                             <Controller
                                 control={control}
@@ -190,7 +190,7 @@ function CollegeStudentForm() {
                             />
                         </StudentInfoInput>
                         <StudentInfoInput
-                            label="Year (ex - 1st year)"
+                            label="Year (ex - 1st year) *"
                         >
                             <Controller
                                 control={control}
@@ -292,7 +292,7 @@ function CollegeStudentForm() {
                             />
                         </StudentInfoInput>
                         <StudentInfoInput
-                            label="Registration Number"
+                            label="Registration Number *"
                         >
                             <Controller
                                 control={control}
@@ -328,7 +328,7 @@ function CollegeStudentForm() {
                             />
                         </StudentInfoInput>
                         <StudentInfoInput
-                            label="Expected year of Passing"
+                            label="Expected year of Passing *"
                         >
                             <Controller
                                 control={control}
@@ -556,7 +556,7 @@ function CollegeStudentForm() {
                             />
                         </StudentInfoInput>
                         <StudentInfoInput
-                            label="Fixed Fee"
+                            label="Fixed Fee *"
                         >
                             <Controller
                                 control={control}
