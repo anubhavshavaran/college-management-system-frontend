@@ -19,12 +19,12 @@ function Home() {
                 <>
                     <div className="w-full flex sm:flex-col md:flex-row items-center gap-4 justify-start">
                         <InfoCard label="students" text={data.studentsNum}/>
-                        <InfoCard label="Total Fixed Fee" text={formatCurrency(data.fees.totalFixedFee)}/>
-                        <InfoCard label="Total Paid Fee" text={formatCurrency(data.fees.totalPaidFee)}/>
+                        <InfoCard label="Total Fixed Fee" text={formatCurrency(data?.fees?.totalFixedFee ?? 0)}/>
+                        <InfoCard label="Total Paid Fee" text={formatCurrency(data?.fees?.totalPaidFee ?? 0)}/>
                     </div>
                     <div className="w-full py-4 flex sm:flex-col md:flex-row gap-4">
                         <FeesChart/>
-                        <GenderChart malePercentage={data.genderRatio.male} femalePercentage={data.genderRatio.female}/>
+                        <GenderChart malePercentage={data?.genderRatio?.male ?? 0} femalePercentage={data?.genderRatio?.female ?? 0}/>
 
                     </div>
                     {user?.role === "CHAIRMAN" && (

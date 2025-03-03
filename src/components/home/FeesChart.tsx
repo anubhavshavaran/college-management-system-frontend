@@ -21,13 +21,16 @@ const chartConfig = {
         label: "Earnings",
         color: "#F7B696",
     },
-} satisfies ChartConfig
+} satisfies ChartConfig;
+
+const range = (start: number, end: number) => Array.from({length: end - start + 1}, (_, i) => start + i);
 
 export function FeesChart() {
-    const [year, setYear] = useState<number | string>(function () {
-        return new Date().getFullYear();
-    });
+    const currentYear = new Date().getFullYear();
+    const [year, setYear] = useState<number | string>(currentYear);
     const {data, isPending} = usePaymentsData(year);
+
+    const years = range(2020, currentYear);
 
     return (
         <Card className="sm:w-full md:w-[900px] bg-defaultGray rounded-2xl border-none shadow-none">
@@ -39,12 +42,12 @@ export function FeesChart() {
                         <CardTitle className="text-2xl font-bold text-defaultBlue">Earnings</CardTitle>
                         <Select onValueChange={(y) => setYear(y)}>
                             <SelectTrigger className="w-[150px]">
-                                <SelectValue placeholder="2024"/>
+                                <SelectValue placeholder={year}/>
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectItem value="2024">2024</SelectItem>
-                                <SelectItem value="2023">2023</SelectItem>
-                                <SelectItem value="2022">2022</SelectItem>
+                                {years.reverse().map((y: number) => (
+                                    <SelectItem value={`${y}`}>{y}</SelectItem>
+                                ))}
                             </SelectContent>
                         </Select>
                     </CardHeader>
