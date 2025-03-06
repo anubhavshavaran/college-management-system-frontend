@@ -26,7 +26,7 @@ function Dashboard() {
 
     return (
         <SidebarProvider>
-            <div className="w-full h-screen flex ">
+            <div className="w-full h-screen flex">
                 <DashSidebar/>
                 <main className="w-full">
                     <Navbar/>

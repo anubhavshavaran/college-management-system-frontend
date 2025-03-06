@@ -44,8 +44,8 @@ function Users() {
     return (
         <div className="w-full p-4 flex flex-col gap-4">
             <div className="flex gap-4 sm:flex-col md:flex-row">
-                <InfoCard label="users" text={data?.users.length} />
-                {data?.stats.map((stat: {count: string, role: string}, key: number) => (
+                <InfoCard label="users" text={data?.users.length}/>
+                {data?.stats.map((stat: { count: string, role: string }, key: number) => (
                     <InfoCard label={stat.role} text={stat.count} key={key}/>
                 ))}
             </div>
@@ -73,14 +73,16 @@ function Users() {
                             render={(user: User, key: number) => (
                                 <TableRow key={key} onClick={() => setId(user._id ?? '')}>
                                     <TableCell className="text-center">{key + 1}</TableCell>
-                                    <TableCell className="text-center">{user._id}</TableCell>
+                                    <TableCell className="text-center">{user.name}</TableCell>
                                     <TableCell className="text-center">{user.username}</TableCell>
                                     <TableCell className="text-center">{user.role}</TableCell>
                                     <TableCell className="text-center">{user.organization}</TableCell>
-                                    <TableCell className="hover:bg-gray-200 rounded-lg flex justify-center"
-                                               onClick={(e) => handleDelete(e, user._id ?? '')}>
-                                        <img src="/icons/bin.png" width="20" alt="Delete Button"/>
-                                    </TableCell>
+                                    {user.role !== "CHAIRMAN" && (
+                                        <TableCell className="hover:bg-gray-200 rounded-lg flex justify-center"
+                                                   onClick={(e) => handleDelete(e, user._id ?? '')}>
+                                            <img src="/icons/bin.png" width="20" alt="Delete Button"/>
+                                        </TableCell>
+                                    )}
                                 </TableRow>
                             )}
                         />

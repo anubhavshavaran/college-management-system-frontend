@@ -51,7 +51,7 @@ function Searchbar() {
     const showResults: boolean = isFetched && results?.length > 0;
 
     return (
-        <div className="sm:w-full md:w-[400px] md:mr-8">
+        <div className="sm:w-full md:w-[300px] md:mr-8">
             <div className={`relative border-2 border-slate-200 rounded-t-xl p-2 ${!showResults && 'rounded-b-xl'}`}>
                 <div className="flex justify-start items-center px-2 gap-2">
                     <CiSearch size={28} className="text-slate-400"/>
@@ -60,13 +60,13 @@ function Searchbar() {
                         onChange={(e) => {
                             setValue(e.target.value)
                         }}
-                        className="w-full border-none outline-none p-0 text-slate-400"
+                        className="w-full border-none outline-none p-0 text-slate-400 text-sm"
                         placeholder={`Search by name, ${organization === Organization.COLLEGE ? 'registration number' : 'SATS number'}`}
                     />
                 </div>
             </div>
             <div
-                className={`w-[400px] absolute bg-white flex justify-center ${showResults && 'border-b-2 border-x-2 border-slate-200 rounded-b-xl'}`}
+                className={`w-[300px] absolute bg-white flex justify-center ${showResults && 'border-b-2 border-x-2 border-slate-200 rounded-b-xl'}`}
             >
                 {isSearching && isEnabled && (
                     <Spinner/>

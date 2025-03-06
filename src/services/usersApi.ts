@@ -8,7 +8,6 @@ async function getUserApi(id: string, organization: Organization) {
         url: `/users/${organization}/${id}/`,
         method: "GET",
     });
-    console.log(data)
 
     if (status.toString()[0] === '4') {
         throw new Error(data.message);

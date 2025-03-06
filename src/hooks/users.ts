@@ -53,8 +53,12 @@ function useCreateUser(organization: Organization) {
     const queryClient = useQueryClient();
     const {mutate: createUser, isPending: isCreatingUser} = useMutation({
         mutationFn: (user: User) => createUserApi(user, organization),
-        onSuccess: async () => {
-            toast.success("User created successfully.");
+        onSuccess: async (data) => {
+            if (data.status === 'success') {
+                toast.success("User created successfully.");
+            } else {
+                toast.error("User creation failed.");
+            }
 
             await queryClient.invalidateQueries({
                 queryKey: ['users', organization]
@@ -74,8 +78,12 @@ function useUpdateUser(userId: string, organization: Organization) {
     const queryClient = useQueryClient();
     const {mutate: updateUser, isPending: isUpdatingUser} = useMutation({
         mutationFn: (user: User) => updateUserApi(userId, user, organization),
-        onSuccess: async () => {
-            toast.success("User updated successfully.");
+        onSuccess: async (data) => {
+            if (data.status === 'success') {
+                toast.success("User created successfully.");
+            } else {
+                toast.error("User creation failed.");
+            }
 
             await queryClient.invalidateQueries({
                 queryKey: ['users', organization]

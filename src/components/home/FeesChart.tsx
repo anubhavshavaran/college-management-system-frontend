@@ -33,7 +33,7 @@ export function FeesChart() {
     const years = range(2020, currentYear);
 
     return (
-        <Card className="sm:w-full md:w-[900px] bg-defaultGray rounded-2xl border-none shadow-none">
+        <Card className="sm:w-full md:w-[800px] bg-defaultGray rounded-2xl border-none shadow-none">
             {isPending ? (
                 <Spinner/>
             ) : (
@@ -52,7 +52,7 @@ export function FeesChart() {
                         </Select>
                     </CardHeader>
                     <CardContent>
-                        <ChartContainer config={chartConfig} className="md:h-[300px] md:w-[850px]">
+                        <ChartContainer config={chartConfig} className="md:h-[300px] md:w-[750px]">
                             <BarChart
                                 accessibilityLayer
                                 data={data}

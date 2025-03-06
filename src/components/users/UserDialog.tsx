@@ -29,6 +29,7 @@ export function UserDialog({organization, onSave}: UserDialogProps) {
     const isEditing: boolean = userId !== null;
     const {control, formState: {errors}, handleSubmit, getValues, reset} = useForm<User>({
         defaultValues: {
+            name: "",
             username: "",
             password: "",
             role: ""
@@ -40,25 +41,31 @@ export function UserDialog({organization, onSave}: UserDialogProps) {
     const {createUser, isCreatingUser} = useCreateUser(organization);
 
     useEffect(() => {
-        if (isFetched) {
-            console.log(
-                user,
-                isFetched
-            )
-            reset(user);
-        }
-    }, [isFetched, user, reset]);
+        if (isFetched && isEditing) reset(user);
+        if (!isEditing) resetForm();
+    }, [isFetched, user, reset, isEditing]);
 
     function create() {
         const data = getValues();
         createUser(data);
+        resetForm();
         onSave();
     }
 
     function update() {
         const data = getValues();
         updateUser(data);
+        resetForm();
         onSave();
+    }
+
+    function resetForm() {
+        reset({
+            name: "",
+            username: "",
+            password: "",
+            role: ""
+        });
     }
 
     return (
@@ -76,6 +83,30 @@ export function UserDialog({organization, onSave}: UserDialogProps) {
             ) : (
                 <>
                     <div className="grid gap-4 py-4">
+                        <div className="grid grid-cols-4 items-center gap-4">
+                            <Label htmlFor="fname" className="text-right">
+                                Name
+                            </Label>
+                            <Controller
+                                control={control}
+                                name="name"
+                                rules={{
+                                    required: {
+                                        value: true,
+                                        message: 'This is field is required'
+                                    }
+                                }}
+                                render={({field: {value, onChange}}) => (
+                                    <Input
+                                        id="fname"
+                                        className="col-span-3"
+                                        value={value}
+                                        onChange={onChange}
+                                    />
+                                )}
+                            />
+                            <FormError message={errors.username?.message}/>
+                        </div>
                         <div className="grid grid-cols-4 items-center gap-4">
                             <Label htmlFor="name" className="text-right">
                                 Username
@@ -100,34 +131,36 @@ export function UserDialog({organization, onSave}: UserDialogProps) {
                             />
                             <FormError message={errors.username?.message}/>
                         </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
-                            <Label htmlFor="date" className="text-right">
-                                Role
-                            </Label>
-                            <Controller
-                                control={control}
-                                name="role"
-                                rules={{
-                                    required: {
-                                        value: true,
-                                        message: 'This is field is required'
-                                    }
-                                }}
-                                render={({field: {value, onChange}}) => (
-                                    <Select value={value} onValueChange={v => onChange(v)}>
-                                        <SelectTrigger className="w-full col-span-3">
-                                            <SelectValue placeholder="Role"/>
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectItem value="UNIVERSAL">CHAIRMAN</SelectItem>
-                                            <SelectItem value="ACCOUNTANT">ACCOUNTANT</SelectItem>
-                                            <SelectItem value="ADMIN">ADMIN</SelectItem>
-                                        </SelectContent>
-                                    </Select>
-                                )}
-                            />
-                            <FormError message={errors.role?.message}/>
-                        </div>
+                        {user?.role !== "CHAIRMAN" && (
+                            <div className="grid grid-cols-4 items-center gap-4">
+                                <Label htmlFor="date" className="text-right">
+                                    Role
+                                </Label>
+                                <Controller
+                                    control={control}
+                                    name="role"
+                                    rules={{
+                                        required: {
+                                            value: true,
+                                            message: 'This is field is required'
+                                        }
+                                    }}
+                                    render={({field: {value, onChange}}) => (
+                                        <Select value={value} onValueChange={v => onChange(v)}>
+                                            <SelectTrigger className="w-full col-span-3">
+                                                <SelectValue placeholder="Role"/>
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                {/*<SelectItem value="UNIVERSAL">CHAIRMAN</SelectItem>*/}
+                                                <SelectItem value="ACCOUNTANT">ACCOUNTANT</SelectItem>
+                                                <SelectItem value="ADMIN">ADMIN</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                    )}
+                                />
+                                <FormError message={errors.role?.message}/>
+                            </div>
+                        )}
                         <div className="grid grid-cols-4 items-center gap-4">
                             <Label htmlFor="date" className="text-right">
                                 New Password
@@ -140,7 +173,7 @@ export function UserDialog({organization, onSave}: UserDialogProps) {
                                         value: !isEditing,
                                         message: 'This is field is required'
                                     },
-                                    min: {
+                                    minLength: {
                                         value: 8,
                                         message: 'Password must be 8 characters long'
                                     }
@@ -158,7 +191,8 @@ export function UserDialog({organization, onSave}: UserDialogProps) {
                         </div>
                     </div>
                     <DialogFooter className="w-full flex-row sm:justify-center">
-                        <Button onClick={isEditing ? handleSubmit(update) : handleSubmit(create)} className="bg-defaultOrange">
+                        <Button onClick={isEditing ? handleSubmit(update) : handleSubmit(create)}
+                                className="bg-defaultOrange">
                             {isCreatingUser || isUpdatingUser ? (
                                 <Spinner/>
                             ) : (

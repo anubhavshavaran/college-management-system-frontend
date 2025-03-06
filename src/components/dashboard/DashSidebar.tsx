@@ -27,7 +27,7 @@ function DashSidebar() {
     }
 
     return (
-        <Sidebar>
+        <Sidebar className="h-full">
             <SidebarHeader className="w-full p-4 flex flex-row justify-start items-center">
                 <img
                     src="/Logo.png"
