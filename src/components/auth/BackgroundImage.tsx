@@ -2,7 +2,7 @@ function BackgroundImage() {
     return (
         <div className="w-full sm:hidden lg:block">
             <img
-                src="/bgs/Cover.png"
+                src="/bgs/cover.jpg"
                 className="w-full h-screen"
                 alt="Institution"
             />
