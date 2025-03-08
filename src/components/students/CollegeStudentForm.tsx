@@ -149,15 +149,21 @@ function CollegeStudentForm() {
                                 }}
                                 render={({field: {value, onChange}}) => (
                                     <>
-                                        <Input
-                                            value={value}
-                                            onChange={(e) => {
-                                                const formattedValue = e.target.value.toLowerCase();
-                                                onChange(formattedValue);
-                                            }}
-                                            disabled={isPending || isUpdatingStudent || isDisabled}
-                                            className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
-                                        />
+                                        <Select value={value} onValueChange={onChange}
+                                                disabled={isPending || isUpdatingStudent || isDisabled}>
+                                            <SelectTrigger
+                                                className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl">
+                                                <SelectValue placeholder="Select course"/>
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="bba">BBA</SelectItem>
+                                                <SelectItem value="bca">BCA</SelectItem>
+                                                <SelectItem value="bcom">BCOM</SelectItem>
+                                                <SelectItem value="ba">BA</SelectItem>
+                                                <SelectItem value="bsc">BSC</SelectItem>
+                                                <SelectItem value="msc">MSC</SelectItem>
+                                            </SelectContent>
+                                        </Select>
                                         <FormError message={errors?.course?.message}/>
                                     </>
                                 )}
@@ -221,14 +227,27 @@ function CollegeStudentForm() {
                             <Controller
                                 control={control}
                                 name='phoneNumber'
+                                rules={{
+                                    minLength: {
+                                        value: 10,
+                                        message: 'Enter a valid phone number'
+                                    },
+                                    maxLength: {
+                                        value: 10,
+                                        message: 'Enter a valid phone number'
+                                    },
+                                }}
                                 render={({field: {value, onChange}}) => (
-                                    <Input
-                                        value={value}
-                                        type="tel"
-                                        onChange={onChange}
-                                        disabled={isPending || isUpdatingStudent || isDisabled}
-                                        className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
-                                    />
+                                    <>
+                                        <Input
+                                            value={value}
+                                            type="tel"
+                                            onChange={onChange}
+                                            disabled={isPending || isUpdatingStudent || isDisabled}
+                                            className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
+                                        />
+                                        <FormError message={errors?.phoneNumber?.message}/>
+                                    </>
                                 )}
                             />
                         </StudentInfoInput>

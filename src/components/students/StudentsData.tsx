@@ -111,7 +111,7 @@ function StudentsData() {
                                             className="text-center">{student.dateOfBirth ? format(new Date(student.dateOfBirth), 'dd-MM-yyyy') : 'NIL'}</TableCell>
                                         <TableCell
                                             className="text-center">{student.dateOfAdmission ? format(new Date(student.dateOfAdmission), 'dd-MM-yyyy') : 'NIL'}</TableCell>
-                                        <TableCell className="text-center">+91 {student.phoneNumber}</TableCell>
+                                        <TableCell className="text-center">{student.phoneNumber ? `+91 ${student.phoneNumber}` : 'NIL'}</TableCell>
 
                                         {user?.role === "CHAIRMAN" && (
                                             <TableCell className="hover:bg-gray-200 rounded-lg flex justify-center"
@@ -133,14 +133,13 @@ function StudentsData() {
                                             <TableCell className="text-center">{student.registrationNumber}</TableCell>
                                             <TableCell className="text-center">{student.name}</TableCell>
                                             <TableCell className="text-center">{student.year}</TableCell>
-                                            <TableCell className="text-center">{student.rollNumber}</TableCell>
                                             <TableCell
                                                 className="text-center">{student.gender?.toLocaleUpperCase()}</TableCell>
                                             <TableCell
                                                 className="text-center">{student.dateOfBirth ? format(new Date(student.dateOfBirth), 'dd-MM-yyyy') : 'NIL'}</TableCell>
                                             <TableCell
                                                 className="text-center">{student.dateOfAdmission ? format(new Date(student.dateOfAdmission), 'dd-MM-yyyy') : 'NIL'}</TableCell>
-                                            <TableCell className="text-center">+91 {student.phoneNumber}</TableCell>
+                                            <TableCell className="text-center">{student.phoneNumber ? `+91 ${student.phoneNumber}` : 'NIL'}</TableCell>
 
                                             {user?.role === "CHAIRMAN" && (
                                                 <TableCell className="hover:bg-gray-200 rounded-lg flex justify-center"

@@ -150,7 +150,8 @@ function SchoolStudentForm() {
                                 }}
                                 render={({field: {value, onChange}}) => (
                                     <>
-                                        <Select value={value} onValueChange={onChange} disabled={isPending || isUpdatingStudent || isDisabled}>
+                                        <Select value={value} onValueChange={onChange}
+                                                disabled={isPending || isUpdatingStudent || isDisabled}>
                                             <SelectTrigger
                                                 className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl">
                                                 <SelectValue placeholder="Gender"/>
@@ -179,12 +180,28 @@ function SchoolStudentForm() {
                                 }}
                                 render={({field: {value, onChange}}) => (
                                     <>
-                                        <Input
-                                            value={value}
-                                            onChange={onChange}
-                                            disabled={isPending || isUpdatingStudent || isDisabled}
-                                            className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
-                                        />
+                                        <Select value={value} onValueChange={onChange}
+                                                disabled={isPending || isUpdatingStudent || isDisabled}>
+                                            <SelectTrigger
+                                                className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl">
+                                                <SelectValue placeholder="Select class"/>
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="nursery">NURSERY</SelectItem>
+                                                <SelectItem value="lkg">LKG</SelectItem>
+                                                <SelectItem value="ukg">UKG</SelectItem>
+                                                <SelectItem value="1">1st</SelectItem>
+                                                <SelectItem value="2">2nd</SelectItem>
+                                                <SelectItem value="3">3rd</SelectItem>
+                                                <SelectItem value="4">4th</SelectItem>
+                                                <SelectItem value="5">5th</SelectItem>
+                                                <SelectItem value="6">6th</SelectItem>
+                                                <SelectItem value="7">7th</SelectItem>
+                                                <SelectItem value="8">8th</SelectItem>
+                                                <SelectItem value="9">9th</SelectItem>
+                                                <SelectItem value="10">10th</SelectItem>
+                                            </SelectContent>
+                                        </Select>
                                         <FormError message={errors?.class?.message}/>
                                     </>
                                 )}
@@ -196,14 +213,27 @@ function SchoolStudentForm() {
                             <Controller
                                 control={control}
                                 name='phoneNumber'
+                                rules={{
+                                    minLength: {
+                                        value: 10,
+                                        message: 'Enter a valid phone number'
+                                    },
+                                    maxLength: {
+                                        value: 10,
+                                        message: 'Enter a valid phone number'
+                                    },
+                                }}
                                 render={({field: {value, onChange}}) => (
-                                    <Input
-                                        value={value}
-                                        type="tel"
-                                        onChange={onChange}
-                                        disabled={isPending || isUpdatingStudent || isDisabled}
-                                        className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
-                                    />
+                                    <>
+                                        <Input
+                                            value={value}
+                                            type="tel"
+                                            onChange={onChange}
+                                            disabled={isPending || isUpdatingStudent || isDisabled}
+                                            className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
+                                        />
+                                        <FormError message={errors?.phoneNumber?.message}/>
+                                    </>
                                 )}
                             />
                         </StudentInfoInput>
@@ -214,7 +244,7 @@ function SchoolStudentForm() {
                                 control={control}
                                 name='dateOfBirth'
                                 render={({field: {value, onChange}}) => (
-                                    <DatePicker date={value} setDate={onChange} />
+                                    <DatePicker date={value} setDate={onChange}/>
                                 )}
                             />
                         </StudentInfoInput>
@@ -298,7 +328,7 @@ function SchoolStudentForm() {
                                 control={control}
                                 name='dateOfAdmission'
                                 render={({field: {value, onChange}}) => (
-                                    <DatePicker date={value} setDate={onChange} />
+                                    <DatePicker date={value} setDate={onChange}/>
                                 )}
                             />
                         </StudentInfoInput>
