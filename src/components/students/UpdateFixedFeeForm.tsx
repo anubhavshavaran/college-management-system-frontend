@@ -19,7 +19,7 @@ function UpdateFixedFeeForm() {
 
     return (
         <div className="w-full flex gap-2 items-end justify-center">
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-1 justify-center">
                 <p className="text-sm font-semibold capitalize">new fixed fee</p>
                 <Controller
                     control={control}
@@ -28,10 +28,14 @@ function UpdateFixedFeeForm() {
                         required: {
                             value: true,
                             message: 'A value for fixed fee is required.'
+                        },
+                        min: {
+                            value: 1,
+                            message: 'A value for min fee is required.'
                         }
                     }}
                     render={({field: {value, onChange}}) => (
-                        <>
+                        <div className="flex flex-col justify-center gap-2">
                             <Input
                                 type="number"
                                 className="sm:w-full md:w-[500px]"
@@ -41,7 +45,7 @@ function UpdateFixedFeeForm() {
                                 onChange={onChange}
                             />
                             <FormError message={errors?.fixedFee?.message} />
-                        </>
+                        </div>
                     )}
                 />
             </div>

@@ -19,7 +19,7 @@ function Dashboard() {
             return;
         }
 
-        if (user.role !== "CHAIRMAN" && user.organization !== organization) {
+        if (user.role !== "CHAIRMAN" && user.organization !== location.pathname.split("/").at(1)?.toUpperCase()) {
             navigate(`/${user.organization.toLowerCase()}/dash`);
         }
     }, [organization, user]);

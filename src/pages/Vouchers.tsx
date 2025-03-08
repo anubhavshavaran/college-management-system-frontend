@@ -53,7 +53,7 @@ function Vouchers() {
 
     const handleExport = () => {
         const csvData = vouchers.map((voucher: Voucher, key: number) => ({
-            Sr_No: key,
+            Sr_No: key + 1,
             Voucher_Number: `Voucher no. ${voucher.voucherNumber}`,
             Title: voucher.title,
             Date: new Date(voucher.date).toLocaleDateString(),

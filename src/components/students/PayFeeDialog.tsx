@@ -36,7 +36,7 @@ function PayFeeDialog({onSave}: PayFeeDialogProps) {
             <div className="grid gap-4 py-4">
                 <div className="grid grid-cols-4 items-center gap-4">
                     <Label htmlFor="name" className="text-right">
-                        Amount
+                        Amount *
                     </Label>
                     <Controller
                         control={control}
@@ -52,7 +52,7 @@ function PayFeeDialog({onSave}: PayFeeDialogProps) {
                             }
                         }}
                         render={({field: {value, onChange}}) => (
-                            <>
+                            <div className="w-full col-span-3 flex flex-col gap-2">
                                 <Input
                                     id="name"
                                     className="col-span-3"
@@ -61,13 +61,13 @@ function PayFeeDialog({onSave}: PayFeeDialogProps) {
                                     disabled={isCreatingPayment}
                                 />
                                 <FormError message={errors.amount?.message}/>
-                            </>
+                            </div>
                         )}
                     />
                 </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="username" className="text-right">
-                        Mode of Payment
+                <div className="grid grid-cols-4 items-center gap-16">
+                    <Label htmlFor="username" className="text-right text-nowrap">
+                        Mode of Payment *
                     </Label>
                     <Controller
                         control={control}
@@ -79,7 +79,7 @@ function PayFeeDialog({onSave}: PayFeeDialogProps) {
                             }
                         }}
                         render={({field: {value, onChange}}) => (
-                            <>
+                            <div className="w-full col-span-3 flex flex-col gap-2">
                                 <Input
                                     id="name"
                                     className="col-span-3"
@@ -88,13 +88,13 @@ function PayFeeDialog({onSave}: PayFeeDialogProps) {
                                     disabled={isCreatingPayment}
                                 />
                                 <FormError message={errors.mode?.message}/>
-                            </>
+                            </div>
                         )}
                     />
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
                     <Label htmlFor="username" className="text-right">
-                        Paid On
+                        Paid On *
                     </Label>
                     <Controller
                         control={control}
@@ -106,10 +106,10 @@ function PayFeeDialog({onSave}: PayFeeDialogProps) {
                             }
                         }}
                         render={({field: {value, onChange}}) => (
-                            <>
-                                <DatePicker date={value} setDate={onChange} className="col-span-3" />
-                                <FormError message={errors.mode?.message}/>
-                            </>
+                            <div className="w-full col-span-3 flex flex-col gap-2">
+                                <DatePicker date={value} setDate={onChange} />
+                                <FormError message={errors.paidOn?.message} />
+                            </div>
                         )}
                     />
                 </div>

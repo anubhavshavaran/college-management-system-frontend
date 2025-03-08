@@ -1,12 +1,12 @@
 import {CiSearch} from "react-icons/ci";
 import {useOrganization} from "@/contexts/OrganizationContextProvider.tsx";
 import Organization from "@/constants/Organization.ts";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useSearchStudents} from "@/hooks/students.ts";
 import Spinner from "@/components/ui/Spinner.tsx";
 import {MdArrowOutward} from "react-icons/md";
 import {FaRegUser} from "react-icons/fa6";
-import {useNavigate} from "react-router";
+import {useLocation, useNavigate} from "react-router";
 import Student from "@/constants/Student.ts";
 
 type ResultProps = {
@@ -49,6 +49,11 @@ function Searchbar() {
     const isEnabled = value !== undefined && value !== '';
     const {results, isSearching, isFetched} = useSearchStudents(organization, isEnabled, value);
     const showResults: boolean = isFetched && results?.length > 0;
+    const location = useLocation();
+
+    useEffect(() => {
+        setValue('');
+    }, [location]);
 
     return (
         <div className="sm:w-full md:w-[300px] md:mr-8">

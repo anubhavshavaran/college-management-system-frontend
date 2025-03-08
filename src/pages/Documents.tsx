@@ -24,7 +24,7 @@ function Documents() {
 
     function navigateToDocument(e: React.MouseEvent, id: string) {
         e.stopPropagation();
-        window.open(`http://localhost:3000${id}`, '_blank');
+        window.open(`http://82.29.167.212:3000${id}`, '_blank');
     }
 
     return (
