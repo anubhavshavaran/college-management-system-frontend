@@ -15,7 +15,7 @@ function OrganizationContextProvider({children}: { children: ReactElement }) {
     const changeOrganization = (o: Organization) => setOrganization(o);
 
     useEffect(() => {
-        if (location.pathname.split("/").at(1) === "school") {
+        if (location.pathname.split("/").at(1) === "school" || location.pathname.split("/").at(1) === "SCHOOL") {
             changeOrganization(Organization.SCHOOL);
         } else {
             changeOrganization(Organization.COLLEGE);

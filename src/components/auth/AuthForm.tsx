@@ -52,7 +52,7 @@ function AuthForm() {
 
     useEffect(() => {
         if (isUserSet) {
-            navigate(`/${getValues().organization.toLowerCase()}`);
+            navigate(`/${user.organization.toLowerCase()}/dash`);
         }
     }, [getValues, isUserSet, navigate]);
 

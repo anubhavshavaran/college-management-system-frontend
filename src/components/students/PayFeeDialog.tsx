@@ -17,11 +17,12 @@ type PayFeeDialogProps = {
 function PayFeeDialog({onSave}: PayFeeDialogProps) {
     const {studentId} = useParams();
     const {createPayment, isCreatingPayment} = useCreateStudentPayment(studentId ?? '');
-    const {control, getValues, formState: {errors}, handleSubmit} = useForm<Payment>();
+    const {control, getValues, formState: {errors}, handleSubmit, reset} = useForm<Payment>();
 
     function create() {
         const data = getValues();
         createPayment(data);
+        reset();
         onSave();
     }
 
