@@ -24,7 +24,7 @@ function Documents() {
 
     function navigateToDocument(e: React.MouseEvent, id: string) {
         e.stopPropagation();
-        window.open(`http://82.29.167.212:3000${id}`, '_blank');
+        window.open(`https://cms.abdulkalaminstitutions.in/api${id}`, '_blank');
     }
 
     return (
@@ -46,7 +46,7 @@ function Documents() {
                 ) : (
 
                     <Table>
-                        {docs.length === 0 && (
+                        {docs?.length === 0 && (
                             <TableCaption>
                                 No docs are available.
                             </TableCaption>
@@ -59,7 +59,7 @@ function Documents() {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {docs.map((doc: Docs, key: number) => (
+                            {docs?.map((doc: Docs, key: number) => (
                                 <TableRow key={key}>
                                     <TableCell className="text-center">{key + 1}</TableCell>
                                     <TableCell className="text-center">{doc.title}</TableCell>
