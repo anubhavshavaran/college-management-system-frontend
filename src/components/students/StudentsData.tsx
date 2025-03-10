@@ -42,7 +42,7 @@ function StudentsData() {
     }
 
     function navToAdd() {
-        navigate(`/${organization}/addStudent`);
+        navigate(`/${organization}/addStudent/${course}`);
     }
 
     function handleDelete(e: React.MouseEvent, id: string) {

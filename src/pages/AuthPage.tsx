@@ -10,11 +10,7 @@ function AuthPage() {
 
     useEffect(() => {
         if (user) {
-            if (user.organization === "UNIVERSAL") {
-                navigate("/school/dash");
-            } else {
-                navigate(`/${user.organization}/dash`);
-            }
+            navigate(-1);
         }
     }, [navigate, user]);
 

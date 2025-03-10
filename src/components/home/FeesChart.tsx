@@ -1,4 +1,4 @@
-import {Bar, BarChart, CartesianGrid, LabelList, XAxis, YAxis} from "recharts"
+import {Bar, BarChart, CartesianGrid, LabelList, XAxis} from "recharts"
 import {
     Card,
     CardContent,
@@ -67,12 +67,6 @@ export function FeesChart() {
                                     tickMargin={10}
                                     axisLine={false}
                                     tickFormatter={(value) => value.slice(0, 3)}
-                                />
-                                <YAxis
-                                    tickLine={false}
-                                    axisLine={false}
-                                    tickMargin={10}
-                                    tickFormatter={(value) => `${value}`} // Optional: Format Y-axis labels
                                 />
                                 <ChartTooltip
                                     cursor={false}

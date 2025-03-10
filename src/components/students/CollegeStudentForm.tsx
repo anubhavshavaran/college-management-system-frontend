@@ -11,20 +11,27 @@
     import {useEffect} from "react";
     import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select.tsx";
     import {useUser} from "@/contexts/UserContextProvider.tsx";
-    import DatePicker from "@/components/ui/date-picker.tsx";
+    import DatePickerWithMonthYear from "@/components/ui/DatePickerWithMonthYear.tsx";
 
-    function CollegeStudentForm() {
+    type CollegeStudentFormProps = {
+        course?: string;
+    }
+
+    function CollegeStudentForm({course}: CollegeStudentFormProps) {
         const {user} = useUser();
         const isDisabled = user?.role === "ADMIN";
         const {organization} = useOrganization();
         const {studentId} = useParams();
         const isEditing: boolean = studentId !== null && studentId !== undefined;
-        const {control, reset, getValues, handleSubmit, formState: {errors}} = useForm<Student>();
+        const {control, reset, getValues, handleSubmit, formState: {errors}} = useForm<Student>({
+            defaultValues: {
+                course: course || "",
+            }
+        });
         const {createStudent, isPending} = useCreateStudent(organization);
         const {student, isPending: isStudentLoading, isFetched} = useStudent(organization, studentId ?? '', isEditing);
         const {updateStudent, isUpdatingStudent} = useUpdateStudent(studentId ?? '', organization);
 
-        console.log(getValues().durationInYear, typeof getValues().durationInYear);
         useEffect(() => {
             if (isFetched) {
                 reset(student);
@@ -267,7 +274,7 @@
                                     control={control}
                                     name='dateOfBirth'
                                     render={({field: {value, onChange}}) => (
-                                        <DatePicker date={value} setDate={onChange}/>
+                                        <DatePickerWithMonthYear date={value} setDate={onChange}/>
                                     )}
                                 />
                             </StudentInfoInput>
@@ -351,7 +358,7 @@
                                     control={control}
                                     name='dateOfAdmission'
                                     render={({field: {value, onChange}}) => (
-                                        <DatePicker date={value} setDate={onChange}/>
+                                        <DatePickerWithMonthYear date={value} setDate={onChange}/>
                                     )}
                                 />
                             </StudentInfoInput>

@@ -16,7 +16,7 @@ import Organization from "@/constants/Organization.ts";
 import {useSearchParams} from "react-router";
 import {useEffect} from "react";
 import {useCreateVoucher, useUpdateVoucher, useVoucher} from "@/hooks/vouchers.ts";
-import DatePicker from "@/components/ui/date-picker.tsx";
+import DatePickerWithMonthYear from "@/components/ui/DatePickerWithMonthYear.tsx";
 
 type VoucherDialogProps = {
     organization: Organization;
@@ -33,6 +33,7 @@ export function VoucherDialog({organization, onSave}: VoucherDialogProps) {
             amount: 0,
             modeOfPayment: "",
             particulars: "",
+            date: new Date()
         },
     });
 
@@ -87,15 +88,17 @@ export function VoucherDialog({organization, onSave}: VoucherDialogProps) {
                                     }
                                 }}
                                 render={({field: {value, onChange}}) => (
-                                    <Input
-                                        id="name"
-                                        className="col-span-3"
-                                        value={value}
-                                        onChange={onChange}
-                                    />
+                                    <div className="w-full col-span-3 flex flex-col gap-2">
+                                        <Input
+                                            id="name"
+                                            className="col-span-3"
+                                            value={value}
+                                            onChange={onChange}
+                                        />
+                                        <FormError message={errors.title?.message}/>
+                                    </div>
                                 )}
                             />
-                            <FormError message={errors.title?.message}/>
                         </div>
                         <div className="grid grid-cols-4 items-center gap-4">
                             <Label htmlFor="date" className="text-right">
@@ -111,10 +114,13 @@ export function VoucherDialog({organization, onSave}: VoucherDialogProps) {
                                     }
                                 }}
                                 render={({field: {value, onChange}}) => (
-                                    <DatePicker date={value} setDate={onChange} className="col-span-3" />
+                                    <div className="w-full col-span-3 flex flex-col gap-2">
+                                        <DatePickerWithMonthYear date={value ?? Date()} setDate={onChange}
+                                                                 className="col-span-3"/>
+                                        <FormError message={errors.date?.message}/>
+                                    </div>
                                 )}
                             />
-                            <FormError message={errors.date?.message}/>
                         </div>
                         <div className="grid grid-cols-4 items-center gap-4">
                             <Label htmlFor="amount" className="text-right">
@@ -134,15 +140,17 @@ export function VoucherDialog({organization, onSave}: VoucherDialogProps) {
                                     }
                                 }}
                                 render={({field: {value, onChange}}) => (
-                                    <Input
-                                        id="amount"
-                                        className="col-span-3"
-                                        value={value}
-                                        onChange={onChange}
-                                    />
+                                    <div className="w-full col-span-3 flex flex-col gap-2">
+                                        <Input
+                                            id="amount"
+                                            className="col-span-3"
+                                            value={value}
+                                            onChange={onChange}
+                                        />
+                                        <FormError message={errors.amount?.message}/>
+                                    </div>
                                 )}
                             />
-                            <FormError message={errors.amount?.message}/>
                         </div>
                         <div className="grid grid-cols-4 items-center gap-4">
                             <Label htmlFor="mode" className="text-right">
@@ -158,15 +166,17 @@ export function VoucherDialog({organization, onSave}: VoucherDialogProps) {
                                     }
                                 }}
                                 render={({field: {value, onChange}}) => (
-                                    <Input
-                                        id="mode"
-                                        className="col-span-3"
-                                        value={value}
-                                        onChange={onChange}
-                                    />
+                                    <div className="w-full col-span-3 flex flex-col gap-2">
+                                        <Input
+                                            id="mode"
+                                            className="col-span-3"
+                                            value={value}
+                                            onChange={onChange}
+                                        />
+                                        <FormError message={errors.modeOfPayment?.message}/>
+                                    </div>
                                 )}
                             />
-                            <FormError message={errors.modeOfPayment?.message}/>
                         </div>
                         <div className="grid grid-cols-4 items-center gap-4">
                             <Label htmlFor="parts" className="text-right">
@@ -182,15 +192,17 @@ export function VoucherDialog({organization, onSave}: VoucherDialogProps) {
                                     }
                                 }}
                                 render={({field: {value, onChange}}) => (
-                                    <Input
-                                        id="parts"
-                                        className="col-span-3"
-                                        value={value}
-                                        onChange={onChange}
-                                    />
+                                    <div className="w-full col-span-3 flex flex-col gap-2">
+                                        <Input
+                                            id="parts"
+                                            className="col-span-3"
+                                            value={value}
+                                            onChange={onChange}
+                                        />
+                                        <FormError message={errors.particulars?.message}/>
+                                    </div>
                                 )}
                             />
-                            <FormError message={errors.particulars?.message}/>
                         </div>
                     </div>
                     <DialogFooter className="w-full flex sm:justify-center">

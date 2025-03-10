@@ -11,16 +11,23 @@ import {useParams} from "react-router";
 import {useEffect} from "react";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select.tsx";
 import {useUser} from "@/contexts/UserContextProvider.tsx";
-import DatePicker from "@/components/ui/date-picker.tsx";
+import DatePickerWithMonthYear from "@/components/ui/DatePickerWithMonthYear.tsx";
 
+type SchoolStudentFormProps = {
+    grade?: string;
+}
 
-function SchoolStudentForm() {
+function SchoolStudentForm({grade}: SchoolStudentFormProps) {
     const {user} = useUser();
     const isDisabled = user?.role === "ADMIN";
     const {organization} = useOrganization();
     const {studentId} = useParams();
     const isEditing: boolean = studentId !== null && studentId !== undefined;
-    const {control, reset, getValues, handleSubmit, formState: {errors}} = useForm<Student>();
+    const {control, reset, getValues, handleSubmit, formState: {errors}} = useForm<Student>({
+        defaultValues: {
+            class: grade,
+        }
+    });
     const {createStudent, isPending} = useCreateStudent(organization);
     const {
         student,
@@ -244,7 +251,7 @@ function SchoolStudentForm() {
                                 control={control}
                                 name='dateOfBirth'
                                 render={({field: {value, onChange}}) => (
-                                    <DatePicker date={value} setDate={onChange}/>
+                                    <DatePickerWithMonthYear date={value} setDate={onChange}/>
                                 )}
                             />
                         </StudentInfoInput>
@@ -328,23 +335,7 @@ function SchoolStudentForm() {
                                 control={control}
                                 name='dateOfAdmission'
                                 render={({field: {value, onChange}}) => (
-                                    <DatePicker date={value} setDate={onChange}/>
-                                )}
-                            />
-                        </StudentInfoInput>
-                        <StudentInfoInput
-                            label="Expected year of Passing"
-                        >
-                            <Controller
-                                control={control}
-                                name='expectedYearOfPassing'
-                                render={({field: {value, onChange}}) => (
-                                    <Input
-                                        value={value}
-                                        onChange={onChange}
-                                        disabled={isPending || isUpdatingStudent || isDisabled}
-                                        className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
-                                    />
+                                    <DatePickerWithMonthYear date={value} setDate={onChange}/>
                                 )}
                             />
                         </StudentInfoInput>

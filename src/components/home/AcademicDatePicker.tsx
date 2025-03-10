@@ -1,4 +1,3 @@
-import DatePicker from "@/components/ui/date-picker.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {useMutation, useQuery} from "@tanstack/react-query";
 import {useOrganization} from "@/contexts/OrganizationContextProvider.tsx";
@@ -6,6 +5,7 @@ import {getAcademicDataApi, updateAcademicDateApi} from "@/services/dashboardApi
 import Spinner from "@/components/ui/Spinner.tsx";
 import {useEffect, useState} from "react";
 import AcademicDate from "@/constants/AcademicDate.ts";
+import DatePickerWithMonthYear from "@/components/ui/DatePickerWithMonthYear.tsx";
 
 function AcademicDatePicker() {
     const {organization} = useOrganization();
@@ -35,7 +35,7 @@ function AcademicDatePicker() {
                     <div className="flex gap-2 items-end">
                         <div className="flex flex-col gap-1">
                             <p>Starting Date</p>
-                            <DatePicker date={startingDate} setDate={setStartingDate}/>
+                            <DatePickerWithMonthYear date={startingDate} setDate={setStartingDate}/>
                         </div>
                         <Button
                             onClick={() => {
@@ -51,7 +51,7 @@ function AcademicDatePicker() {
                     <div className="flex gap-2 items-end">
                         <div className="flex flex-col gap-1">
                             <p>Ending Date</p>
-                            <DatePicker date={endingDate} setDate={setEndingDate}/>
+                            <DatePickerWithMonthYear date={endingDate} setDate={setEndingDate}/>
                         </div>
                         <Button
                             onClick={() => {
