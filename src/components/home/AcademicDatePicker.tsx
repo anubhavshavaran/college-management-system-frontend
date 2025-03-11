@@ -5,7 +5,6 @@ import {getAcademicDataApi, updateAcademicDateApi} from "@/services/dashboardApi
 import Spinner from "@/components/ui/Spinner.tsx";
 import {useEffect, useState} from "react";
 import AcademicDate from "@/constants/AcademicDate.ts";
-import DatePickerWithMonthYear from "@/components/ui/DatePickerWithMonthYear.tsx";
 import MuiDatePicker from "@/components/ui/MuiDatePicker.tsx";
 
 function AcademicDatePicker() {
