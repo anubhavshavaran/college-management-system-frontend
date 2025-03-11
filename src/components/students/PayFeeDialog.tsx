@@ -8,7 +8,7 @@ import {Controller, useForm} from "react-hook-form";
 import Payment from "@/constants/Payment.ts";
 import FormError from "@/components/ui/FormError.tsx";
 import Spinner from "@/components/ui/Spinner.tsx";
-import DatePickerWithMonthYear from "@/components/ui/DatePickerWithMonthYear.tsx";
+import MuiDatePicker from "@/components/ui/MuiDatePicker.tsx";
 
 type PayFeeDialogProps = {
     onSave: () => void;
@@ -17,7 +17,11 @@ type PayFeeDialogProps = {
 function PayFeeDialog({onSave}: PayFeeDialogProps) {
     const {studentId} = useParams();
     const {createPayment, isCreatingPayment} = useCreateStudentPayment(studentId ?? '');
-    const {control, getValues, formState: {errors}, handleSubmit, reset} = useForm<Payment>();
+    const {control, getValues, formState: {errors}, handleSubmit, reset} = useForm<Payment>({
+        defaultValues: {
+            paidOn: new Date()
+        }
+    });
 
     function create() {
         const data = getValues();
@@ -108,7 +112,7 @@ function PayFeeDialog({onSave}: PayFeeDialogProps) {
                         }}
                         render={({field: {value, onChange}}) => (
                             <div className="w-full col-span-3 flex flex-col gap-2">
-                                <DatePickerWithMonthYear date={value ?? Date()} setDate={onChange} />
+                                <MuiDatePicker value={value} onChange={onChange} />
                                 <FormError message={errors.paidOn?.message} />
                             </div>
                         )}

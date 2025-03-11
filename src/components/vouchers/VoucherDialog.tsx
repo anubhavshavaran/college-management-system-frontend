@@ -16,7 +16,7 @@ import Organization from "@/constants/Organization.ts";
 import {useSearchParams} from "react-router";
 import {useEffect} from "react";
 import {useCreateVoucher, useUpdateVoucher, useVoucher} from "@/hooks/vouchers.ts";
-import DatePickerWithMonthYear from "@/components/ui/DatePickerWithMonthYear.tsx";
+import MuiDatePicker from "@/components/ui/MuiDatePicker.tsx";
 
 type VoucherDialogProps = {
     organization: Organization;
@@ -50,12 +50,14 @@ export function VoucherDialog({organization, onSave}: VoucherDialogProps) {
     function create() {
         const data = getValues();
         createVoucher(data);
+        reset();
         onSave();
     }
 
     function update() {
         const data = getValues();
         updateVoucher(data);
+        reset();
         onSave();
     }
 
@@ -115,8 +117,7 @@ export function VoucherDialog({organization, onSave}: VoucherDialogProps) {
                                 }}
                                 render={({field: {value, onChange}}) => (
                                     <div className="w-full col-span-3 flex flex-col gap-2">
-                                        <DatePickerWithMonthYear date={value ?? Date()} setDate={onChange}
-                                                                 className="col-span-3"/>
+                                        <MuiDatePicker value={value ?? new Date()} onChange={onChange} />
                                         <FormError message={errors.date?.message}/>
                                     </div>
                                 )}

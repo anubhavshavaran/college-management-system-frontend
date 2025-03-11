@@ -54,8 +54,9 @@ function AuthForm() {
         if (isUserSet) {
             if (user.organization === 'UNIVERSAL') {
                 navigate(`/${getValues().organization.toLowerCase()}/dash`);
+            } else {
+                navigate(`/${user.organization.toLowerCase()}/dash`);
             }
-            navigate(`/${user.organization.toLowerCase()}/dash`);
         }
     }, [getValues, isUserSet, navigate]);
 

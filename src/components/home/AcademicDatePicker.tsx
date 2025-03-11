@@ -6,6 +6,7 @@ import Spinner from "@/components/ui/Spinner.tsx";
 import {useEffect, useState} from "react";
 import AcademicDate from "@/constants/AcademicDate.ts";
 import DatePickerWithMonthYear from "@/components/ui/DatePickerWithMonthYear.tsx";
+import MuiDatePicker from "@/components/ui/MuiDatePicker.tsx";
 
 function AcademicDatePicker() {
     const {organization} = useOrganization();
@@ -35,7 +36,7 @@ function AcademicDatePicker() {
                     <div className="flex gap-2 items-end">
                         <div className="flex flex-col gap-1">
                             <p>Starting Date</p>
-                            <DatePickerWithMonthYear date={startingDate} setDate={setStartingDate}/>
+                            <MuiDatePicker value={startingDate ?? new Date()} onChange={setStartingDate} />
                         </div>
                         <Button
                             onClick={() => {
@@ -51,7 +52,7 @@ function AcademicDatePicker() {
                     <div className="flex gap-2 items-end">
                         <div className="flex flex-col gap-1">
                             <p>Ending Date</p>
-                            <DatePickerWithMonthYear date={endingDate} setDate={setEndingDate}/>
+                            <MuiDatePicker value={endingDate ?? new Date()} onChange={setEndingDate} />
                         </div>
                         <Button
                             onClick={() => {

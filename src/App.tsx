@@ -37,7 +37,7 @@ function App() {
                                     <Route path="dash" element={<Home/>}/>
                                     <Route path="students" element={<Students />}/>
                                     <Route path="students/:studentId" element={<Student />}/>
-                                    <Route path="addStudent/:course" element={<AddStudent />}/>
+                                    <Route path="addStudent/:course?" element={<AddStudent />}/>
                                     <Route path="fees" element={<Fees />}/>
                                     <Route path="users" element={<Users />}/>
                                     <Route path="docs" element={<Documents />}/>
@@ -48,7 +48,7 @@ function App() {
                                     <Route index path="dash" element={<Home/>}/>
                                     <Route path="students" element={<Students />}/>
                                     <Route path="students/:studentId" element={<Student />}/>
-                                    <Route path="addStudent/:course" element={<AddStudent />}/>
+                                    <Route path="addStudent/:course?" element={<AddStudent />}/>
                                     <Route path="fees" element={<Fees />}/>
                                     <Route path="users" element={<Users />}/>
                                     <Route path="docs" element={<Documents />}/>

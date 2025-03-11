@@ -43,11 +43,16 @@ function useStudent(organization: Organization, id: string, isEnable: boolean) {
     }
 }
 
-function useCreateStudent(organization: Organization) {
+function useCreateStudent(organization: Organization, onSuccess: () => void) {
     const {mutate: createStudent, isPending, error} = useMutation({
         mutationFn: (student: Student) => createStudentApi(organization, student),
-        onSuccess: () => {
-            toast.success("Student created successfully.");
+        onSuccess: (data) => {
+            if (data.status === "error") {
+                toast.error("Error Occurred");
+            } else {
+                toast.success("Student created successfully.");
+                onSuccess();
+            }
         }
     });
 

@@ -27,7 +27,6 @@ function Vouchers() {
     const [searchParams, setSearchParams] = useSearchParams();
     const receiptId = searchParams.get("receiptId");
     const {vouchers, isVouchersLoading, error} = useVouchers(organization);
-    console.log(vouchers);
     const {deleteVoucher} = useDeleteVouchers(organization);
 
     function setId(id: string) {

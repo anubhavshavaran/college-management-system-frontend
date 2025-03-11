@@ -14,6 +14,7 @@ type Student = {
     mothersName?: string;
     fathersName?: string;
     phoneNumber?: string;
+    phoneNumber2?: string;
     dateOfBirth?: Date;
     adhaarNumber?: string;
     voterNumber?: string;

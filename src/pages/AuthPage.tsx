@@ -9,8 +9,13 @@ function AuthPage() {
     const navigate = useNavigate();
 
     useEffect(() => {
+        console.log(user)
         if (user) {
-            navigate(-1);
+            if (user.organization === 'UNIVERSAL') {
+                navigate(`/school/dash`);
+            } else {
+                navigate(`${user.organization.toLowerCase()}/dash`);
+            }
         }
     }, [navigate, user]);
 

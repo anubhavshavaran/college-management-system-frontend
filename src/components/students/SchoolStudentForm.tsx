@@ -7,11 +7,11 @@ import Spinner from "@/components/ui/Spinner.tsx";
 import {useOrganization} from "@/contexts/OrganizationContextProvider.tsx";
 import Student from "@/constants/Student.ts";
 import {useCreateStudent, useStudent, useUpdateStudent} from "@/hooks/students.ts";
-import {useParams} from "react-router";
+import {useNavigate, useParams} from "react-router";
 import {useEffect} from "react";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select.tsx";
 import {useUser} from "@/contexts/UserContextProvider.tsx";
-import DatePickerWithMonthYear from "@/components/ui/DatePickerWithMonthYear.tsx";
+import MuiDatePicker from "@/components/ui/MuiDatePicker.tsx";
 
 type SchoolStudentFormProps = {
     grade?: string;
@@ -19,16 +19,20 @@ type SchoolStudentFormProps = {
 
 function SchoolStudentForm({grade}: SchoolStudentFormProps) {
     const {user} = useUser();
+    const navigate = useNavigate();
     const isDisabled = user?.role === "ADMIN";
     const {organization} = useOrganization();
     const {studentId} = useParams();
     const isEditing: boolean = studentId !== null && studentId !== undefined;
-    const {control, reset, getValues, handleSubmit, formState: {errors}} = useForm<Student>({
+    console.log(isEditing);
+    const {control, reset, getValues, handleSubmit, formState: {errors}, setValue} = useForm<Student>({
         defaultValues: {
             class: grade,
+            dateOfBirth: new Date(),
+            dateOfAdmission: new Date(),
         }
     });
-    const {createStudent, isPending} = useCreateStudent(organization);
+    const {createStudent, isPending} = useCreateStudent(organization, () => navigate(-1));
     const {
         student,
         isPending: isStudentLoading,
@@ -39,6 +43,8 @@ function SchoolStudentForm({grade}: SchoolStudentFormProps) {
     useEffect(() => {
         if (isFetched) {
             reset(student);
+            setValue('dateOfBirth', new Date(student.dateOfBirth))
+            setValue('dateOfAdmission', new Date(student.dateOfAdmission))
         }
     }, [student, reset, isFetched]);
 
@@ -245,13 +251,43 @@ function SchoolStudentForm({grade}: SchoolStudentFormProps) {
                             />
                         </StudentInfoInput>
                         <StudentInfoInput
+                            label="Phone number 2"
+                        >
+                            <Controller
+                                control={control}
+                                name='phoneNumber2'
+                                rules={{
+                                    minLength: {
+                                        value: 10,
+                                        message: 'Enter a valid phone number'
+                                    },
+                                    maxLength: {
+                                        value: 10,
+                                        message: 'Enter a valid phone number'
+                                    },
+                                }}
+                                render={({field: {value, onChange}}) => (
+                                    <>
+                                        <Input
+                                            value={value}
+                                            type="tel"
+                                            onChange={onChange}
+                                            disabled={isPending || isUpdatingStudent || isDisabled}
+                                            className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
+                                        />
+                                        <FormError message={errors?.phoneNumber?.message}/>
+                                    </>
+                                )}
+                            />
+                        </StudentInfoInput>
+                        <StudentInfoInput
                             label="Date of Birth"
                         >
                             <Controller
                                 control={control}
                                 name='dateOfBirth'
                                 render={({field: {value, onChange}}) => (
-                                    <DatePickerWithMonthYear date={value} setDate={onChange}/>
+                                    <MuiDatePicker value={value ?? new Date()} onChange={onChange}/>
                                 )}
                             />
                         </StudentInfoInput>
@@ -261,13 +297,22 @@ function SchoolStudentForm({grade}: SchoolStudentFormProps) {
                             <Controller
                                 control={control}
                                 name='adhaarNumber'
+                                rules={{
+                                    minLength: {
+                                        value: 12,
+                                        message: 'Aadhaar should contain 12 digits'
+                                    }
+                                }}
                                 render={({field: {value, onChange}}) => (
-                                    <Input
-                                        value={value}
-                                        onChange={onChange}
-                                        disabled={isPending || isUpdatingStudent || isDisabled}
-                                        className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
-                                    />
+                                    <>
+                                        <Input
+                                            value={value}
+                                            onChange={onChange}
+                                            disabled={isPending || isUpdatingStudent || isDisabled}
+                                            className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
+                                        />
+                                        <FormError message={errors?.adhaarNumber?.message}/>
+                                    </>
                                 )}
                             />
                         </StudentInfoInput>
@@ -335,7 +380,7 @@ function SchoolStudentForm({grade}: SchoolStudentFormProps) {
                                 control={control}
                                 name='dateOfAdmission'
                                 render={({field: {value, onChange}}) => (
-                                    <DatePickerWithMonthYear date={value} setDate={onChange}/>
+                                    <MuiDatePicker value={value ?? new Date()} onChange={onChange}/>
                                 )}
                             />
                         </StudentInfoInput>
@@ -542,32 +587,31 @@ function SchoolStudentForm({grade}: SchoolStudentFormProps) {
                                 )}
                             />
                         </StudentInfoInput>
-                        <StudentInfoInput
-                            label="Fixed Fee *"
-                        >
-                            <Controller
-                                control={control}
-                                name='fixedFee'
-                                rules={{
-                                    required: {
-                                        value: true,
-                                        message: 'Fixed Fee is required'
-                                    }
-                                }}
-                                render={({field: {value, onChange}}) => (
-                                    <>
-                                        <Input
-                                            value={value}
-                                            type="number"
-                                            onChange={onChange}
-                                            disabled={isPending || isUpdatingStudent || isDisabled}
-                                            className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
-                                        />
-                                        <FormError message={errors?.fixedFee?.message}/>
-                                    </>
-                                )}
-                            />
-                        </StudentInfoInput>
+
+                        {(isEditing ? user?.role === "CHAIRMAN" : true) && (
+                            <StudentInfoInput label="Fixed Fee *">
+                                <Controller
+                                    control={control}
+                                    name="fixedFee"
+                                    rules={{
+                                        required: { value: true, message: "Fixed Fee is required" },
+                                    }}
+                                    render={({ field: { value, onChange } }) => (
+                                        <>
+                                            <Input
+                                                value={value}
+                                                type="number"
+                                                onChange={onChange}
+                                                disabled={isPending || isUpdatingStudent || isDisabled}
+                                                className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
+                                            />
+                                            <FormError message={errors?.fixedFee?.message} />
+                                        </>
+                                    )}
+                                />
+                            </StudentInfoInput>
+                        )}
+
                     </div>
 
                     {user?.role !== "ADMIN" && (
@@ -579,7 +623,7 @@ function SchoolStudentForm({grade}: SchoolStudentFormProps) {
                             {isPending || isUpdatingStudent ? (
                                 <Spinner/>
                             ) : (
-                                <p>{isEditing ? 'Save Student' : 'Add Student'}</p>
+                                <p>{isEditing ? 'Update Info' : 'Add Student'}</p>
                             )}
                         </Button>
                     )}
