@@ -46,8 +46,6 @@ async function createStudentApi(organization: Organization, student: Student) {
         }
     });
 
-    console.log(data)
-
     if (status.toString()[0] === '4') {
         throw new Error(data.message);
     }

@@ -9,7 +9,7 @@ import {useUser} from "@/contexts/UserContextProvider.tsx";
 import {LiaMoneyCheckAltSolid} from "react-icons/lia";
 import {RiLogoutBoxLine} from "react-icons/ri";
 import Organization from "@/constants/Organization.ts";
-import {useNavigate} from "react-router";
+import {useNavigate, useSearchParams} from "react-router";
 import {Button} from "@/components/ui/button.tsx";
 import {IoMdArrowBack} from "react-icons/io";
 
@@ -17,6 +17,8 @@ function DashSidebar() {
     const {organization} = useOrganization();
     const navigate = useNavigate();
     const {user, changeUser} = useUser();
+    const [searchParams] = useSearchParams();
+    console.log(searchParams);
 
     function switchOrganization() {
         if (organization === Organization.SCHOOL) {

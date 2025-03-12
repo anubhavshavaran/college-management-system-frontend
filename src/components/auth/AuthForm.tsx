@@ -53,9 +53,13 @@ function AuthForm() {
     useEffect(() => {
         if (isUserSet) {
             if (user.organization === 'UNIVERSAL') {
-                navigate(`/${getValues().organization.toLowerCase()}/dash`);
+                navigate(`/${getValues().organization.toLowerCase()}/dash`, {
+                    replace: true
+                });
             } else {
-                navigate(`/${user.organization.toLowerCase()}/dash`);
+                navigate(`/${user.organization.toLowerCase()}/dash`, {
+                    replace: true
+                });
             }
         }
     }, [getValues, isUserSet, navigate]);

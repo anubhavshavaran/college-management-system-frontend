@@ -9,15 +9,14 @@ function AuthPage() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log(user)
         if (user) {
             if (user.organization === 'UNIVERSAL') {
                 navigate(`/school/dash`);
             } else {
-                navigate(`${user.organization.toLowerCase()}/dash`);
+                navigate(`/${user.organization.toLowerCase()}/dash`);
             }
         }
-    }, [navigate, user]);
+    }, [navigate]);
 
     return (
         <div className="w-full h-screen flex justify-between items-center">

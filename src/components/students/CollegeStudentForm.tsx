@@ -7,7 +7,7 @@ import {useOrganization} from "@/contexts/OrganizationContextProvider.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import FormError from "@/components/ui/FormError.tsx";
 import Spinner from "@/components/ui/Spinner.tsx";
-import {useNavigate, useParams} from "react-router";
+import {useNavigate, useParams, useSearchParams} from "react-router";
 import {useEffect} from "react";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select.tsx";
 import {useUser} from "@/contexts/UserContextProvider.tsx";
@@ -20,7 +20,9 @@ type CollegeStudentFormProps = {
 function CollegeStudentForm({course}: CollegeStudentFormProps) {
     const {user} = useUser();
     const navigate = useNavigate();
-    const isDisabled = user?.role === "ADMIN";
+    const [searchParams] = useSearchParams();
+    const redirect = searchParams.get("r");
+    const isDisabled = user?.role === "ADMIN" || (user?.role !== "CHAIRMAN" && redirect === 'fees');
     const {organization} = useOrganization();
     const {studentId} = useParams();
     const isEditing: boolean = studentId !== null && studentId !== undefined;
@@ -328,9 +330,7 @@ function CollegeStudentForm({course}: CollegeStudentFormProps) {
                                 control={control}
                                 name='dateOfBirth'
                                 render={({field: {value, onChange}}) => (
-                                    // <DatePickerInput value={value} onChange={onChange}/>
-                                    // <DatePickerWithMonthYear date={value} setDate={onChange} />
-                                    <MuiDatePicker value={value ?? new Date()} onChange={onChange} />
+                                    <MuiDatePicker value={value ?? new Date()} onChange={onChange} disabled={isDisabled} />
                                 )}
                             />
                         </StudentInfoInput>
@@ -423,7 +423,7 @@ function CollegeStudentForm({course}: CollegeStudentFormProps) {
                                 control={control}
                                 name='dateOfAdmission'
                                 render={({field: {value, onChange}}) => (
-                                    <MuiDatePicker value={value ?? new Date()} onChange={onChange} />
+                                    <MuiDatePicker value={value ?? new Date()} onChange={onChange} disabled={isDisabled} />
                                 )}
                             />
                         </StudentInfoInput>

@@ -5,9 +5,10 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
 type MuiDatePickerProps = {
     value: Date;
     onChange: (time: Date) => void;
+    disabled?: boolean;
 };
 
-function MuiDatePicker({ value, onChange }: MuiDatePickerProps) {
+function MuiDatePicker({ value, disabled, onChange }: MuiDatePickerProps) {
     const handleChange = (newValue: Date | null) => {
         if (newValue) {
             onChange(newValue);
@@ -24,6 +25,7 @@ function MuiDatePicker({ value, onChange }: MuiDatePickerProps) {
                     onChange={(newValue) => handleChange(newValue)}
                     format={"dd/MM/yyyy"}
                     className="w-full p-0 border-none"
+                    disabled={disabled}
                     sx={{
                         "& .MuiInputBase-input": {
                             padding: "4px 8px",

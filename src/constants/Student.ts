@@ -35,7 +35,8 @@ type Student = {
     incomeCertificateEnclosed?: "yes" | "no";
     fixedFee?: number,
     paidFee?: number,
-    previousFee?: number
+    previousFee?: number,
+    createdAt?: Date,
 }
 
 export default Student;

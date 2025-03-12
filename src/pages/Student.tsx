@@ -5,10 +5,15 @@ import Organization from "@/constants/Organization.ts";
 import SchoolStudentForm from "@/components/students/SchoolStudentForm.tsx";
 import CollegeStudentForm from "@/components/students/CollegeStudentForm.tsx";
 import FeeData from "@/components/students/FeeData.tsx";
+import {useSearchParams} from "react-router";
 
 function Student() {
     const {organization} = useOrganization();
-    const [selectedTab, setSelectedTab] = useState<number>(0);
+    const [searchParams] = useSearchParams();
+    const redirectParam = searchParams.get('r');
+    const [selectedTab, setSelectedTab] = useState<number>(function () {
+        return redirectParam === 'fees' ? 1 : 0;
+    });
 
     return (
         <div className="w-full p-6">

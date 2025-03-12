@@ -50,8 +50,12 @@ function useCreateStudent(organization: Organization, onSuccess: () => void) {
             if (data.status === "error") {
                 toast.error("Error Occurred");
             } else {
-                toast.success("Student created successfully.");
-                onSuccess();
+                if (data.error === "duplicate") {
+                    toast.error(data.message);
+                } else {
+                    toast.success("Student created successfully.");
+                    onSuccess();
+                }
             }
         }
     });

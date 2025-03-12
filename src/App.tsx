@@ -30,28 +30,28 @@ function App() {
                     <UserContextProvider>
                         <OrganizationContextProvider>
                             <Routes>
-                                <Route path="/" element={<Navigate to="/auth" />} />
+                                <Route path="/" element={<Navigate to="/auth"/>}/>
                                 <Route path="/auth" element={<AuthPage/>}/>
                                 <Route path="/school" element={<Dashboard/>}>
                                     <Route path="" element={<Navigate to="dash"/>}/>
                                     <Route path="dash" element={<Home/>}/>
-                                    <Route path="students" element={<Students />}/>
-                                    <Route path="students/:studentId" element={<Student />}/>
-                                    <Route path="addStudent/:course?" element={<AddStudent />}/>
-                                    <Route path="fees" element={<Fees />}/>
-                                    <Route path="users" element={<Users />}/>
-                                    <Route path="docs" element={<Documents />}/>
+                                    <Route path="students" element={<Students/>}/>
+                                    <Route path="students/:studentId" element={<Student/>}/>
+                                    <Route path="addStudent/:course?" element={<AddStudent/>}/>
+                                    <Route path="fees" element={<Fees/>}/>
+                                    <Route path="users" element={<Users/>}/>
+                                    <Route path="docs" element={<Documents/>}/>
                                     <Route path="vouchers" element={<Vouchers/>}/>
                                 </Route>
                                 <Route path="/college" element={<Dashboard/>}>
                                     <Route path="" element={<Navigate to="dash"/>}/>
                                     <Route index path="dash" element={<Home/>}/>
-                                    <Route path="students" element={<Students />}/>
-                                    <Route path="students/:studentId" element={<Student />}/>
-                                    <Route path="addStudent/:course?" element={<AddStudent />}/>
-                                    <Route path="fees" element={<Fees />}/>
-                                    <Route path="users" element={<Users />}/>
-                                    <Route path="docs" element={<Documents />}/>
+                                    <Route path="students" element={<Students/>}/>
+                                    <Route path="students/:studentId" element={<Student/>}/>
+                                    <Route path="addStudent/:course?" element={<AddStudent/>}/>
+                                    <Route path="fees" element={<Fees/>}/>
+                                    <Route path="users" element={<Users/>}/>
+                                    <Route path="docs" element={<Documents/>}/>
                                     <Route path="vouchers" element={<Vouchers/>}/>
                                 </Route>
                             </Routes>

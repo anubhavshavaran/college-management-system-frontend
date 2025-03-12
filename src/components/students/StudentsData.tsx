@@ -16,7 +16,11 @@ import React, {useState} from "react";
 import Searchbar from "@/components/ui/Searchbar.tsx";
 import YearSelect from "@/components/students/YearSelect.tsx";
 
-function StudentsData() {
+type StudentsDataProps = {
+    fromFees?: boolean;
+}
+
+function StudentsData({fromFees}: StudentsDataProps) {
     const {user} = useUser();
     const navigate = useNavigate();
     const {organization} = useOrganization();
@@ -51,7 +55,8 @@ function StudentsData() {
     }
 
     function navToStudent(id: string) {
-        navigate(`/${organization}/students/${id}`);
+        const params = fromFees ? '?r=fees' : '';
+        navigate(`/${organization}/students/${id}${params}`);
     }
 
     return (

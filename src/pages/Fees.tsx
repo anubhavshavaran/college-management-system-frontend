@@ -18,7 +18,7 @@ function Fees() {
                 <CollegeCategories/>
             ))}
             {isCategory && (
-                <StudentsData/>
+                <StudentsData fromFees/>
             )}
         </div>
     );
