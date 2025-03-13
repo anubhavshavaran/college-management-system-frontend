@@ -27,7 +27,7 @@ function Result({id, name, idNumber, onNavigate}: ResultProps) {
     return (
         <div
             onClick={handleClick}
-            className="w-full px-2 py-1 flex justify-between items-center hover:bg-slate-100"
+            className="w-full px-2 py-1 flex justify-between items-center hover:bg-slate-100 z-50 bg-white"
         >
             <div className="flex justify-center items-center gap-2">
                 <div className="bg-slate-200 p-3 rounded-full flex items-center justify-center">
@@ -77,7 +77,7 @@ function Searchbar() {
                     <Spinner/>
                 )}
                 {showResults && (
-                    <div className="w-full flex flex-col items-center">
+                    <div className="w-full flex flex-col items-center z-50 max-h-[400px] overflow-y-scroll bg-white">
                         {results?.map((item: Student, i: number) => (
                             <Result
                                 key={i}

@@ -37,7 +37,10 @@ function CollegeStudentForm({course}: CollegeStudentFormProps) {
     const duration = watch("durationInYear");
     const admYear = watch("dateOfAdmission");
 
-    const {createStudent, isPending} = useCreateStudent(organization, () => navigate(`/college/students?cat=${getValues().course}&year=${getValues().year}`));
+    const {
+        createStudent,
+        isPending
+    } = useCreateStudent(organization, () => navigate(`/college/students?cat=${getValues().course}&year=${getValues().year}`));
     const {student, isPending: isStudentLoading, isFetched} = useStudent(organization, studentId ?? '', isEditing);
     const {updateStudent, isUpdatingStudent} = useUpdateStudent(studentId ?? '', organization);
 
@@ -330,7 +333,8 @@ function CollegeStudentForm({course}: CollegeStudentFormProps) {
                                 control={control}
                                 name='dateOfBirth'
                                 render={({field: {value, onChange}}) => (
-                                    <MuiDatePicker value={value ?? new Date()} onChange={onChange} disabled={isDisabled} />
+                                    <MuiDatePicker value={value ?? new Date()} onChange={onChange}
+                                                   disabled={isDisabled}/>
                                 )}
                             />
                         </StudentInfoInput>
@@ -423,7 +427,8 @@ function CollegeStudentForm({course}: CollegeStudentFormProps) {
                                 control={control}
                                 name='dateOfAdmission'
                                 render={({field: {value, onChange}}) => (
-                                    <MuiDatePicker value={value ?? new Date()} onChange={onChange} disabled={isDisabled} />
+                                    <MuiDatePicker value={value ?? new Date()} onChange={onChange}
+                                                   disabled={isDisabled}/>
                                 )}
                             />
                         </StudentInfoInput>
@@ -655,32 +660,38 @@ function CollegeStudentForm({course}: CollegeStudentFormProps) {
                                 )}
                             />
                         </StudentInfoInput>
-                        <StudentInfoInput
-                            label="Fixed Fee *"
-                        >
-                            <Controller
-                                control={control}
-                                name='fixedFee'
-                                rules={{
-                                    required: {
-                                        value: true,
-                                        message: 'Fixed Fee is required'
-                                    }
-                                }}
-                                render={({field: {value, onChange}}) => (
-                                    <>
-                                        <Input
-                                            value={value}
-                                            type="number"
-                                            onChange={onChange}
-                                            disabled={isPending || isUpdatingStudent || isDisabled}
-                                            className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
-                                        />
-                                        <FormError message={errors?.fixedFee?.message}/>
-                                    </>
-                                )}
-                            />
-                        </StudentInfoInput>
+                        {(isEditing ? user?.role === "CHAIRMAN" : true) && (
+                            <StudentInfoInput
+                                label="Fixed Fee *"
+                            >
+                                <Controller
+                                    control={control}
+                                    name='fixedFee'
+                                    rules={{
+                                        required: {
+                                            value: true,
+                                            message: 'Fixed Fee is required'
+                                        },
+                                        min: {
+                                            value: 1,
+                                            message: 'Fixed fees should be greater than 0'
+                                        }
+                                    }}
+                                    render={({field: {value, onChange}}) => (
+                                        <>
+                                            <Input
+                                                value={value}
+                                                type="number"
+                                                onChange={onChange}
+                                                disabled={isPending || isUpdatingStudent || isDisabled}
+                                                className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
+                                            />
+                                            <FormError message={errors?.fixedFee?.message}/>
+                                        </>
+                                    )}
+                                />
+                            </StudentInfoInput>
+                        )}
                     </div>
 
                     {user?.role !== "ADMIN" && (

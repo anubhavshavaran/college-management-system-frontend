@@ -596,6 +596,10 @@ function SchoolStudentForm({grade}: SchoolStudentFormProps) {
                                     name="fixedFee"
                                     rules={{
                                         required: { value: true, message: "Fixed Fee is required" },
+                                        min: {
+                                            value: 1,
+                                            message: 'Fixed fees should be greater than 0'
+                                        }
                                     }}
                                     render={({ field: { value, onChange } }) => (
                                         <>

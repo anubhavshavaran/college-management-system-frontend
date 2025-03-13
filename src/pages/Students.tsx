@@ -19,12 +19,14 @@ function Students() {
     return (
         <div className="w-full p-4 flex flex-col gap-4">
             <>
-                <Button
-                    onClick={navToAdd}
-                    className="bg-defaultGray p-5 shadow-none border-[1.5px] border-gray-400 rounded-xl hover:bg-defaultGray w-fit">
-                    <img src="/icons/plus.png" width={18} alt="Add Student"/>
-                    <p className="text-lg text-black font-normal ">Add Student</p>
-                </Button>
+                {!isCategory && (
+                    <Button
+                        onClick={navToAdd}
+                        className="bg-defaultGray p-5 shadow-none border-[1.5px] border-gray-400 rounded-xl hover:bg-defaultGray w-fit">
+                        <img src="/icons/plus.png" width={18} alt="Add Student"/>
+                        <p className="text-lg text-black font-normal ">Add Student</p>
+                    </Button>
+                )}
                 {!isCategory && (organization === Organization.SCHOOL ? (
                     <SchoolCategories/>
                 ) : (
