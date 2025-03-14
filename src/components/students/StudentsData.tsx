@@ -71,7 +71,7 @@ function StudentsData({fromFees}: StudentsDataProps) {
                         <InfoCard label={`${title} females`} text={data.stats.females}/>
                     </div>
 
-                    {user?.role !== "ADMIN" && location.pathname.split("/")[2] === "students" && (
+                    {user?.role !== "ADMIN" && location.pathname.split("/")[2] === "students" && course !== "passedOut" && (
                         <Button
                             onClick={navToAdd}
                             className="bg-defaultGray p-5 shadow-none border-[1.5px] border-gray-400 rounded-xl hover:bg-defaultGray w-fit">
@@ -103,7 +103,7 @@ function StudentsData({fromFees}: StudentsDataProps) {
                         </div>
                         {organization === Organization.SCHOOL ? (
                             <SchoolStudentsTable
-                                data={query !== null ? searchedData.students : data.students}
+                                data={query !== null ? searchedData?.students : data?.students}
                                 render={(student, key) => (
                                     <TableRow key={key} onClick={() => navToStudent(student._id ?? '')}>
                                         <TableCell className="text-center">{key + 1}</TableCell>
@@ -131,7 +131,7 @@ function StudentsData({fromFees}: StudentsDataProps) {
                         ) : (
                             <>
                                 <CollegeStudentsTable
-                                    data={query !== null ? searchedData.students : data.students}
+                                    data={query !== null ? searchedData?.students : data?.students}
                                     render={(student, key) => (
                                         <TableRow key={key} onClick={() => navToStudent(student._id ?? '')}>
                                             <TableCell className="text-center">{key + 1}</TableCell>

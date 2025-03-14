@@ -54,6 +54,7 @@ function App() {
                                     <Route path="docs" element={<Documents/>}/>
                                     <Route path="vouchers" element={<Vouchers/>}/>
                                 </Route>
+                                <Route path='*' element={<Navigate to='/auth' />} />
                             </Routes>
                         </OrganizationContextProvider>
                     </UserContextProvider>

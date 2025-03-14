@@ -12,20 +12,20 @@ const headers = ['Sr. no.', 'Registration Number', 'Name', 'Year', 'Gender', 'Da
 function CollegeStudentsTable({data, render}: TableProps) {
     return (
         <Table>
-            {data.length === 0 && (
+            {data?.length === 0 && (
                 <TableCaption>
                     No students are available.
                 </TableCaption>
             )}
             <TableHeader>
                 <TableRow>
-                    {headers.map((header, i) => (
+                    {headers?.map((header, i) => (
                         <TableHead className="text-center" key={i}>{header}</TableHead>
                     ))}
                 </TableRow>
             </TableHeader>
             <TableBody>
-                {data.map(render)}
+                {data?.map(render)}
             </TableBody>
         </Table>
     );
