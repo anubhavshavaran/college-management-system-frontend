@@ -101,10 +101,13 @@ async function updateStudentsFixedFeeApi(organization: Organization, query: Cour
     return data;
 }
 
-async function searchStudentsApi(organization: Organization, query: string) {
+async function searchStudentsApi(organization: Organization, search: string, query?: CourseQuery) {
     const {data, status} = await axiosInstance.request({
         method: 'GET',
-        url: `/students/${organization}/search/${query}`
+        url: `/students/${organization}/search/${search}`,
+        params: {
+            ...query
+        }
     });
 
     if (status.toString()[0] === '4') {

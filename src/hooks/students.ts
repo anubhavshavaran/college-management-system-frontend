@@ -216,10 +216,18 @@ function useUpdateStudentsFee() {
     }
 }
 
-function useSearchStudents(organization: Organization, enabled: boolean, query?: string) {
+function useSearchStudents(organization: Organization, enabled: boolean, query?: string, course?: string, year?: string) {
+    let params = {};
+    if (course) params = {...params, course};
+    if (year) params = {...params, year};
+
+    let queryArray = ['search', query];
+    if (course) queryArray = [...queryArray, course];
+    if (year) queryArray = [...queryArray, year];
+
     const {data, isPending: isSearching, isFetched} = useQuery({
-        queryKey: ['search', query],
-        queryFn: () => searchStudentsApi(organization, query ?? ''),
+        queryKey: ['search', queryArray],
+        queryFn: () => searchStudentsApi(organization, query ?? '', params),
         enabled
     });
 

@@ -2,7 +2,7 @@ import {Button} from "@/components/ui/button.tsx";
 import InfoCard from "@/components/ui/InfoCard.tsx";
 import {useOrganization} from "@/contexts/OrganizationContextProvider.tsx";
 import {useLocation, useNavigate, useSearchParams} from "react-router";
-import {useDeleteStudent, useStudents} from "@/hooks/students.ts";
+import {useDeleteStudent, useSearchStudents, useStudents} from "@/hooks/students.ts";
 import Spinner from "@/components/ui/Spinner.tsx";
 import SchoolStudentsTable from "@/components/students/SchoolStudentsTable.tsx";
 import Organization from "@/constants/Organization.ts";
@@ -29,10 +29,10 @@ function StudentsData({fromFees}: StudentsDataProps) {
     const [searchValue, setSearchValue] = useState<string>('');
     const course = searchParams.get("cat") ?? '';
     const year = searchParams.get("year") ?? '';
-    const query = searchParams.get("query");
+    const query = searchParams.get("query") ?? '';
     const {deleteStudent} = useDeleteStudent(organization);
     const {data, isPending} = useStudents(organization, course, year);
-    const {data: searchedData, isPending: isSearching} = useStudents(organization, course, year, query ?? '');
+    const {results} = useSearchStudents(organization, query !== '', query ?? '', course, year);
 
     let title: string;
     if (organization === Organization.SCHOOL) {
@@ -61,7 +61,7 @@ function StudentsData({fromFees}: StudentsDataProps) {
 
     return (
         <div className="w-full flex flex-col gap-4">
-            {isPending || isSearching ? (
+            {isPending ? (
                 <Spinner/>
             ) : (
                 <>
@@ -103,7 +103,7 @@ function StudentsData({fromFees}: StudentsDataProps) {
                         </div>
                         {organization === Organization.SCHOOL ? (
                             <SchoolStudentsTable
-                                data={query !== null ? searchedData?.students : data?.students}
+                                data={query !== null ? results : data?.students}
                                 render={(student, key) => (
                                     <TableRow key={key} onClick={() => navToStudent(student._id ?? '')}>
                                         <TableCell className="text-center">{key + 1}</TableCell>
@@ -116,7 +116,8 @@ function StudentsData({fromFees}: StudentsDataProps) {
                                             className="text-center">{student.dateOfBirth ? format(new Date(student.dateOfBirth), 'dd-MM-yyyy') : 'NIL'}</TableCell>
                                         <TableCell
                                             className="text-center">{student.dateOfAdmission ? format(new Date(student.dateOfAdmission), 'dd-MM-yyyy') : 'NIL'}</TableCell>
-                                        <TableCell className="text-center">{student.phoneNumber ? `+91 ${student.phoneNumber}` : 'NIL'}</TableCell>
+                                        <TableCell
+                                            className="text-center">{student.phoneNumber ? `+91 ${student.phoneNumber}` : 'NIL'}</TableCell>
 
                                         {user?.role === "CHAIRMAN" && (
                                             <TableCell className="hover:bg-gray-200 rounded-lg flex justify-center"
@@ -131,7 +132,7 @@ function StudentsData({fromFees}: StudentsDataProps) {
                         ) : (
                             <>
                                 <CollegeStudentsTable
-                                    data={query !== null ? searchedData?.students : data?.students}
+                                    data={query !== null ? results : data?.students}
                                     render={(student, key) => (
                                         <TableRow key={key} onClick={() => navToStudent(student._id ?? '')}>
                                             <TableCell className="text-center">{key + 1}</TableCell>
@@ -144,7 +145,8 @@ function StudentsData({fromFees}: StudentsDataProps) {
                                                 className="text-center">{student.dateOfBirth ? format(new Date(student.dateOfBirth), 'dd-MM-yyyy') : 'NIL'}</TableCell>
                                             <TableCell
                                                 className="text-center">{student.dateOfAdmission ? format(new Date(student.dateOfAdmission), 'dd-MM-yyyy') : 'NIL'}</TableCell>
-                                            <TableCell className="text-center">{student.phoneNumber ? `+91 ${student.phoneNumber}` : 'NIL'}</TableCell>
+                                            <TableCell
+                                                className="text-center">{student.phoneNumber ? `+91 ${student.phoneNumber}` : 'NIL'}</TableCell>
 
                                             {user?.role === "CHAIRMAN" && (
                                                 <TableCell className="hover:bg-gray-200 rounded-lg flex justify-center"

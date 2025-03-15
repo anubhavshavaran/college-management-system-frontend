@@ -21,7 +21,7 @@ function Searchbar({value, onChange}: SearchbarProps) {
         <div className="p-1 px-3 rounded-md bg-white flex justify-start items-center gap-2 border-[1.5px] border-gray-400">
             <input
                 className="outline-none"
-                placeholder="Search by name"
+                placeholder="Search by students"
                 ref={inputRef}
                 onKeyUp={search}
                 value={value}
