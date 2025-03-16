@@ -5,7 +5,8 @@ import Student from "@/constants/Student.ts";
 type CourseQuery = {
     course?: string;
     year?: string;
-    class?: string
+    class?: string;
+    expectedYearOfPassing?: string;
 }
 
 async function getStudentsApi(organization: Organization, query: CourseQuery) {
@@ -117,4 +118,20 @@ async function searchStudentsApi(organization: Organization, search: string, que
     return data;
 }
 
-export {getStudentApi, getStudentsApi, createStudentApi, deleteStudentApi, updateStudentApi, updateStudentsFixedFeeApi, searchStudentsApi};
+async function getStudentsYearsOfPassingApi(organization: Organization, query: CourseQuery) {
+    const {data, status} = await axiosInstance.request({
+        method: 'GET',
+        url: `/students/${organization}/year`,
+        params: {
+            ...query
+        }
+    });
+
+    if (status.toString()[0] === '4') {
+        throw new Error(data.message);
+    }
+
+    return data;
+}
+
+export {getStudentApi, getStudentsApi, createStudentApi, deleteStudentApi, updateStudentApi, updateStudentsFixedFeeApi, searchStudentsApi, getStudentsYearsOfPassingApi};

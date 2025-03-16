@@ -3,7 +3,7 @@ import {
     createStudentApi,
     deleteStudentApi,
     getStudentApi,
-    getStudentsApi, searchStudentsApi,
+    getStudentsApi, getStudentsYearsOfPassingApi, searchStudentsApi,
     updateStudentApi, updateStudentsFixedFeeApi
 } from "@/services/studentsApi.ts";
 import Organization from "@/constants/Organization.ts";
@@ -14,10 +14,15 @@ import {useOrganization} from "@/contexts/OrganizationContextProvider.tsx";
 import {useSearchParams} from "react-router";
 import {toast} from "react-hot-toast";
 
-function useStudents(organization: Organization, course: string, year?: string, name?: string) {
-    const query = organization === Organization.SCHOOL ? {class: course, name} : {course, year, name};
+function useStudents(organization: Organization, course: string, year?: string, name?: string, expectedYearOfPassing?: string) {
+    const query = organization === Organization.SCHOOL ? {class: course, name} : expectedYearOfPassing !== '' ? {
+        course,
+        year,
+        name,
+        expectedYearOfPassing
+    } : {course, year, name};
     const {data, isPending, error} = useQuery({
-        queryKey: organization === Organization.SCHOOL ? [organization, 'students', name] : [organization, 'students', course, year, name],
+        queryKey: organization === Organization.SCHOOL ? [organization, 'students', name] : expectedYearOfPassing !== '' ? [organization, 'students', course, year, name, expectedYearOfPassing] : [organization, 'students', course, year, name],
         queryFn: () => getStudentsApi(organization, query)
     });
 
@@ -25,6 +30,19 @@ function useStudents(organization: Organization, course: string, year?: string, 
         data: data?.data,
         isPending,
         error
+    }
+}
+
+function useStudentsPassingYears(organization: Organization, course?: string, year?: string) {
+    const query = {course, year};
+    const {data, isPending} = useQuery({
+        queryKey: ['years', organization, course, year],
+        queryFn: () => getStudentsYearsOfPassingApi(organization, query)
+    });
+
+    return {
+        data: data?.data,
+        isPending,
     }
 }
 
@@ -249,5 +267,6 @@ export {
     useDeleteStudentPayment,
     useUpdateStudentsFee,
     useSearchStudents,
-    useStudentPayment
+    useStudentPayment,
+    useStudentsPassingYears
 };

@@ -2,7 +2,7 @@ import {Button} from "@/components/ui/button.tsx";
 import InfoCard from "@/components/ui/InfoCard.tsx";
 import {useOrganization} from "@/contexts/OrganizationContextProvider.tsx";
 import {useLocation, useNavigate, useSearchParams} from "react-router";
-import {useDeleteStudent, useSearchStudents, useStudents} from "@/hooks/students.ts";
+import {useDeleteStudent, useSearchStudents, useStudents, useStudentsPassingYears} from "@/hooks/students.ts";
 import Spinner from "@/components/ui/Spinner.tsx";
 import SchoolStudentsTable from "@/components/students/SchoolStudentsTable.tsx";
 import Organization from "@/constants/Organization.ts";
@@ -15,6 +15,7 @@ import UpdateFixedFeeForm from "@/components/students/UpdateFixedFeeForm.tsx";
 import React, {useState} from "react";
 import Searchbar from "@/components/ui/Searchbar.tsx";
 import YearSelect from "@/components/students/YearSelect.tsx";
+import PassedOutFilter from "@/components/students/PassedOutFilter.tsx";
 
 type StudentsDataProps = {
     fromFees?: boolean;
@@ -31,12 +32,19 @@ function StudentsData({fromFees}: StudentsDataProps) {
     const year = searchParams.get("year") ?? '';
     const query = searchParams.get("query") ?? '';
     const {deleteStudent} = useDeleteStudent(organization);
-    const {data, isPending} = useStudents(organization, course, year);
+    const [passOutYear, setPassOutYear] = useState<string>(function (): string {
+        const dateYear = new Date().getFullYear();
+        return year === 'passedOut' ? `${dateYear - 2}-${dateYear - 1}` : '';
+    });
+    const {data, isPending} = useStudents(organization, course, year, '', passOutYear ?? '');
     const {results} = useSearchStudents(organization, query !== '', query ?? '', course, year);
+    const {data: yearData} = useStudentsPassingYears(organization, course, year);
 
     let title: string;
     if (organization === Organization.SCHOOL) {
-        if (course.length >= 3) {
+        if (course === 'passedOut') {
+            title = 'Passed';
+        } else if (course.length >= 3) {
             title = course;
         } else {
             title = `${formatOrdinal(Number(course))} std`;
@@ -86,6 +94,9 @@ function StudentsData({fromFees}: StudentsDataProps) {
 
                     <div className="w-full bg-defaultGray py-2 rounded-2xl flex flex-col justify-center items-end">
                         <div className="flex justify-center items-center gap-2">
+                            {(year === "passedOut") && (
+                                <PassedOutFilter year={passOutYear} data={yearData === undefined ? [] : yearData?.years} onChange={(y) => setPassOutYear(y)}/>
+                            )}
                             <Searchbar value={searchValue} onChange={e => setSearchValue(e)}/>
                             <Button
                                 className="bg-defaultOrange hover:bg-defaultOrange"
@@ -103,7 +114,7 @@ function StudentsData({fromFees}: StudentsDataProps) {
                         </div>
                         {organization === Organization.SCHOOL ? (
                             <SchoolStudentsTable
-                                data={query !== null ? results : data?.students}
+                                data={query !== '' ? results : data?.students}
                                 render={(student, key) => (
                                     <TableRow key={key} onClick={() => navToStudent(student._id ?? '')}>
                                         <TableCell className="text-center">{key + 1}</TableCell>
@@ -132,7 +143,7 @@ function StudentsData({fromFees}: StudentsDataProps) {
                         ) : (
                             <>
                                 <CollegeStudentsTable
-                                    data={query !== null ? results : data?.students}
+                                    data={query !== '' ? results : data?.students}
                                     render={(student, key) => (
                                         <TableRow key={key} onClick={() => navToStudent(student._id ?? '')}>
                                             <TableCell className="text-center">{key + 1}</TableCell>
