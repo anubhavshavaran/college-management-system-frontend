@@ -79,7 +79,7 @@ function StudentsData({fromFees}: StudentsDataProps) {
                         <InfoCard label={`${title} females`} text={data.stats.females}/>
                     </div>
 
-                    {user?.role !== "ADMIN" && location.pathname.split("/")[2] === "students" && course !== "passedOut" && (
+                    {user?.role !== "ADMIN" && location.pathname.split("/")[2] === "students" && course !== "passedOut" && year !== "passedOut" && (
                         <Button
                             onClick={navToAdd}
                             className="bg-defaultGray p-5 shadow-none border-[1.5px] border-gray-400 rounded-xl hover:bg-defaultGray w-fit">
