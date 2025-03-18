@@ -117,7 +117,7 @@ export function VoucherDialog({organization, onSave}: VoucherDialogProps) {
                                 }}
                                 render={({field: {value, onChange}}) => (
                                     <div className="w-full col-span-3 flex flex-col gap-2">
-                                        <MuiDatePicker value={value ?? new Date()} onChange={onChange} />
+                                        <MuiDatePicker value={value ?? new Date()} onChange={onChange}/>
                                         <FormError message={errors.date?.message}/>
                                     </div>
                                 )}

@@ -35,6 +35,13 @@ function MuiDatePicker({ value, disabled, onChange }: MuiDatePickerProps) {
                             border: "none",
                         },
                     }}
+                    slotProps={{
+                        popper: {
+                            sx: {
+                                zIndex: 2147484000,
+                            },
+                        },
+                    }}
                 />
             </div>
         </LocalizationProvider>

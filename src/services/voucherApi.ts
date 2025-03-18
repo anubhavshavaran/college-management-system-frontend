@@ -2,10 +2,19 @@ import Organization from "@/constants/Organization.ts";
 import axiosInstance from "@/services/axiosInstance.ts";
 import Voucher from "@/constants/Voucher.ts";
 
-async function getAllVouchersApi(organization: Organization) {
+type VoucherQuery = {
+    date?: string;
+    start?: string;
+    end?: string;
+}
+
+async function getAllVouchersApi(organization: Organization, query?: VoucherQuery) {
     const {data, status} = await axiosInstance.request({
         method: "GET",
         url: `/vouchers/${organization}/`,
+        data: {
+            ...query,
+        }
     });
 
     if (status.toString()[0] === '4') {

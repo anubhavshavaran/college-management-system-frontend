@@ -17,6 +17,7 @@ import {useUser} from "@/contexts/UserContextProvider.tsx";
 import PaymentReceipt from "@/components/receipts/PaymentReceipt.tsx";
 import VoucherReceipt from "@/components/receipts/VoucherReceipt.tsx";
 import Papa from "papaparse";
+import ExportVoucherDialog from "@/components/vouchers/ExportVoucherDialog.tsx";
 
 const headers = ['Sr. no.', 'Voucher Number', 'Paid to', 'Date', 'Amount', 'Mode of Payment', 'Particulars'];
 
@@ -24,6 +25,7 @@ function Vouchers() {
     const {user} = useUser();
     const {organization} = useOrganization();
     const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
+    const [isExportDialogOpen, setIsExportDialogOpen] = useState<boolean>(false);
     const [searchParams, setSearchParams] = useSearchParams();
     const receiptId = searchParams.get("receiptId");
     const {vouchers, isVouchersLoading, error} = useVouchers(organization);
@@ -90,6 +92,10 @@ function Vouchers() {
                         <VoucherDialog onSave={() => setIsDialogOpen(false)} organization={organization}/>
                     </Dialog>
 
+                    <Dialog open={isExportDialogOpen} onOpenChange={() => setIsExportDialogOpen(e => !e)}>
+                        <ExportVoucherDialog />
+                    </Dialog>
+
                     <div className="flex gap-3">
                         <Button onClick={() => setIsDialogOpen(true)}
                                 className="bg-defaultGray p-5 shadow-none border-[1.5px] border-gray-400 rounded-xl hover:bg-defaultGray w-fit">
@@ -99,7 +105,12 @@ function Vouchers() {
                         <Button
                             onClick={handleExport}
                             className="bg-defaultGray p-5 shadow-none border-[1.5px] border-gray-400 rounded-xl hover:bg-defaultGray w-fit">
-                            <p className="text-lg text-black font-normal ">Export</p>
+                            <p className="text-lg text-black font-normal">Export as CSV</p>
+                        </Button>
+                        <Button
+                            onClick={() => setIsExportDialogOpen(true)}
+                            className="bg-defaultGray p-5 shadow-none border-[1.5px] border-gray-400 rounded-xl hover:bg-defaultGray w-fit">
+                            <p className="text-lg text-black font-normal">Export by Date</p>
                         </Button>
                     </div>
                 </>
