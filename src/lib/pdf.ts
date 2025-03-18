@@ -1,20 +1,21 @@
 import {jsPDF} from "jspdf";
 import {applyPlugin} from 'jspdf-autotable';
 import Voucher from "@/constants/Voucher.ts";
-import Organization from "@/constants/Organization.ts";
+// import Organization from "@/constants/Organization.ts";
 
 applyPlugin(jsPDF);
 
-type Query = {
-    date?: string;
-    start?: string;
-    end?: string;
-}
+// type Query = {
+//     date?: string;
+//     start?: string;
+//     end?: string;
+// }
 
-function generateStatement(data: Voucher[], organization: Organization, query: Query) {
+// function generateStatement(data: Voucher[], organization: Organization, query: Query) {
+function generateStatement(data: Voucher[]) {
     const doc = new jsPDF();
 
-    const pageWidth = doc.internal.pageSize.getWidth();
+    // const pageWidth = doc.internal.pageSize.getWidth();
 
     // doc.setFontSize(18);
     //
