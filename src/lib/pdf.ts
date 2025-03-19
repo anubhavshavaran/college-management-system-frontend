@@ -60,7 +60,7 @@ function generateStatement(data: Voucher[], organization: Organization, query: Q
         doc.text(`Page ${i} of ${pageCount}`, 180, 290);
     }
 
-    doc.save('statement.pdf');
+    doc.save('vouchers.pdf');
 }
 
 export { generateStatement };

@@ -10,6 +10,7 @@ import {useState} from "react";
 import Spinner from "@/components/ui/Spinner.tsx";
 import {generateStatement} from "@/lib/pdf.ts";
 import FlowDatePicker from "@/components/ui/FlowDatePicker.tsx";
+import {toast} from "react-hot-toast";
 
 enum Duration {
     Today,
@@ -123,7 +124,14 @@ function ExportVoucherDialog() {
 
             const data = await getAllVouchersApi(organization, query);
             const vouchers = data?.data?.docs;
-            generateStatement(vouchers, organization, query);
+
+            if (vouchers.length === 0) {
+                toast.error(
+                    'No Vouchers available for the selected duration.'
+                );
+            } else {
+                generateStatement(vouchers, organization, query);
+            }
         } catch (e) {
             console.error(e)
         } finally {
@@ -188,7 +196,7 @@ function ExportVoucherDialog() {
                                 }}
                                 render={({field: {value, onChange}}) => (
                                     <>
-                                        <FlowDatePicker value={value} onChange={onChange} disabled={isLoading} />
+                                        <FlowDatePicker value={value} onChange={onChange} disabled={isLoading}/>
                                         <FormError message={errors?.startDate?.message}/>
                                     </>
                                 )}
@@ -207,7 +215,7 @@ function ExportVoucherDialog() {
                                 }}
                                 render={({field: {value, onChange}}) => (
                                     <>
-                                        <FlowDatePicker value={value} onChange={onChange} disabled={isLoading} />
+                                        <FlowDatePicker value={value} onChange={onChange} disabled={isLoading}/>
                                         <FormError message={errors?.endDate?.message}/>
                                     </>
                                 )}
