@@ -1,5 +1,5 @@
-import {jsPDF} from "jspdf";
-import {autoTable} from 'jspdf-autotable';
+import { jsPDF } from "jspdf";
+import autoTable from 'jspdf-autotable';
 import Voucher from "@/constants/Voucher.ts";
 import Organization from "@/constants/Organization.ts";
 
@@ -7,10 +7,13 @@ type Query = {
     date?: string;
     start?: string;
     end?: string;
-}
+};
 
 function generateStatement(data: Voucher[], organization: Organization, query: Query) {
-    const doc = new jsPDF() as jsPDF & { autoTable: typeof autoTable };
+    const doc = new jsPDF();
+
+    autoTable(doc, {});
+
     const pageWidth = doc.internal.pageSize.getWidth();
 
     doc.setFontSize(18);
@@ -33,7 +36,7 @@ function generateStatement(data: Voucher[], organization: Organization, query: Q
         doc.text(`Date: ${new Date(query.date).toISOString().split('T')[0]}`, 14, 35);
     }
 
-    doc.autoTable({
+    autoTable(doc, {
         startY: 50,
         head: [['Sr. no.', 'Voucher number', 'Paid To', 'Date', 'Amount', 'Mode of Payment', 'Particulars']],
         body: data.map((item: Voucher, index) => [
@@ -46,9 +49,9 @@ function generateStatement(data: Voucher[], organization: Organization, query: Q
             item.particulars,
         ]),
         theme: 'grid',
-        headStyles: {fillColor: [200, 200, 200], textColor: 50},
-        styles: {fontSize: 10, cellPadding: 2}
-    }, {});
+        headStyles: { fillColor: [200, 200, 200], textColor: 50 },
+        styles: { fontSize: 10, cellPadding: 2 },
+    });
 
     const pageCount = doc.getNumberOfPages();
     for (let i = 1; i <= pageCount; i++) {
@@ -60,4 +63,4 @@ function generateStatement(data: Voucher[], organization: Organization, query: Q
     doc.save('statement.pdf');
 }
 
-export {generateStatement};
+export { generateStatement };
