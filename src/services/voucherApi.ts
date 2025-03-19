@@ -12,7 +12,7 @@ async function getAllVouchersApi(organization: Organization, query?: VoucherQuer
     const {data, status} = await axiosInstance.request({
         method: "GET",
         url: `/vouchers/${organization}/`,
-        data: {
+        params: {
             ...query,
         }
     });

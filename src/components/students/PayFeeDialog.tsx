@@ -8,7 +8,7 @@ import {Controller, useForm} from "react-hook-form";
 import Payment from "@/constants/Payment.ts";
 import FormError from "@/components/ui/FormError.tsx";
 import Spinner from "@/components/ui/Spinner.tsx";
-import MuiDatePicker from "@/components/ui/MuiDatePicker.tsx";
+import FlowDatePicker from "@/components/ui/FlowDatePicker.tsx";
 
 type PayFeeDialogProps = {
     onSave: () => void;
@@ -112,7 +112,7 @@ function PayFeeDialog({onSave}: PayFeeDialogProps) {
                         }}
                         render={({field: {value, onChange}}) => (
                             <div className="w-full col-span-3 flex flex-col gap-2">
-                                <MuiDatePicker value={value} onChange={onChange} />
+                                <FlowDatePicker value={value} onChange={onChange} />
                                 <FormError message={errors.paidOn?.message} />
                             </div>
                         )}

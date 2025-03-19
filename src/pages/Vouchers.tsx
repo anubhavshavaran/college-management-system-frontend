@@ -88,12 +88,18 @@ function Vouchers() {
 
             {user?.role !== "ADMIN" && (
                 <>
-                    <Dialog open={isDialogOpen} onOpenChange={handleDialogClose}>
-                        <VoucherDialog onSave={() => setIsDialogOpen(false)} organization={organization}/>
-                    </Dialog>
+                    {isDialogOpen && (
+                        <Dialog open={isDialogOpen} onOpenChange={handleDialogClose}>
+                            <VoucherDialog onSave={() => {
+                                searchParams.delete("id");
+                                setSearchParams(searchParams);
+                                setIsDialogOpen(false);
+                            }} organization={organization}/>
+                        </Dialog>
+                    )}
 
                     <Dialog open={isExportDialogOpen} onOpenChange={() => setIsExportDialogOpen(e => !e)}>
-                        <ExportVoucherDialog />
+                        <ExportVoucherDialog/>
                     </Dialog>
 
                     <div className="flex gap-3">

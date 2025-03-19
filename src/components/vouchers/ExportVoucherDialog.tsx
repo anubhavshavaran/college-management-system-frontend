@@ -2,7 +2,6 @@ import {DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitl
 import {Button} from "@/components/ui/button.tsx";
 import {Label} from "@/components/ui/label.tsx";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select.tsx";
-import MuiDatePicker from "@/components/ui/MuiDatePicker.tsx";
 import {Controller, useForm} from "react-hook-form";
 import FormError from "@/components/ui/FormError.tsx";
 import {getAllVouchersApi} from "@/services/voucherApi.ts";
@@ -10,6 +9,7 @@ import {useOrganization} from "@/contexts/OrganizationContextProvider.tsx";
 import {useState} from "react";
 import Spinner from "@/components/ui/Spinner.tsx";
 import {generateStatement} from "@/lib/pdf.ts";
+import FlowDatePicker from "@/components/ui/FlowDatePicker.tsx";
 
 enum Duration {
     Today,
@@ -45,13 +45,18 @@ function ExportVoucherDialog() {
 
             let query = {};
             if (Number(form.duration) === Duration.Custom) {
+                const startDate = new Date(form.startDate);
+                startDate.setDate(startDate.getDate() + 1);
+                const endDate = new Date(form.endDate);
+                endDate.setDate(endDate.getDate() + 1);
+
                 query = {
-                    start: form.startDate.toISOString(),
-                    end: form.endDate.toISOString(),
+                    start: startDate.toISOString().split("T")[0],
+                    end: endDate.toISOString().split("T")[0],
                 }
             } else {
                 let today: Date | string = new Date();
-                today = today.toISOString();
+                today = today.toISOString().split("T")[0];
 
                 switch (Number(form.duration)) {
                     case Duration.Today:
@@ -64,7 +69,7 @@ function ExportVoucherDialog() {
                         day.setDate(day.getDate() - 1);
 
                         query = {
-                            date: day.toISOString(),
+                            date: day.toISOString().split("T")[0],
                         };
                         break;
                     }
@@ -73,7 +78,7 @@ function ExportVoucherDialog() {
                         day.setDate(day.getDate() - 7);
 
                         query = {
-                            start: day.toISOString(),
+                            start: day.toISOString().split("T")[0],
                             end: today,
                         };
                         break;
@@ -84,7 +89,7 @@ function ExportVoucherDialog() {
                         day.setMonth(day.getMonth() - 1);
 
                         query = {
-                            start: day.toISOString(),
+                            start: day.toISOString().split("T")[0],
                             end: today,
                         };
                         break;
@@ -95,7 +100,7 @@ function ExportVoucherDialog() {
                         day.setMonth(day.getMonth() - 6);
 
                         query = {
-                            start: day.toISOString(),
+                            start: day.toISOString().split("T")[0],
                             end: today,
                         };
                         break;
@@ -106,7 +111,7 @@ function ExportVoucherDialog() {
                         day.setFullYear(day.getFullYear() - 1);
 
                         query = {
-                            start: day.toISOString(),
+                            start: day.toISOString().split("T")[0],
                             end: today,
                         };
                         break;
@@ -114,6 +119,7 @@ function ExportVoucherDialog() {
                 }
 
             }
+            console.log(query);
 
             const data = await getAllVouchersApi(organization, query);
             const vouchers = data?.data?.docs;
@@ -168,7 +174,7 @@ function ExportVoucherDialog() {
                     />
                 </div>
                 {Number(duration) === Duration.Custom && (
-                    <div className="w-full flex flex-col justify-center items-center gap-2">
+                    <div className="w-full flex justify-center items-center gap-2">
                         <div className="w-full flex flex-col justify-start items-start gap-2">
                             <Label htmlFor="name" className="text-left">From</Label>
                             <Controller
@@ -182,7 +188,7 @@ function ExportVoucherDialog() {
                                 }}
                                 render={({field: {value, onChange}}) => (
                                     <>
-                                        <MuiDatePicker value={value} onChange={onChange} disabled={isLoading}/>
+                                        <FlowDatePicker value={value} onChange={onChange} disabled={isLoading} />
                                         <FormError message={errors?.startDate?.message}/>
                                     </>
                                 )}
@@ -201,7 +207,7 @@ function ExportVoucherDialog() {
                                 }}
                                 render={({field: {value, onChange}}) => (
                                     <>
-                                        <MuiDatePicker value={value} onChange={onChange} disabled={isLoading}/>
+                                        <FlowDatePicker value={value} onChange={onChange} disabled={isLoading} />
                                         <FormError message={errors?.endDate?.message}/>
                                     </>
                                 )}

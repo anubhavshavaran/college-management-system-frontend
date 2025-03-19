@@ -10,6 +10,17 @@ type TableProps = {
 const headers = ['Sr. no.', 'SATS Number', 'Name', 'Roll no.', 'Gender', 'Date of Birth', 'Date of Admission', 'Phone number'];
 
 function SchoolStudentsTable({data, render}: TableProps) {
+    data.sort((a: Student, b: Student): number => {
+        const numA = a.satsNumber && a.satsNumber.match(/\d+$/)
+            ? parseInt(a.satsNumber.match(/\d+$/)![0], 10)
+            : 0;
+        const numB = b.satsNumber && b.satsNumber.match(/\d+$/)
+            ? parseInt(b.satsNumber.match(/\d+$/)![0], 10)
+            : 0;
+
+        return numA - numB;
+    });
+
     return (
         <Table>
             {data?.length === 0 && (

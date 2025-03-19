@@ -19,8 +19,10 @@ function MuiDatePicker({ value, disabled, onChange }: MuiDatePickerProps) {
         <LocalizationProvider dateAdapter={AdapterDateFns}>
             <div
                 className={`w-full bg-white p-1 border-2 border-defaultLightBlue text-defaultBlue rounded-xl`}
+                onMouseDown={(e) => e.stopPropagation()}
             >
                 <DatePicker
+                    autoFocus={true}
                     value={new Date(value)}
                     onChange={(newValue) => handleChange(newValue)}
                     format={"dd/MM/yyyy"}
@@ -37,8 +39,17 @@ function MuiDatePicker({ value, disabled, onChange }: MuiDatePickerProps) {
                     }}
                     slotProps={{
                         popper: {
+                            container: document.body,
+                            modifiers: [
+                                {
+                                    name: "preventOverflow",
+                                    options: {
+                                        boundary: "viewport",
+                                    },
+                                },
+                            ],
                             sx: {
-                                zIndex: 2147484000,
+                                zIndex: 9999,
                             },
                         },
                     }}
