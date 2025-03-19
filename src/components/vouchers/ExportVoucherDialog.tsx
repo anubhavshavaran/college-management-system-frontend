@@ -9,7 +9,7 @@ import {getAllVouchersApi} from "@/services/voucherApi.ts";
 import {useOrganization} from "@/contexts/OrganizationContextProvider.tsx";
 import {useState} from "react";
 import Spinner from "@/components/ui/Spinner.tsx";
-// import {generateStatement} from "@/lib/pdf.ts";
+import {generateStatement} from "@/lib/pdf.ts";
 
 enum Duration {
     Today,
@@ -115,11 +115,9 @@ function ExportVoucherDialog() {
 
             }
 
-            console.log(query)
             const data = await getAllVouchersApi(organization, query);
             const vouchers = data?.data?.docs;
-            console.log(vouchers)
-            // generateStatement(vouchers, organization, query);
+            generateStatement(vouchers, organization, query);
         } catch (e) {
             console.error(e)
         } finally {
