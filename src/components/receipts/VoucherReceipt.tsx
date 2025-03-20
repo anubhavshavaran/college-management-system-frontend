@@ -12,7 +12,7 @@ function VoucherReceipt() {
     const {voucher, isVoucherLoading} = useVoucher(voucherId, Boolean(voucherId), organization);
 
     return (
-        <div className="w-[10cm] h-[18cm] border-2 border-slate-700 rounded-lg relative">
+        <div className="w-[10cm] h-[14cm] border-2 border-slate-700 rounded-lg relative">
             {isVoucherLoading ? (
                 <Spinner/>
             ) : (
@@ -21,7 +21,7 @@ function VoucherReceipt() {
                         <p className="absolute top-4 left-4 text-start capitalize">Voucher no. {voucher.voucherNumber}</p>
                         <img
                             src="/Logo.png"
-                            width="64"
+                            width="48"
                             alt="Logo"
                         />
                         <div className="flex flex-col justify-center items-center">
@@ -31,7 +31,7 @@ function VoucherReceipt() {
                         </div>
                         <p className="text-white px-2 py-1 bg-black  rounded-lg capitalize">debit voucher</p>
                     </div>
-                    <div className="flex flex-col justify-center items-start gap-1 mt-4 p-4">
+                    <div className="flex flex-col justify-center items-start gap-1 p-4">
                         <p className="">Date: {formatDate(voucher.date, "dd-MM-yyyy")}</p>
                         <p className="">Paid to: {voucher.title}</p>
                         <p className="">Mode of Payment: {voucher.modeOfPayment}</p>
@@ -51,7 +51,7 @@ function VoucherReceipt() {
                             <p className="border-b-[1.5px] border-b-black capitalize">{formatNumberToWord(voucher.amount)} only</p>
                         </div>
                     </div>
-                    <div className="mt-24 w-full flex justify-start gap-16 pt-4 pb-4 px-4 border-t-2 border-t-black">
+                    <div className="mt-8 w-full flex justify-start gap-16 pt-2 pb-4 px-4 border-t-2 border-t-black">
                         <p>Accountant sign:</p>
                         <p>Remitter sign:</p>
                     </div>

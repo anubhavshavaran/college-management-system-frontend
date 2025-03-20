@@ -17,7 +17,7 @@ function Receipt({title}: ReceiptProps) {
     const {payment, isPending} = useStudentPayment(paymentId);
 
     return (
-        <div className="w-[10cm] h-[18cm] border-2 border-slate-700 rounded-lg">
+        <div className="w-[10cm] h-[14cm] border-2 border-slate-700 rounded-lg">
             {isPending ? (
                 <Spinner/>
             ) : (
@@ -29,7 +29,7 @@ function Receipt({title}: ReceiptProps) {
                         </div>
                         <img
                             src="/Logo.png"
-                            width="64"
+                            width="56"
                             alt="Logo"
                         />
                         <p className="text-sm font-semibold">Date: {formatDate(payment.paidOn, "dd-MM-yyyy")}</p>
@@ -42,7 +42,7 @@ function Receipt({title}: ReceiptProps) {
                         </div>
                         <p className="text-white px-2 py-1 bg-black rounded-lg">Fee Receipt</p>
                     </div>
-                    <div className="p-4 flex flex-col justify-center items-start mt-4">
+                    <div className="p-4 flex flex-col justify-center items-start">
                         <p className="">Name: {payment.studentId.name}</p>
                         {organization === Organization.SCHOOL ? (
                             <div className="grid grid-cols-2">
@@ -69,15 +69,7 @@ function Receipt({title}: ReceiptProps) {
                             <p className="w-[2.5cm] p-[2px] text-center border-t-black border-t-2">{payment.amount}</p>
                         </div>
                         <div className="w-full flex">
-                            <p className="w-[7.5cm] p-3 text-center border-black border-2 border-b-0 border-l-0 whitespace-normal break-words"></p>
-                            <p className="w-[2.5cm] p-3 text-center border-t-black border-t-2"></p>
-                        </div>
-                        <div className="w-full flex">
-                            <p className="w-[7.5cm] p-3 text-center border-black border-2 border-b-0 border-l-0 whitespace-normal break-words"></p>
-                            <p className="w-[2.5cm] p-3 text-center border-t-black border-t-2"></p>
-                        </div>
-                        <div className="w-full flex">
-                            <p className="w-[7.5cm] p-3 text-center border-black border-2 border-l-0 whitespace-normal break-words"></p>
+                            <p className="w-[7.5cm] p-3 text-center border-black border-2 border-b-0 border-l-0 border-b-2 whitespace-normal break-words"></p>
                             <p className="w-[2.5cm] p-3 text-center border-y-black border-y-2"></p>
                         </div>
                     </div>
@@ -91,7 +83,7 @@ function Receipt({title}: ReceiptProps) {
                             <p className="border-b-[1.5px] border-b-black capitalize">{formatNumberToWord(payment.amount)} only</p>
                         </div>
                     </div>
-                    <div className="mt-14 w-full flex justify-start gap-16 pt-4 pb-4 px-4 border-t-2 border-t-black">
+                    <div className="mt-8 w-full flex justify-start gap-16 pt-2 pb-4 px-4 border-t-2 border-t-black">
                         <p>Accountant sign:</p>
                         <p>Remitter sign:</p>
                     </div>

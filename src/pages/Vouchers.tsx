@@ -80,7 +80,7 @@ function Vouchers() {
 
             {receiptId && (
                 <PaymentReceipt>
-                    <div className="w-full flex pl-[3cm] pt-[3cm]">
+                    <div className="w-full flex pl-[1cm] pt-[1cm]">
                         <VoucherReceipt/>
                     </div>
                 </PaymentReceipt>

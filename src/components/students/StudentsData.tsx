@@ -92,8 +92,8 @@ function StudentsData({fromFees}: StudentsDataProps) {
                         <UpdateFixedFeeForm/>
                     )}
 
-                    <div className="w-full bg-defaultGray py-2 rounded-2xl flex flex-col justify-center items-end">
-                        <div className="flex justify-center items-center gap-2">
+                    <div className="w-full bg-defaultGray py-2 rounded-2xl flex flex-col justify-center sm:items-center md:items-end">
+                        <div className="flex sm:flex-col md:flex-row justify-center items-center gap-2">
                             {(year === "passedOut") && (
                                 <PassedOutFilter year={passOutYear} data={yearData === undefined ? [] : yearData?.years} onChange={(y) => setPassOutYear(y)}/>
                             )}

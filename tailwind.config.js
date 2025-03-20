@@ -30,7 +30,7 @@ export default {
 				defaultLightGray: '#f9f9f7',
     		},
     		screens: {
-    			sm: '380px',
+    			sm: '350px',
     			md: '720px',
     			lg: '1025px'
     		}
