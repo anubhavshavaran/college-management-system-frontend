@@ -31,6 +31,7 @@ function SchoolStudentForm({grade}: SchoolStudentFormProps) {
             class: grade,
             dateOfBirth: new Date(),
             dateOfAdmission: new Date(),
+            fixedFee: 0,
         }
     });
     const {createStudent, isPending} = useCreateStudent(organization, () => navigate(-1));
@@ -589,7 +590,7 @@ function SchoolStudentForm({grade}: SchoolStudentFormProps) {
                             />
                         </StudentInfoInput>
 
-                        {(isEditing ? user?.role === "CHAIRMAN" : true) && (
+                        {user?.role === "CHAIRMAN" && (
                             <StudentInfoInput label="Fixed Fee *">
                                 <Controller
                                     control={control}

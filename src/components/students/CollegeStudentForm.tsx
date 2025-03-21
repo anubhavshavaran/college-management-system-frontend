@@ -31,6 +31,7 @@ function CollegeStudentForm({course}: CollegeStudentFormProps) {
             course: course || "",
             dateOfBirth: new Date(),
             dateOfAdmission: new Date(),
+            fixedFee: 0,
         }
     });
 
@@ -660,7 +661,7 @@ function CollegeStudentForm({course}: CollegeStudentFormProps) {
                                 )}
                             />
                         </StudentInfoInput>
-                        {(isEditing ? user?.role === "CHAIRMAN" : true) && (
+                        {user?.role === "CHAIRMAN" && (
                             <StudentInfoInput
                                 label="Fixed Fee *"
                             >
