@@ -17,7 +17,7 @@ function VoucherReceipt() {
                 <Spinner/>
             ) : (
                 <>
-                    <div className="flex flex-col gap-4 justify-center items-center pt-5">
+                    <div className="flex flex-col gap-2 justify-center items-center pt-5">
                         <p className="absolute top-4 left-4 text-start capitalize">Voucher no. {voucher.voucherNumber}</p>
                         <img
                             src="/Logo.png"
@@ -25,35 +25,37 @@ function VoucherReceipt() {
                             alt="Logo"
                         />
                         <div className="flex flex-col justify-center items-center">
-                            <p>S.M.E Society</p>
-                            <p className="font-semibold">Abdulkalam College</p>
-                            <p>Vivekanand Nagar, Gadag-Betageri-582 103</p>
+                            <p className="text-sm">S.M.E Society</p>
+                            <p className="font-semibold uppercase">Abdulkalam College</p>
+                            <p className="text-sm">Vivekanand Nagar, Gadag-Betageri-582 103</p>
                         </div>
+                        <div className="w-full h-[1.5px] bg-black" />
                         <p className="text-white px-2 py-1 bg-black  rounded-lg capitalize">debit voucher</p>
+                        <div className="w-full h-[1.5px] bg-black" />
                     </div>
                     <div className="flex flex-col justify-center items-start gap-1 p-4">
                         <p className="">Date: {formatDate(voucher.date, "dd-MM-yyyy")}</p>
                         <p className="">Paid to: {voucher.title}</p>
                         <p className="">Mode of Payment: {voucher.modeOfPayment}</p>
                     </div>
-                    <div className="w-full flex flex-col mt-4">
+                    <div className="w-full flex flex-col">
                         <p className="w-full p-1 text-center font-semibold border-t-black border-t-2">Particulars</p>
                         <p className="w-full p-1 text-center border-y-black border-y-2 whitespace-normal break-words">{voucher.particulars}</p>
                     </div>
 
-                    <div className="mt-5 px-4 w-full flex flex-wrap justify-between">
+                    <div className="p-3 w-full flex flex-wrap justify-between">
                         <div className="flex gap-1">
-                            <p className="">Rs:</p>
-                            <p className="border-b-[1.5px] border-b-black">{voucher.amount}</p>
+                            <p className="text-sm">Rs:</p>
+                            <p className="text-sm border-b-[1.5px] border-b-black">{voucher.amount}</p>
                         </div>
                         <div className="flex gap-1">
-                            <p className="">Rupees in Words:</p>
-                            <p className="border-b-[1.5px] border-b-black capitalize">{formatNumberToWord(voucher.amount)} only</p>
+                            <p className="text-sm">Rupees in Words:</p>
+                            <p className="text-sm border-b-[1.5px] border-b-black capitalize">{formatNumberToWord(voucher.amount)} only</p>
                         </div>
                     </div>
-                    <div className="mt-8 w-full flex justify-start gap-16 pt-2 pb-4 px-4 border-t-2 border-t-black">
+                    <div className="w-full flex justify-start gap-16 pt-2 pb-10 px-4 border-t-2 border-t-black">
                         <p>Accountant sign:</p>
-                        <p>Remitter sign:</p>
+                        <p>Receiver sign:</p>
                     </div>
                 </>
             )}

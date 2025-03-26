@@ -34,13 +34,15 @@ function Receipt({title}: ReceiptProps) {
                         />
                         <p className="text-sm font-semibold">Date: {formatDate(payment.paidOn, "dd-MM-yyyy")}</p>
                     </div>
-                    <div className="flex flex-col gap-4 justify-center items-center">
+                    <div className="flex flex-col gap-2 justify-center items-center">
                         <div className="flex flex-col justify-center items-center">
-                            <p>S.M.E Society</p>
-                            <p className="font-semibold">Abdulkalam College</p>
-                            <p>Vivekanand Nagar, Gadag-Betageri-582 103</p>
+                            <p className="text-sm">S.M.E Society</p>
+                            <p className="font-semibold uppercase">Abdulkalam College</p>
+                            <p className="text-sm">Vivekanand Nagar, Gadag-Betageri-582 103</p>
                         </div>
+                        <div className="w-full h-[1.5px] bg-black" />
                         <p className="text-white px-2 py-1 bg-black rounded-lg">Fee Receipt</p>
+                        <div className="w-full h-[1.5px] bg-black" />
                     </div>
                     <div className="p-4 flex flex-col justify-center items-start">
                         <p className="">Name: {payment.studentId.name}</p>
@@ -59,7 +61,7 @@ function Receipt({title}: ReceiptProps) {
                             </div>
                         )}
                     </div>
-                    <div className="w-full flex flex-col mt-4">
+                    <div className="w-full flex flex-col">
                         <div className="w-full flex">
                             <p className="w-[7.5cm] text-center border-r-black border-r-2 border-t-black border-t-2">Particulars</p>
                             <p className="w-[2.5cm] text-center border-t-black border-t-2">Amount</p>
@@ -73,19 +75,19 @@ function Receipt({title}: ReceiptProps) {
                             <p className="w-[2.5cm] p-3 text-center border-y-black border-y-2"></p>
                         </div>
                     </div>
-                    <div className="mt-4 px-4 w-full flex flex-wrap justify-between">
+                    <div className="p-3 w-full flex flex-wrap justify-between">
                         <div className="flex gap-1">
-                            <p className="">Rs:</p>
-                            <p className="border-b-[1.5px] border-b-black">{payment.amount}</p>
+                            <p className="text-sm ">Rs:</p>
+                            <p className="text-sm border-b-[1.5px] border-b-black">{payment.amount}</p>
                         </div>
                         <div className="flex gap-1">
-                            <p className="">Rupees in Words:</p>
-                            <p className="border-b-[1.5px] border-b-black capitalize">{formatNumberToWord(payment.amount)} only</p>
+                            <p className="text-sm ">Rupees in Words:</p>
+                            <p className="text-sm border-b-[1.5px] border-b-black capitalize">{formatNumberToWord(payment.amount)} only</p>
                         </div>
                     </div>
-                    <div className="mt-8 w-full flex justify-start gap-16 pt-2 pb-4 px-4 border-t-2 border-t-black">
+                    <div className="w-full flex justify-start gap-16 pt-2 pb-8 px-4 border-t-2 border-t-black">
                         <p>Accountant sign:</p>
-                        <p>Remitter sign:</p>
+                        <p>Receiver sign:</p>
                     </div>
                 </>
             )}
