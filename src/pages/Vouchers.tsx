@@ -11,13 +11,14 @@ import {format} from "date-fns";
 import {useSearchParams} from "react-router";
 import React, {useState} from "react";
 import VoucherDialog from "@/components/vouchers/VoucherDialog.tsx";
-import {useDeleteVouchers, useVouchers} from "@/hooks/vouchers.ts";
+import {useDeleteVouchers, useSearchVouchers, useVouchers} from "@/hooks/vouchers.ts";
 import {useOrganization} from "@/contexts/OrganizationContextProvider.tsx";
 import {useUser} from "@/contexts/UserContextProvider.tsx";
 import PaymentReceipt from "@/components/receipts/PaymentReceipt.tsx";
 import VoucherReceipt from "@/components/receipts/VoucherReceipt.tsx";
 import Papa from "papaparse";
 import ExportVoucherDialog from "@/components/vouchers/ExportVoucherDialog.tsx";
+import Searchbar from "@/components/ui/Searchbar.tsx";
 
 const headers = ['Sr. no.', 'Voucher Number', 'Paid to', 'Date', 'Amount', 'Mode of Payment', 'Particulars'];
 
@@ -27,8 +28,11 @@ function Vouchers() {
     const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
     const [isExportDialogOpen, setIsExportDialogOpen] = useState<boolean>(false);
     const [searchParams, setSearchParams] = useSearchParams();
+    const query = searchParams.get("query") ?? '';
+    const [searchValue, setSearchValue] = useState<string>('');
     const receiptId = searchParams.get("receiptId");
     const {vouchers, isVouchersLoading, error} = useVouchers(organization);
+    const {results} = useSearchVouchers(organization, query !== '', query ?? '');
     const {deleteVoucher} = useDeleteVouchers(organization);
 
     function setId(id: string) {
@@ -131,9 +135,22 @@ function Vouchers() {
                 )}
                 {!isVouchersLoading && !error && (
                     <div className="w-full flex flex-col gap-4">
+                        <div className="w-full flex sm:justify-center md:justify-end items-center gap-2 px-4">
+                            <Searchbar title="Search by Paid to, Particulars and Amount" value={searchValue} onChange={e => setSearchValue(e)} className="w-[400px]"/>
+                            <Button
+                                className="bg-defaultOrange hover:bg-defaultOrange"
+                                onClick={() => {
+                                    searchParams.delete("query");
+                                    setSearchParams(searchParams);
+                                    setSearchValue('');
+                                }}
+                            >
+                                Clear
+                            </Button>
+                        </div>
                         <VoucherTable
                             headers={headers}
-                            data={vouchers ?? []}
+                            data={query !== '' ? results : vouchers ?? []}
                             render={(voucher: Voucher, key: number) => (
                                 <TableRow key={key} onClick={() => setId(voucher._id ?? '')}>
                                     <TableCell className="text-center">{key + 1}</TableCell>

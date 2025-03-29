@@ -97,7 +97,7 @@ function StudentsData({fromFees}: StudentsDataProps) {
                             {(year === "passedOut") && (
                                 <PassedOutFilter year={passOutYear} data={yearData === undefined ? [] : yearData?.years} onChange={(y) => setPassOutYear(y)}/>
                             )}
-                            <Searchbar value={searchValue} onChange={e => setSearchValue(e)}/>
+                            <Searchbar title="Search by students" value={searchValue} onChange={e => setSearchValue(e)}/>
                             <Button
                                 className="bg-defaultOrange hover:bg-defaultOrange"
                                 onClick={() => {

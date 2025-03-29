@@ -3,7 +3,7 @@ import {
     createVoucherApi,
     deleteVoucherApi,
     getAllVouchersApi,
-    getVoucherApi,
+    getVoucherApi, searchVouchersApi,
     updateVoucherApi
 } from "@/services/voucherApi.ts";
 import Organization from "@/constants/Organization.ts";
@@ -99,4 +99,18 @@ function useUpdateVoucher(voucherId: string, organization: Organization) {
     }
 }
 
-export { useVoucher, useVouchers, useDeleteVouchers, useCreateVoucher, useUpdateVoucher };
+function useSearchVouchers(organization: Organization, enabled: boolean, query?: string) {
+    const {data, isPending: isSearching, isFetched} = useQuery({
+        queryKey: ['vouchers', 'search', query],
+        queryFn: () => searchVouchersApi(organization, query ?? ''),
+        enabled
+    });
+
+    return {
+        results: data?.data?.vouchers,
+        isSearching,
+        isFetched
+    }
+}
+
+export { useVoucher, useVouchers, useDeleteVouchers, useCreateVoucher, useUpdateVoucher, useSearchVouchers };

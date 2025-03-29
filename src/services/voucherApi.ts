@@ -83,4 +83,17 @@ async function updateVoucherApi(id: string, voucher: Voucher, organization: Orga
     return data;
 }
 
-export {getAllVouchersApi, getVoucherApi, createVoucherApi, deleteVoucherApi, updateVoucherApi};
+async function searchVouchersApi(organization: Organization, search: string) {
+    const {data, status} = await axiosInstance.request({
+        method: 'GET',
+        url: `/vouchers/${organization}/search/${search}`,
+    });
+
+    if (status.toString()[0] === '4') {
+        throw new Error(data.message);
+    }
+
+    return data;
+}
+
+export {getAllVouchersApi, getVoucherApi, createVoucherApi, deleteVoucherApi, updateVoucherApi, searchVouchersApi};

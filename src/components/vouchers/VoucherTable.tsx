@@ -11,20 +11,20 @@ type TableProps = {
 function VoucherTable({headers, data, render}: TableProps) {
     return (
         <Table>
-            {data.length === 0 && (
+            {data?.length === 0 && (
                 <TableCaption>
                     No vouchers are available.
                 </TableCaption>
             )}
             <TableHeader>
                 <TableRow>
-                    {headers.map((header, i) => (
+                    {headers?.map((header, i) => (
                         <TableHead className="text-center" key={i}>{header}</TableHead>
                     ))}
                 </TableRow>
             </TableHeader>
             <TableBody>
-                {data.map(render)}
+                {data?.map(render)}
             </TableBody>
         </Table>
     );
