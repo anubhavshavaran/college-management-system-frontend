@@ -163,7 +163,7 @@ function ExportVoucherDialog() {
                     <VoucherReceiptStatic voucher={voucher}/>
                 );
             }).then(() => {
-                toast.success('Vouchers PDF has been successfully downloaded.');
+                toast.success('Vouchers PDF has been successfully exported.');
             });
         } catch (e) {
             console.error(e)

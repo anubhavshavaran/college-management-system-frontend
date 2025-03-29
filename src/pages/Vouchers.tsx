@@ -83,7 +83,7 @@ function Vouchers() {
         <div className="w-full p-4 flex flex-col gap-4">
 
             {receiptId && (
-                <PaymentReceipt>
+                <PaymentReceipt className="print-section">
                     <div className="w-full flex pl-[1cm] pt-[1cm]">
                         <VoucherReceipt/>
                     </div>

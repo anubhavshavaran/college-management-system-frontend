@@ -5,9 +5,10 @@ import {useSearchParams} from "react-router";
 
 type PaymentReceiptProps = {
     children: ReactNode;
+    className?: string;
 }
 
-function PaymentReceipt({children}: PaymentReceiptProps) {
+function PaymentReceipt({className, children}: PaymentReceiptProps) {
     const [searchParams, setSearchParams] = useSearchParams();
 
     function handlePrint() {
@@ -27,7 +28,7 @@ function PaymentReceipt({children}: PaymentReceiptProps) {
             >
                 <IoCloseSharp color="black"/>
             </Button>
-            <div className="print-section w-full flex justify-around items-center">
+            <div className={`${className} w-full flex justify-around items-center`}>
                 {children}
             </div>
             <Button

@@ -66,23 +66,36 @@ function generateStatement(data: Voucher[], organization: Organization, query: Q
 
 async function generatePDF(vouchers: Voucher[], voucherRender: (voucher: Voucher) => string) {
     const pdf = new jsPDF("p", "mm", "a6");
+
     const canvasPromises = vouchers.map(async (voucher: Voucher, index: number) => {
         const voucherHTML = voucherRender(voucher);
 
         const tempDiv = document.createElement("div");
         tempDiv.innerHTML = voucherHTML;
+        tempDiv.style.position = "absolute";
+        tempDiv.style.left = "-9999px";
         document.body.appendChild(tempDiv);
 
         const canvas = await html2canvas(tempDiv);
         const imgData = canvas.toDataURL("image/png");
 
-        const imgWidth = 400;
-        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        const canvasWidth = canvas.width;
+        const canvasHeight = canvas.height;
+
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = pdf.internal.pageSize.getHeight();
+
+        const imgWidth = pdfWidth;
+        const imgHeight = (canvasHeight * imgWidth) / canvasWidth;
+
+        const x = (pdfWidth - imgWidth) / 2;
+        const y = (pdfHeight - imgHeight) / 2;
 
         if (index > 0) {
             pdf.addPage();
         }
-        pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+
+        pdf.addImage(imgData, "PNG", x, y, imgWidth, imgHeight);
 
         document.body.removeChild(tempDiv);
     });

@@ -29,7 +29,7 @@
   body * {
     visibility: hidden;
   }
-  .print-section, .print-section * {
+  .print-section * {
     visibility: visible;
   }
   .print-section {
@@ -40,3 +40,171 @@
     -webkit-print-color-adjust: exact;
   }
 }
+
+/*@media print {*/
+/*  body {*/
+/*    -webkit-print-color-adjust: exact;*/
+/*    print-color-adjust: exact;*/
+/*  }*/
+
+/*  .print-section-fees {*/
+/*    width: 210mm;*/
+/*    height: 148mm;*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    page-break-inside: avoid;*/
+/*    page-break-after: avoid;*/
+/*    transform: scale(0.95);*/
+/*    transform-origin: top left;*/
+/*  }*/
+
+/*  @page {*/
+/*    size: A5 landscape;*/
+/*    margin: 0;*/
+/*  }*/
+
+/*  .no-print {*/
+/*    display: none;*/
+/*  }*/
+/*}*/
+
+/*@media print {*/
+/*  !* Hide everything except the print section *!*/
+/*  body * {*/
+/*    visibility: hidden;*/
+/*  }*/
+
+/*  !* Print section and its children are visible *!*/
+/*  .print-section, .print-section * {*/
+/*    visibility: visible;*/
+/*  }*/
+
+/*  !* Ensure the print section fits on a single A5 page *!*/
+/*  .print-section {*/
+/*    position: absolute;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    width: 210mm; !* A5 width *!*/
+/*    height: 148mm; !* A5 height *!*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    page-break-inside: avoid; !* Prevent page breaks *!*/
+/*    page-break-after: avoid;  !* Prevent breaking after *!*/
+/*    print-color-adjust: exact;*/
+/*    -webkit-print-color-adjust: exact;*/
+/*    transform: scale(1);      !* Ensure full scaling *!*/
+/*    transform-origin: top left;*/
+/*    overflow: hidden;          !* Prevent content overflow *!*/
+/*  }*/
+
+/*  @page {*/
+/*    size: A5 landscape;      !* Force A5 landscape size *!*/
+/*    margin: 0;               !* Remove default margins *!*/
+/*  }*/
+
+/*  !* Hide print button when printing *!*/
+/*  .no-print {*/
+/*    display: none;*/
+/*  }*/
+/*}*/
+
+/*@media print {*/
+/*  !* Hide everything except the print section *!*/
+/*  body * {*/
+/*    visibility: hidden;*/
+/*  }*/
+
+/*  !* Only print the section content *!*/
+/*  .print-section, .print-section * {*/
+/*    visibility: visible;*/
+/*  }*/
+
+/*  !* Force single page in A5 landscape *!*/
+/*  .print-section {*/
+/*    position: fixed;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    width: 210mm;                  !* Exact A5 landscape width *!*/
+/*    height: 148mm;                  !* Exact A5 landscape height *!*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    page-break-inside: avoid;       !* Prevent content splitting *!*/
+/*    page-break-after: avoid;        !* Avoid unnecessary page breaks *!*/
+/*    overflow: hidden;               !* Prevent any overflow *!*/
+/*    print-color-adjust: exact;      !* Ensure accurate colors *!*/
+/*    -webkit-print-color-adjust: exact;*/
+/*  }*/
+
+/*  @page {*/
+/*    size: A5 portrait;*/
+/*    margin: 0;*/
+/*  }*/
+/*  */
+/*  .print-section::after {*/
+/*    content: '';                     !* Prevent extra page *!*/
+/*    display: none;                   !* Hide any additional pages *!*/
+/*  }*/
+
+/*  !* Hide non-print elements *!*/
+/*  .no-print {*/
+/*    display: none;*/
+/*  }*/
+/*}*/
+
+/*@media print {*/
+/*  !* Hide everything by default *!*/
+/*  body * {*/
+/*    visibility: hidden;*/
+/*  }*/
+
+/*  !* Portrait Page *!*/
+/*  .print-section-portrait, .print-section-portrait * {*/
+/*    visibility: visible;*/
+/*  }*/
+
+/*  .print-section-portrait {*/
+/*    position: fixed;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    width: 148mm; !* A5 Portrait Width *!*/
+/*    height: 210mm; !* A5 Portrait Height *!*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    page-break-after: always; !* Ensures the next page starts fresh *!*/
+/*    print-color-adjust: exact;*/
+/*    -webkit-print-color-adjust: exact;*/
+/*  }*/
+
+/*  !* Landscape Page *!*/
+/*  .print-section-landscape, .print-section-landscape * {*/
+/*    visibility: visible;*/
+/*  }*/
+
+/*  .print-section-landscape {*/
+/*    position: fixed;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    width: 210mm; !* A5 Landscape Width *!*/
+/*    height: 148mm; !* A5 Landscape Height *!*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    page-break-before: always; !* Ensures this starts on a new page *!*/
+/*    print-color-adjust: exact;*/
+/*    -webkit-print-color-adjust: exact;*/
+/*  }*/
+
+/*  !* Dynamic Page Size *!*/
+/*  @page {*/
+/*    margin: 0;*/
+/*  }*/
+
+/*  !* Prevent any unwanted content from appearing *!*/
+/*  .no-print {*/
+/*    display: none;*/
+/*  }*/
+/*}*/

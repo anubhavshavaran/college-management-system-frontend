@@ -47,8 +47,8 @@ function FeeData() {
     return (
         <>
             {receiptId && (
-                <PaymentReceipt>
-                    <div className="w-full flex sm:flex-col md:flex-row gap-[2cm] pl-[1cm] pt-[1cm]">
+                <PaymentReceipt className="print-section">
+                    <div className="w-full flex flex-row gap-[2cm] pl-[1cm] pt-[1cm]">
                         <Receipt title={`"${organization} copy"`}/>
                         <Receipt title="&quot;student copy&quot;"/>
                     </div>
