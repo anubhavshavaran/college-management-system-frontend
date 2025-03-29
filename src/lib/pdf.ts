@@ -1,7 +1,8 @@
-import { jsPDF } from "jspdf";
+import {jsPDF} from "jspdf";
 import autoTable from 'jspdf-autotable';
 import Voucher from "@/constants/Voucher.ts";
 import Organization from "@/constants/Organization.ts";
+import html2canvas from "html2canvas";
 
 type Query = {
     date?: string;
@@ -49,8 +50,8 @@ function generateStatement(data: Voucher[], organization: Organization, query: Q
             item.particulars,
         ]),
         theme: 'grid',
-        headStyles: { fillColor: [200, 200, 200], textColor: 50 },
-        styles: { fontSize: 10, cellPadding: 2 },
+        headStyles: {fillColor: [200, 200, 200], textColor: 50},
+        styles: {fontSize: 10, cellPadding: 2},
     });
 
     const pageCount = doc.getNumberOfPages();
@@ -63,4 +64,32 @@ function generateStatement(data: Voucher[], organization: Organization, query: Q
     doc.save('vouchers.pdf');
 }
 
-export { generateStatement };
+async function generatePDF(vouchers: Voucher[], voucherRender: (voucher: Voucher) => string) {
+    const pdf = new jsPDF("p", "mm", "a6");
+    const canvasPromises = vouchers.map(async (voucher: Voucher, index: number) => {
+        const voucherHTML = voucherRender(voucher);
+
+        const tempDiv = document.createElement("div");
+        tempDiv.innerHTML = voucherHTML;
+        document.body.appendChild(tempDiv);
+
+        const canvas = await html2canvas(tempDiv);
+        const imgData = canvas.toDataURL("image/png");
+
+        const imgWidth = 400;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+        if (index > 0) {
+            pdf.addPage();
+        }
+        pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+
+        document.body.removeChild(tempDiv);
+    });
+
+    await Promise.all(canvasPromises);
+
+    pdf.save("vouchers.pdf");
+}
+
+export {generateStatement, generatePDF};

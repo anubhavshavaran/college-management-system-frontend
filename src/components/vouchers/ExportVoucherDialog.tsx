@@ -8,9 +8,12 @@ import {getAllVouchersApi} from "@/services/voucherApi.ts";
 import {useOrganization} from "@/contexts/OrganizationContextProvider.tsx";
 import {useState} from "react";
 import Spinner from "@/components/ui/Spinner.tsx";
-import {generateStatement} from "@/lib/pdf.ts";
+import {generatePDF, generateStatement} from "@/lib/pdf.ts";
 import FlowDatePicker from "@/components/ui/FlowDatePicker.tsx";
 import {toast} from "react-hot-toast";
+import Organization from "@/constants/Organization.ts";
+import ReactDOMServer from "react-dom/server";
+import VoucherReceiptStatic from "@/components/receipts/VoucherReceiptStatic.tsx";
 
 enum Duration {
     Today,
@@ -28,6 +31,90 @@ type DurationType = {
     endDate: Date;
 }
 
+async function getVouchers(organization: Organization, form: DurationType) {
+    let query = {};
+    if (Number(form.duration) === Duration.Custom) {
+        const startDate = new Date(form.startDate);
+        startDate.setDate(startDate.getDate() + 1);
+        const endDate = new Date(form.endDate);
+        endDate.setDate(endDate.getDate() + 1);
+
+        query = {
+            start: startDate.toISOString().split("T")[0],
+            end: endDate.toISOString().split("T")[0],
+        }
+    } else {
+        let today: Date | string = new Date();
+        today = today.toISOString().split("T")[0];
+
+        switch (Number(form.duration)) {
+            case Duration.Today:
+                query = {
+                    date: today,
+                };
+                break;
+            case Duration.Yesterday: {
+                const day = new Date(today);
+                day.setDate(day.getDate() - 1);
+
+                query = {
+                    date: day.toISOString().split("T")[0],
+                };
+                break;
+            }
+            case Duration.LastWeek: {
+                const day = new Date(today);
+                day.setDate(day.getDate() - 7);
+
+                query = {
+                    start: day.toISOString().split("T")[0],
+                    end: today,
+                };
+                break;
+            }
+
+            case Duration.LastMonth: {
+                const day = new Date(today);
+                day.setMonth(day.getMonth() - 1);
+
+                query = {
+                    start: day.toISOString().split("T")[0],
+                    end: today,
+                };
+                break;
+            }
+
+            case Duration.LastSixMonth: {
+                const day = new Date(today);
+                day.setMonth(day.getMonth() - 6);
+
+                query = {
+                    start: day.toISOString().split("T")[0],
+                    end: today,
+                };
+                break;
+            }
+
+            case Duration.LastYear: {
+                const day = new Date(today);
+                day.setFullYear(day.getFullYear() - 1);
+
+                query = {
+                    start: day.toISOString().split("T")[0],
+                    end: today,
+                };
+                break;
+            }
+        }
+
+    }
+    const data = await getAllVouchersApi(organization, query);
+    return {
+        vouchers: data?.data?.docs,
+        query,
+    };
+}
+
 function ExportVoucherDialog() {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const {organization} = useOrganization();
@@ -42,88 +129,7 @@ function ExportVoucherDialog() {
         setIsLoading(true);
 
         try {
-            const form = getValues();
-
-            let query = {};
-            if (Number(form.duration) === Duration.Custom) {
-                const startDate = new Date(form.startDate);
-                startDate.setDate(startDate.getDate() + 1);
-                const endDate = new Date(form.endDate);
-                endDate.setDate(endDate.getDate() + 1);
-
-                query = {
-                    start: startDate.toISOString().split("T")[0],
-                    end: endDate.toISOString().split("T")[0],
-                }
-            } else {
-                let today: Date | string = new Date();
-                today = today.toISOString().split("T")[0];
-
-                switch (Number(form.duration)) {
-                    case Duration.Today:
-                        query = {
-                            date: today,
-                        };
-                        break;
-                    case Duration.Yesterday: {
-                        const day = new Date(today);
-                        day.setDate(day.getDate() - 1);
-
-                        query = {
-                            date: day.toISOString().split("T")[0],
-                        };
-                        break;
-                    }
-                    case Duration.LastWeek: {
-                        const day = new Date(today);
-                        day.setDate(day.getDate() - 7);
-
-                        query = {
-                            start: day.toISOString().split("T")[0],
-                            end: today,
-                        };
-                        break;
-                    }
-
-                    case Duration.LastMonth: {
-                        const day = new Date(today);
-                        day.setMonth(day.getMonth() - 1);
-
-                        query = {
-                            start: day.toISOString().split("T")[0],
-                            end: today,
-                        };
-                        break;
-                    }
-
-                    case Duration.LastSixMonth: {
-                        const day = new Date(today);
-                        day.setMonth(day.getMonth() - 6);
-
-                        query = {
-                            start: day.toISOString().split("T")[0],
-                            end: today,
-                        };
-                        break;
-                    }
-
-                    case Duration.LastYear: {
-                        const day = new Date(today);
-                        day.setFullYear(day.getFullYear() - 1);
-
-                        query = {
-                            start: day.toISOString().split("T")[0],
-                            end: today,
-                        };
-                        break;
-                    }
-                }
-
-            }
-            console.log(query);
-
-            const data = await getAllVouchersApi(organization, query);
-            const vouchers = data?.data?.docs;
+            const {vouchers, query} = await getVouchers(organization, getValues());
 
             if (vouchers.length === 0) {
                 toast.error(
@@ -132,6 +138,33 @@ function ExportVoucherDialog() {
             } else {
                 generateStatement(vouchers, organization, query);
             }
+        } catch (e) {
+            console.error(e)
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
+    async function generateReceipts() {
+        setIsLoading(true);
+
+        try {
+            const {vouchers} = await getVouchers(organization, getValues());
+
+            if (vouchers.length === 0) {
+                toast.error(
+                    'No Vouchers available for the selected duration.'
+                );
+                return;
+            }
+
+            generatePDF(vouchers, (voucher) => {
+                return ReactDOMServer.renderToStaticMarkup(
+                    <VoucherReceiptStatic voucher={voucher}/>
+                );
+            }).then(() => {
+                toast.success('Vouchers PDF has been successfully downloaded.');
+            });
         } catch (e) {
             console.error(e)
         } finally {
@@ -233,7 +266,18 @@ function ExportVoucherDialog() {
                     {isLoading ? (
                         <Spinner/>
                     ) : (
-                        <p>Export</p>
+                        <p>Export as Statements</p>
+                    )}
+                </Button>
+                <Button
+                    onClick={handleSubmit(generateReceipts)}
+                    className="bg-defaultOrange"
+                    disabled={isLoading}
+                >
+                    {isLoading ? (
+                        <Spinner/>
+                    ) : (
+                        <p>Export as PDF</p>
                     )}
                 </Button>
             </DialogFooter>
