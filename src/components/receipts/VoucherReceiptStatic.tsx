@@ -22,7 +22,14 @@ function VoucherReceipt({voucher}: VoucherReceiptProps) {
                     <p className="text-sm">Vivekanand Nagar, Gadag-Betageri-582 103</p>
                 </div>
                 <div className="w-full h-[1.5px] bg-black"/>
-                <p className="text-white px-2 py-1 bg-black  rounded-lg capitalize">debit voucher</p>
+                <div className="flex justify-center w-full">
+                    <img
+                        src="/debit-voucher.png"
+                        alt="Debit Voucher"
+                        className="h-8"
+                    />
+                </div>
+
                 <div className="w-full h-[1.5px] bg-black"/>
             </div>
             <div className="flex flex-col justify-center items-start gap-1 p-4">
@@ -38,11 +45,11 @@ function VoucherReceipt({voucher}: VoucherReceiptProps) {
             <div className="p-3 w-full flex flex-wrap justify-between">
                 <div className="flex gap-1">
                     <p className="text-sm">Rs:</p>
-                    <p className="text-sm border-b-[1.5px] border-b-black">{voucher.amount}</p>
+                    <p className="text-sm font-bold">{voucher.amount}</p>
                 </div>
-                <div className="flex gap-1">
+                <div className="flex gap-1 items-center">
                     <p className="text-sm">Rupees in Words:</p>
-                    <p className="text-sm border-b-[1.5px] border-b-black capitalize">{formatNumberToWord(voucher.amount)} only</p>
+                    <p className="text-sm capitalize font-bold">{formatNumberToWord(voucher.amount)} only</p>
                 </div>
             </div>
             <div className="w-full flex justify-start gap-16 pt-2 pb-10 px-4 border-t-2 border-t-black">
