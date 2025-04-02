@@ -9,7 +9,7 @@ type Student = {
     section?: number;
     course?: string;
     durationInYear?: number;
-    year?: number;
+    year?: number | string;
     expectedYearOfPassing?: string;
     mothersName?: string;
     fathersName?: string;
@@ -37,6 +37,7 @@ type Student = {
     paidFee?: number,
     previousFee?: number,
     createdAt?: Date,
+    batch?: string,
 }
 
 export default Student;

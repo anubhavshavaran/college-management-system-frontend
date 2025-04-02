@@ -7,7 +7,7 @@ type TableProps = {
     render: (data: Student, key: number) => ReactElement;
 }
 
-const headers = ['Sr. no.', 'Registration Number', 'Name', 'Year', 'Gender', 'Date of Birth', 'Date of Admission', 'Phone number'];
+const headers = ['Sr. no.', 'Registration Number', 'Name', 'Batch', 'Year', 'Gender', 'Date of Birth', 'Date of Admission', 'Phone number'];
 
 function CollegeStudentsTable({data, render}: TableProps) {
     data.sort((a: Student, b: Student): number => {

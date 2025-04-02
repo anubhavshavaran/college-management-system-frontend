@@ -149,7 +149,8 @@ function StudentsData({fromFees}: StudentsDataProps) {
                                             <TableCell className="text-center">{key + 1}</TableCell>
                                             <TableCell className="text-center">{student.registrationNumber}</TableCell>
                                             <TableCell className="text-center">{student.name}</TableCell>
-                                            <TableCell className="text-center">{student.year}</TableCell>
+                                            <TableCell className="text-center">{student.batch}</TableCell>
+                                            <TableCell className="text-center">{student?.year === 'newAdmission' ? 'New Admission' : student.year}</TableCell>
                                             <TableCell
                                                 className="text-center">{student.gender?.toLocaleUpperCase()}</TableCell>
                                             <TableCell

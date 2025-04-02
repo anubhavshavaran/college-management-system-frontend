@@ -80,6 +80,33 @@ function CollegeStudentForm({course}: CollegeStudentFormProps) {
                 <>
                     <div className="w-full grid grid-cols-2 gap-x-6 gap-y-4">
                         <StudentInfoInput
+                            label="Batch *"
+                        >
+                            <Controller
+                                control={control}
+                                name='batch'
+                                rules={{
+                                    required: {
+                                        value: true,
+                                        message: "Batch is required"
+                                    }
+                                }}
+
+                                render={({field: {value, onChange}}) => (
+                                    <>
+                                        <Input
+                                            value={value}
+                                            onChange={onChange}
+                                            disabled={isPending || isUpdatingStudent || isDisabled}
+                                            className="bg-white p-5 border-2 border-defaultLightBlue text-defaultBlue rounded-xl"
+                                            placeholder="ex:. 2025-2026"
+                                        />
+                                        <FormError message={errors?.batch?.message}/>
+                                    </>
+                                )}
+                            />
+                        </StudentInfoInput>
+                        <StudentInfoInput
                             label="Student name *"
                         >
                             <Controller
@@ -256,6 +283,7 @@ function CollegeStudentForm({course}: CollegeStudentFormProps) {
                                                 <SelectValue placeholder="Select year"/>
                                             </SelectTrigger>
                                             <SelectContent>
+                                                <SelectItem value="newAdmission">New Admission</SelectItem>
                                                 <SelectItem value="1">1st</SelectItem>
                                                 <SelectItem value="2">2nd</SelectItem>
                                                 <SelectItem value="3">3rd</SelectItem>

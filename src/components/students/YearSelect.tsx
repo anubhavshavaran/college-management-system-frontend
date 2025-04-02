@@ -16,6 +16,7 @@ function YearSelect() {
                 <SelectValue placeholder="Year"/>
             </SelectTrigger>
             <SelectContent>
+                <SelectItem value="newAdmission">New Admission</SelectItem>
                 <SelectItem value="1">1st year</SelectItem>
                 <SelectItem value="2">2nd year</SelectItem>
                 <SelectItem value="3">3rd year</SelectItem>
