@@ -2,7 +2,13 @@ import {Button} from "@/components/ui/button.tsx";
 import InfoCard from "@/components/ui/InfoCard.tsx";
 import {useOrganization} from "@/contexts/OrganizationContextProvider.tsx";
 import {useLocation, useNavigate, useSearchParams} from "react-router";
-import {useDeleteStudent, useSearchStudents, useStudents, useStudentsPassingYears} from "@/hooks/students.ts";
+import {
+    useDeleteStudent,
+    usePromoteStudents,
+    useSearchStudents,
+    useStudents,
+    useStudentsPassingYears
+} from "@/hooks/students.ts";
 import Spinner from "@/components/ui/Spinner.tsx";
 import SchoolStudentsTable from "@/components/students/SchoolStudentsTable.tsx";
 import Organization from "@/constants/Organization.ts";
@@ -36,6 +42,8 @@ function StudentsData({fromFees}: StudentsDataProps) {
         const dateYear = new Date().getFullYear();
         return year === 'passedOut' ? `${dateYear - 2}-${dateYear - 1}` : '';
     });
+    // const newYear = year === 'newAdmission' ? '1' : year === '1' ? '2' : year === '2' ? '3' : year === '3' ? '4' : year === '4' ? 'passedOut' : undefined;
+    const {promoteStudents, isPending: isPromoting} = usePromoteStudents(course, year);
     const {data, isPending} = useStudents(organization, course, year, '', passOutYear ?? '');
     const {results} = useSearchStudents(organization, query !== '', query ?? '', course, year);
     const {data: yearData} = useStudentsPassingYears(organization, course, year);
@@ -69,7 +77,7 @@ function StudentsData({fromFees}: StudentsDataProps) {
 
     return (
         <div className="w-full flex flex-col gap-4">
-            {isPending ? (
+            {isPending || isPromoting ? (
                 <Spinner/>
             ) : (
                 <>
@@ -108,6 +116,16 @@ function StudentsData({fromFees}: StudentsDataProps) {
                             >
                                 Clear
                             </Button>
+
+                            {organization === Organization.COLLEGE && year !== 'passedOut' && (
+                                <Button
+                                    className="bg-defaultOrange hover:bg-defaultOrange"
+                                    onClick={() => promoteStudents()}
+                                >
+                                    Promote
+                                </Button>
+                            )}
+
                             {organization === Organization.COLLEGE && searchParams.get("year") !== "passedOut" && (
                                 <YearSelect/>
                             )}

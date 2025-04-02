@@ -134,4 +134,20 @@ async function getStudentsYearsOfPassingApi(organization: Organization, query: C
     return data;
 }
 
-export {getStudentApi, getStudentsApi, createStudentApi, deleteStudentApi, updateStudentApi, updateStudentsFixedFeeApi, searchStudentsApi, getStudentsYearsOfPassingApi};
+async function promoteStudentsApi(organization: Organization, query: CourseQuery) {
+    const {data, status} = await axiosInstance.request({
+        method: 'POST',
+        url: `/students/${organization}/promote`,
+        params: {
+            ...query
+        }
+    });
+
+    if (status.toString()[0] === '4') {
+        throw new Error(data.message);
+    }
+
+    return data;
+}
+
+export {getStudentApi, getStudentsApi, createStudentApi, deleteStudentApi, updateStudentApi, updateStudentsFixedFeeApi, searchStudentsApi, getStudentsYearsOfPassingApi, promoteStudentsApi};

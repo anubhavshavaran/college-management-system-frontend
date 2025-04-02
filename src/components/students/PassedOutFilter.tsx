@@ -12,7 +12,8 @@ type PassedOutFilterProps = {
 }
 
 function PassedOutFilter({data, year, onChange}: PassedOutFilterProps) {
-    const years = data?.map(d => d.expectedYearOfPassing);
+    const years = [...new Set(data?.map(d => d.expectedYearOfPassing))];
+
     return (
         <div className="w-full">
             <Select onValueChange={onChange} defaultValue={years?.includes(year) ? year : undefined}>

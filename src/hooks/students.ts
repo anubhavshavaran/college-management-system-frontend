@@ -3,7 +3,7 @@ import {
     createStudentApi,
     deleteStudentApi,
     getStudentApi,
-    getStudentsApi, getStudentsYearsOfPassingApi, searchStudentsApi,
+    getStudentsApi, getStudentsYearsOfPassingApi, promoteStudentsApi, searchStudentsApi,
     updateStudentApi, updateStudentsFixedFeeApi
 } from "@/services/studentsApi.ts";
 import Organization from "@/constants/Organization.ts";
@@ -256,6 +256,28 @@ function useSearchStudents(organization: Organization, enabled: boolean, query?:
     }
 }
 
+function usePromoteStudents(course: string, year?: string) {
+    const {organization} = useOrganization();
+    const queryClient = useQueryClient();
+    const {mutate: promoteStudents, isPending} = useMutation({
+        mutationFn: () => promoteStudentsApi(organization, {course, year}),
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({
+                queryKey: [organization, 'students', course, year]
+            }, {
+                throwOnError: true
+            });
+
+            toast.success("Students promoted successfully.");
+        }
+    });
+
+    return {
+        promoteStudents,
+        isPending,
+    }
+}
+
 export {
     useStudent,
     useStudents,
@@ -268,5 +290,6 @@ export {
     useUpdateStudentsFee,
     useSearchStudents,
     useStudentPayment,
-    useStudentsPassingYears
+    useStudentsPassingYears,
+    usePromoteStudents
 };
