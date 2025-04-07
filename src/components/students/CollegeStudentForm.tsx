@@ -425,17 +425,11 @@ function CollegeStudentForm({course}: CollegeStudentFormProps) {
                             />
                         </StudentInfoInput>
                         <StudentInfoInput
-                            label="Registration Number *"
+                            label="Registration Number"
                         >
                             <Controller
                                 control={control}
                                 name='registrationNumber'
-                                rules={{
-                                    required: {
-                                        value: true,
-                                        message: 'Registration number is required'
-                                    }
-                                }}
                                 render={({field: {value, onChange}}) => (
                                     <>
                                         <Input
