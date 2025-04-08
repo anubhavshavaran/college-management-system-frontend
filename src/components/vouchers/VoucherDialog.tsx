@@ -76,6 +76,34 @@ export function VoucherDialog({organization, onSave}: VoucherDialogProps) {
             ) : (
                 <>
                     <div className="grid gap-4 py-4">
+                        {isEditing && (
+                            <div className="grid grid-cols-4 items-center gap-4">
+                                <Label htmlFor="voucherNumber" className="text-right">
+                                    Voucher Number
+                                </Label>
+                                <Controller
+                                    control={control}
+                                    name="voucherNumber"
+                                    rules={{
+                                        required: {
+                                            value: true,
+                                            message: 'This is field is required'
+                                        }
+                                    }}
+                                    render={({field: {value, onChange}}) => (
+                                        <div className="w-full col-span-3 flex flex-col gap-2">
+                                            <Input
+                                                id="voucherNumber"
+                                                className="col-span-3"
+                                                value={value}
+                                                onChange={onChange}
+                                            />
+                                            <FormError message={errors.voucherNumber?.message}/>
+                                        </div>
+                                    )}
+                                />
+                            </div>
+                        )}
                         <div className="grid grid-cols-4 items-center gap-4">
                             <Label htmlFor="name" className="text-right">
                                 Paid To
@@ -117,7 +145,7 @@ export function VoucherDialog({organization, onSave}: VoucherDialogProps) {
                                 }}
                                 render={({field: {value, onChange}}) => (
                                     <div className="w-full col-span-3 flex flex-col gap-2">
-                                        <FlowDatePicker value={value} onChange={onChange} />
+                                        <FlowDatePicker value={value} onChange={onChange}/>
                                         <FormError message={errors.date?.message}/>
                                     </div>
                                 )}
