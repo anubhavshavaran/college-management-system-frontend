@@ -94,13 +94,13 @@ function DocsDialog({onSave}: DocsDialogProps) {
                     <Label htmlFor="name" className="text-right">
                         Upload Document
                     </Label>
-                    <Input
+                    <input
                         id="file"
                         type="file"
                         accept=".pdf,.docx,.txt"
-                        className="col-span-3"
                         disabled={isPending}
                         required={true}
+                        className="col-span-3 bg-transparent h-9 w-full rounded-md border border-zinc-200 after:bg-defaultOrange"
                         onChange={e => {
                             const selectedFile = e.target.files?.[0];
                             if (selectedFile) {
