@@ -1,7 +1,18 @@
+import CollegeStudentsTable from "@/components/students/CollegeStudentsTable.tsx";
+import PassedOutFilter from "@/components/students/PassedOutFilter.tsx";
+import SchoolStudentsTable from "@/components/students/SchoolStudentsTable.tsx";
+import UpdateFixedFeeForm from "@/components/students/UpdateFixedFeeForm.tsx";
+import YearSelect from "@/components/students/YearSelect.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import InfoCard from "@/components/ui/InfoCard.tsx";
+import Searchbar from "@/components/ui/Searchbar.tsx";
+import Spinner from "@/components/ui/Spinner.tsx";
+import {TableCell, TableRow} from "@/components/ui/table.tsx";
+import Organization from "@/constants/Organization.ts";
 import {useOrganization} from "@/contexts/OrganizationContextProvider.tsx";
-import {useLocation, useNavigate, useSearchParams} from "react-router";
+import {useUser} from "@/contexts/UserContextProvider.tsx";
+import {formatCurrency} from "@/functions/formatCurrency.ts";
+import formatOrdinal from "@/functions/formatOrdinal.ts";
 import {
     useDeleteStudent,
     usePromoteStudents,
@@ -9,19 +20,9 @@ import {
     useStudents,
     useStudentsPassingYears
 } from "@/hooks/students.ts";
-import Spinner from "@/components/ui/Spinner.tsx";
-import SchoolStudentsTable from "@/components/students/SchoolStudentsTable.tsx";
-import Organization from "@/constants/Organization.ts";
-import {TableCell, TableRow} from "@/components/ui/table.tsx";
 import {format} from "date-fns";
-import CollegeStudentsTable from "@/components/students/CollegeStudentsTable.tsx";
-import formatOrdinal from "@/functions/formatOrdinal.ts";
-import {useUser} from "@/contexts/UserContextProvider.tsx";
-import UpdateFixedFeeForm from "@/components/students/UpdateFixedFeeForm.tsx";
 import React, {useState} from "react";
-import Searchbar from "@/components/ui/Searchbar.tsx";
-import YearSelect from "@/components/students/YearSelect.tsx";
-import PassedOutFilter from "@/components/students/PassedOutFilter.tsx";
+import {useLocation, useNavigate, useSearchParams} from "react-router";
 
 type StudentsDataProps = {
     fromFees?: boolean;
@@ -32,6 +33,7 @@ function StudentsData({fromFees}: StudentsDataProps) {
     const navigate = useNavigate();
     const {organization} = useOrganization();
     const location = useLocation();
+    const locationName = location.pathname.split("/")[2];
     const [searchParams, setSearchParams] = useSearchParams();
     const [searchValue, setSearchValue] = useState<string>('');
     const course = searchParams.get("cat") ?? '';
@@ -42,9 +44,8 @@ function StudentsData({fromFees}: StudentsDataProps) {
         const dateYear = new Date().getFullYear();
         return year === 'passedOut' ? `${dateYear - 2}-${dateYear - 1}` : '';
     });
-    // const newYear = year === 'newAdmission' ? '1' : year === '1' ? '2' : year === '2' ? '3' : year === '3' ? '4' : year === '4' ? 'passedOut' : undefined;
     const {promoteStudents, isPending: isPromoting} = usePromoteStudents(course, year);
-    const {data, isPending} = useStudents(organization, course, year, '', passOutYear ?? '');
+    const {data, isPending, dues} = useStudents(organization, course, year, '', passOutYear ?? '');
     const {results} = useSearchStudents(organization, query !== '', query ?? '', course, year);
     const {data: yearData} = useStudentsPassingYears(organization, course, year);
 
@@ -85,9 +86,12 @@ function StudentsData({fromFees}: StudentsDataProps) {
                         <InfoCard label={`${title} students`} text={data.students.length ?? "0"}/>
                         <InfoCard label={`${title} male`} text={data.stats.males}/>
                         <InfoCard label={`${title} females`} text={data.stats.females}/>
+                        {locationName === 'fees' && (
+                            <InfoCard label={`${title} Dues`} text={`${formatCurrency(dues)}`}/>
+                        )}
                     </div>
 
-                    {user?.role !== "ADMIN" && location.pathname.split("/")[2] === "students" && course !== "passedOut" && year !== "passedOut" && (
+                    {user?.role !== "ADMIN" && locationName === "students" && course !== "passedOut" && year !== "passedOut" && (
                         <Button
                             onClick={navToAdd}
                             className="bg-defaultGray p-5 shadow-none border-[1.5px] border-gray-400 rounded-xl hover:bg-defaultGray w-fit">
@@ -96,16 +100,19 @@ function StudentsData({fromFees}: StudentsDataProps) {
                         </Button>
                     )}
 
-                    {user?.role === "CHAIRMAN" && location.pathname.split("/")[2] === "fees" && (
+                    {user?.role === "CHAIRMAN" && locationName === "fees" && (
                         <UpdateFixedFeeForm/>
                     )}
 
-                    <div className="w-full bg-defaultGray py-2 rounded-2xl flex flex-col justify-center sm:items-center md:items-end">
+                    <div
+                        className="w-full bg-defaultGray py-2 rounded-2xl flex flex-col justify-center sm:items-center md:items-end">
                         <div className="flex sm:flex-col md:flex-row justify-center items-center gap-2">
                             {(year === "passedOut") && (
-                                <PassedOutFilter year={passOutYear} data={yearData === undefined ? [] : yearData?.years} onChange={(y) => setPassOutYear(y)}/>
+                                <PassedOutFilter year={passOutYear} data={yearData === undefined ? [] : yearData?.years}
+                                                 onChange={(y) => setPassOutYear(y)}/>
                             )}
-                            <Searchbar title="Search by students" value={searchValue} onChange={e => setSearchValue(e)}/>
+                            <Searchbar title="Search by students" value={searchValue}
+                                       onChange={e => setSearchValue(e)}/>
                             <Button
                                 className="bg-defaultOrange hover:bg-defaultOrange"
                                 onClick={() => {
@@ -165,10 +172,12 @@ function StudentsData({fromFees}: StudentsDataProps) {
                                     render={(student, key) => (
                                         <TableRow key={key} onClick={() => navToStudent(student._id ?? '')}>
                                             <TableCell className="text-center">{key + 1}</TableCell>
-                                            <TableCell className="text-center">{student.registrationNumber ?? ''}</TableCell>
+                                            <TableCell
+                                                className="text-center">{student.registrationNumber ?? ''}</TableCell>
                                             <TableCell className="text-center">{student.name}</TableCell>
                                             <TableCell className="text-center">{student.batch}</TableCell>
-                                            <TableCell className="text-center">{student?.year === 'newAdmission' ? 'New Admission' : student.year}</TableCell>
+                                            <TableCell
+                                                className="text-center">{student?.year === 'newAdmission' ? 'New Admission' : student.year}</TableCell>
                                             <TableCell
                                                 className="text-center">{student.gender?.toLocaleUpperCase()}</TableCell>
                                             <TableCell

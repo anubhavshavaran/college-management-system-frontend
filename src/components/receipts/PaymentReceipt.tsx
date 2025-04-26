@@ -1,7 +1,7 @@
 import {Button} from "@/components/ui/button.tsx";
-import {IoCloseSharp} from "react-icons/io5";
 import {ReactNode} from "react";
-import {useSearchParams} from "react-router";
+import {IoCloseSharp} from "react-icons/io5";
+import {useNavigate} from "react-router";
 
 type PaymentReceiptProps = {
     children: ReactNode;
@@ -9,15 +9,14 @@ type PaymentReceiptProps = {
 }
 
 function PaymentReceipt({className, children}: PaymentReceiptProps) {
-    const [searchParams, setSearchParams] = useSearchParams();
+    const navigate = useNavigate();
 
     function handlePrint() {
         window.print();
     }
 
     function handleClose() {
-        searchParams.delete("receiptId");
-        setSearchParams(searchParams);
+        navigate(-1);
     }
 
     return (

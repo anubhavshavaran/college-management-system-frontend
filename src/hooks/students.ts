@@ -25,10 +25,16 @@ function useStudents(organization: Organization, course: string, year?: string, 
         queryKey: organization === Organization.SCHOOL ? [organization, 'students', name] : expectedYearOfPassing !== '' ? [organization, 'students', course, year, name, expectedYearOfPassing] : [organization, 'students', course, year, name],
         queryFn: () => getStudentsApi(organization, query)
     });
+    let dues: number = 0;
+    data?.data?.students.forEach((student: any) => {
+        console.log(student.fixedFee - student.paidFee);
+        dues += Number(student.fixedFee - student.paidFee);
+    });
 
     return {
         data: data?.data,
         isPending,
+        dues,
         error
     }
 }

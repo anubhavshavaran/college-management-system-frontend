@@ -54,7 +54,7 @@ function Receipt({title}: ReceiptProps) {
                             </div>
                         ) : (
                             <div className="grid grid-cols-2">
-                                <p className="">Course: {payment.studentId.course}</p>
+                                <p className="">Course: {payment.studentId.course.toUpperCase()}</p>
                                 <p className="">Year: {payment.studentId.year}</p>
                                 <p className="">Reg no.: {payment.studentId.registrationNumber}</p>
                                 <p className="">Mode of Payment: {payment.mode}</p>

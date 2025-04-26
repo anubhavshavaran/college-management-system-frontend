@@ -4,6 +4,7 @@ import {useSearchParams} from "react-router";
 function YearSelect() {
     const [searchParams, setSearchParams] = useSearchParams();
     const year = searchParams.get("year");
+    const cat = searchParams.get("cat");
 
     function handleYearChange(y: string) {
         searchParams.set("year", y);
@@ -19,8 +20,12 @@ function YearSelect() {
                 <SelectItem value="newAdmission">New Admission</SelectItem>
                 <SelectItem value="1">1st year</SelectItem>
                 <SelectItem value="2">2nd year</SelectItem>
-                <SelectItem value="3">3rd year</SelectItem>
-                <SelectItem value="4">4th year</SelectItem>
+                {cat !== 'msc' && (
+                    <>
+                        <SelectItem value="3">3rd year</SelectItem>
+                        <SelectItem value="4">4th year</SelectItem>
+                    </>
+                )}
             </SelectContent>
         </Select>
     );
