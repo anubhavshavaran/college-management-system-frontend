@@ -48,7 +48,7 @@ function FeeData() {
         <>
             {receiptId && (
                 <PaymentReceipt className="print-section">
-                    <div className="w-full flex flex-row gap-[2cm] pl-[1cm] pt-[1cm]">
+                    <div className="w-full flex flex-row justify-center gap-[2cm]">
                         <Receipt title={`"${organization} copy"`}/>
                         <Receipt title="&quot;student copy&quot;"/>
                     </div>
@@ -83,9 +83,6 @@ function FeeData() {
                             </Button>
                         )}
 
-                        <div className="w-full flex flex-col gap-6">
-
-                        </div>
                         <div className="w-full py-8 bg-defaultLightGray flex flex-col gap-2">
                             <p className="text-base font-semibold">Transaction History</p>
                             <Table>
