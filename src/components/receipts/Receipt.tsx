@@ -81,6 +81,7 @@ function Receipt({title}: ReceiptProps) {
                         </div>
                         <div className="w-full h-[1.5px] bg-black"/>
                         <p className="text-white px-2 py-1 bg-black rounded-lg">Fee Receipt</p>
+                        <p className="text-sm">Note: Fees once paid cannot be refunded</p>
                         <div className="w-full h-[1.5px] bg-black"/>
                     </div>
                     <div className="p-4 flex flex-col justify-center items-start">
@@ -94,7 +95,7 @@ function Receipt({title}: ReceiptProps) {
                         ) : (
                             <div className="grid grid-cols-2">
                                 <p className="">Course: {payment.studentId.course.toUpperCase()}</p>
-                                <p className="">Year: {payment.studentId.year}</p>
+                                <p className="capitalize">Year: {payment.studentId.year === 'newAdmission' ? 'new admission' : payment.studentId.year}</p>
                                 <p className="">Reg no.: {payment.studentId.registrationNumber}</p>
                                 <p className="">Mode of Payment: {payment.mode}</p>
                             </div>
