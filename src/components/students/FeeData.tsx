@@ -68,7 +68,7 @@ function FeeData() {
                             <FeeInfoCard label="fees paid" value={student.paidFee}/>
                             <FeeInfoCard label="balance due"
                                          value={String(Number(student.fixedFee) - Number(student.paidFee))}/>
-                            <FeeInfoCard label="previous fees" value={student.previousFee}/>
+                            <FeeInfoCard label="previous due" value={student.previousFee}/>
                         </div>
 
                         {user?.role === "CHAIRMAN" && (
